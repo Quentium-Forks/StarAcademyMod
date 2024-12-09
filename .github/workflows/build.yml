@@ -13,40 +13,53 @@ jobs:
     runs-on: ubuntu-latest
 
     steps:
-      - name: Checkout code
+      - name: Checkout Code
         uses: actions/checkout@v4.2.2
 
-      - name: Set up JDK 17
+      - name: Setup JDK 17
         uses: actions/setup-java@v4.5.0
         with:
           java-version: '17'
           distribution: 'temurin'
+          cache: gradle
 
-      - name: Cache Gradle files
-        uses: actions/cache@v4
+      - name: Publish to Github Packages
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        run: ./gradlew :fabric:build :fabric:publish
+
+      - name: Cleanup Old Artifacts
+        uses: actions/delete-package-versions@v5
         with:
-          path: |
-            ~/.gradle/caches
-            ~/.gradle/wrapper
-          key: ${{ runner.os }}-gradle-${{ hashFiles('**/*.gradle*', '**/*.gradle.kts*', '**/gradle-wrapper.properties') }}
-          restore-keys: |
-            ${{ runner.os }}-gradle-
+          package-name: 'Abes-Hutt.StarAcademyMod.academy'
+          min-versions-to-keep: 10
+          package-type: 'maven'
 
-      - name: Build Fabric Project
-        run: ./gradlew :fabric:build
+#      - name: Cache Gradle files
+#        uses: actions/cache@v4
+#        with:
+#          path: |
+#            ~/.gradle/caches
+#            ~/.gradle/wrapper
+#          key: ${{ runner.os }}-gradle-${{ hashFiles('**/*.gradle*', '**/*.gradle.kts*', '**/gradle-wrapper.properties') }}
+#          restore-keys: |
+#            ${{ runner.os }}-gradle-
 
-      - name: Filter Non-Normal JARs
-        run: |
-          mkdir filtered-libs
-          find fabric/build/libs -type f -name '*.jar' ! -name '*-dev*' ! -name '*-sources*' -exec cp {} filtered-libs/ \;
-          find forge/build/libs -type f -name '*.jar' ! -name '*-dev*' ! -name '*-sources*' -exec cp {} filtered-libs/ \;
-          cd filtered-libs
-          for file in *.jar; do
-            mv "$file" "$(echo "$file" | sed -E 's/-(.*-.*-.*)\.jar$/.jar/')"
-          done
+#      - name: Build Fabric Project
+#        run: ./gradlew :fabric:build
 
-      - name: Upload Filtered Build Artifacts
-        uses: actions/upload-artifact@v4
-        with:
-          name: final-build
-          path: filtered-libs/
+#      - name: Filter Non-Normal JARs
+#        run: |
+#          mkdir filtered-libs
+#          find fabric/build/libs -type f -name '*.jar' ! -name '*-dev*' ! -name '*-sources*' -exec cp {} filtered-libs/ \;
+#          find forge/build/libs -type f -name '*.jar' ! -name '*-dev*' ! -name '*-sources*' -exec cp {} filtered-libs/ \;
+#          cd filtered-libs
+#          for file in *.jar; do
+#            mv "$file" "$(echo "$file" | sed -E 's/-(.*-.*-.*)\.jar$/.jar/')"
+#          done
+
+#      - name: Upload Filtered Build Artifacts
+#        uses: actions/upload-artifact@v4
+#        with:
+#          name: final-build
+#          path: filtered-libs/
