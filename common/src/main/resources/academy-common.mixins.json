@@ -17,6 +17,7 @@
     "MixinGameProfile",
     "MixinPlayerScreenHandler",
     "bountiful.MixinBountyItem",
+    "mythsandlegends.MixinFormAndAspectUtils",
     "mythsandlegends.MixinPlayerEvents",
     "scout.MixinBaseBagItem",
     "terrastorage.MixinPacketRegistry"
