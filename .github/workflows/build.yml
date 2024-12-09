@@ -71,7 +71,7 @@ jobs:
                 description += "\n";
               }
             
-              description += "[" + commit.id.slice(0,7) + "](<" + commit.url + ">) " + commit.message + " - " + commit.author.username;
+              description += " [" + commit.id.slice(0,7) + "](<" + commit.url + ">) " + commit.message + " - " + commit.author.username;
             }
             
             core.setOutput('EMBED_DESCRIPTION', description);
