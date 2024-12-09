@@ -79,6 +79,10 @@ publishing {
     }
 }
 
+tasks.register('printVersion') {
+    println "mc$rootProject.minecraft_version-v$rootProject.mod_version${getBuildNumber()}-fabric"
+}
+
 static def getBuildNumber() {
     if(System.getenv("GITHUB_RUN_NUMBER") != null) {
         return "." + System.getenv("GITHUB_RUN_NUMBER").toString()
