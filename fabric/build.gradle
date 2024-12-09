@@ -72,7 +72,7 @@ publishing {
     publications {
         gpr(MavenPublication) {
             groupId = rootProject.maven_group
-            artifactId = rootProject.archives_name
+            artifactId = rootProject.archives_name.toLowerCase()
             version = "mc${rootProject.minecraft_version}-v${rootProject.mod_version}${getBuildNumber()}-${project.name}"
             from components.java
         }
