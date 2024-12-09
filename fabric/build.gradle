@@ -71,8 +71,24 @@ publishing {
     }
     publications {
         gpr(MavenPublication) {
-            artifactId = 'academy'
-            from(components.java)
+            groupId = 'abeshutt'
+            artifactId = 'staracademy'
+            version = project.version
+            artifact tasks.jar.archiveFile
         }
     }
+}
+
+tasks.jar {
+    archiveBaseName.set("$rootProject.archives_name")
+    archiveVersion.set("mc${rootProject.minecraft_version}-v${rootProject.mod_version}${getBuildNumber()}")
+    archiveClassifier.set("$project.name")
+}
+
+static def getBuildNumber() {
+    if(System.getenv("GITHUB_RUN_NUMBER") != null) {
+        return "." + System.getenv("GITHUB_RUN_NUMBER").toString()
+    }
+
+    return ""
 }

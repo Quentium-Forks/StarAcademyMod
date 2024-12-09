@@ -26,12 +26,7 @@ jobs:
       - name: Make Gradle Wrapper Executable
         run: chmod +x ./gradlew
 
-      - name: Publish to Github Packages
-        env:
-          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-        run: ./gradlew :fabric:build :fabric:publish
-
-      - name: Cache Gradle files
+      - name: Cache Gradle Files
         uses: actions/cache@v4
         with:
           path: |
@@ -41,10 +36,15 @@ jobs:
           restore-keys: |
             ${{ runner.os }}-gradle-
 
+      - name: Publish to Github Packages
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        run: ./gradlew :fabric:build :fabric:publish
+
       - name: Cleanup Old Artifacts
         uses: actions/delete-package-versions@v5
         with:
-          package-name: 'Abes-Hutt.StarAcademyMod.academy'
+          package-name: 'abeshutt.staracademy'
           min-versions-to-keep: 10
           package-type: 'maven'
 
