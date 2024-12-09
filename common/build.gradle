@@ -11,11 +11,11 @@ dependencies {
     modImplementation "dev.architectury:architectury:$rootProject.architectury_api_version"
     modImplementation("com.cobblemon:mod:1.5.2+1.20.1")
 
-    modImplementation files("libs/Scout-2.0.4+1.20.1.jar")
-    modImplementation files("libs/Bountiful-6.0.3+1.20.1-fabric.jar")
-    modImplementation files("libs/trinkets-3.7.2.jar")
-    modImplementation files("libs/Hunt-1.1.0-fabric.jar")
-    modImplementation files("libs/Terrastorage-1.0.7+1.20-1.20.1.jar")
-    modImplementation files("libs/GooeyLibs-Fabric-3.0.0+1.20.1.jar")
-    modImplementation files("libs/Myths_and_Legends-1.6.1-fabric.jar")
+    modImplementation files("jars/Bountiful-6.0.3+1.20.1-fabric.jar")
+    modImplementation files("jars/GooeyLibs-Fabric-3.0.0+1.20.1.jar")
+    modImplementation files("jars/Hunt-1.1.0-fabric.jar")
+    modImplementation files("jars/Myths_and_Legends-1.6.1-fabric.jar")
+    modImplementation files("jars/Scout-2.0.4+1.20.1.jar")
+    modImplementation files("jars/Terrastorage-1.0.7+1.20-1.20.1.jar")
+    modImplementation files("jars/trinkets-3.7.2.jar")
 }
