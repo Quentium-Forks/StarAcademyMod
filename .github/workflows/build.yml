@@ -42,23 +42,24 @@ jobs:
         run: ./gradlew :fabric:build :fabric:publish
 
       - name: Retrieve Version
-        id: get_version_name
+        id: get_version
         run: |
           VERSION_NAME=$(./gradlew -q :fabric:printVersion)
           echo "VERSION_NAME=$VERSION_NAME" >> $GITHUB_OUTPUT
 
       - name: Print Version
         run: |
-          echo "Version: ${{ steps.get_version_name.outputs.VERSION_NAME }}"
+          echo "Version: ${{ steps.get_version.outputs.VERSION_NAME }}"
 
       - name: Compile Version Message
+        id: embed
         uses: actions/github-script@v7
         with:
           script: |
             const gh = ${{ toJSON(github) }};
 
-            core.setOutput('EMBED_TITLE', "[" + gh.event.repository.name + ":" + gh.ref_name +"] new build ${{steps.version.outputs.VERSION_NAME}}");
-            core.setOutput('EMBED_URL', "https://github.com/Abes-Hutt/StarAcademyMod/packages/1664003?version=${{steps.version.outputs.VERSION_NAME}}");
+            core.setOutput('EMBED_TITLE', "[" + gh.event.repository.name + ":" + gh.ref_name +"] New Build ${{steps.get_version.outputs.VERSION_NAME}}");
+            core.setOutput('EMBED_URL', "https://github.com/Abes-Hutt/StarAcademyMod/packages/2338941?version=${{steps.get_version.outputs.VERSION_NAME}}");
             core.setOutput('EMBED_AUTHOR_NAME', gh.event.sender.login);
             core.setOutput('EMBED_AUTHOR_ICON_URL', gh.event.sender.avatar_url);
 
@@ -71,7 +72,6 @@ jobs:
               description += "[" + commit.id.slice(0,7) + "](<" + commit.url + ">) " + commit.message + " - " + commit.author.username;
             }
             core.setOutput('EMBED_DESCRIPTION', description);
-        id: embed
 
       - name: Send Discord Notification
         uses: tsickert/discord-webhook@v5.3.0
