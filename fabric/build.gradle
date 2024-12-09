@@ -71,18 +71,16 @@ publishing {
     }
     publications {
         gpr(MavenPublication) {
-            groupId = 'abeshutt'
-            artifactId = 'staracademy'
-            version = project.version
-            artifact tasks.jar.archiveFile
+            groupId = rootProject.maven_group
+            artifactId = rootProject.archives_name
+            version = "mc${rootProject.minecraft_version}-v${rootProject.mod_version}${getBuildNumber()}-${project.name}"
+            from components.java
+
+            artifacts = artifacts.findAll { artifact ->
+                artifact.classifier == null || artifact.classifier.isEmpty()
+            }
         }
     }
-}
-
-tasks.jar {
-    archiveBaseName.set("$rootProject.archives_name")
-    archiveVersion.set("mc${rootProject.minecraft_version}-v${rootProject.mod_version}${getBuildNumber()}")
-    archiveClassifier.set("$project.name")
 }
 
 static def getBuildNumber() {

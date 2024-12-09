@@ -44,7 +44,7 @@ jobs:
       - name: Cleanup Old Artifacts
         uses: actions/delete-package-versions@v5
         with:
-          package-name: 'abeshutt.staracademy'
+          package-name: "abeshutt.StarAcademy"
           min-versions-to-keep: 10
           package-type: 'maven'
 
