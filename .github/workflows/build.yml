@@ -23,6 +23,9 @@ jobs:
           distribution: 'temurin'
           cache: gradle
 
+      - name: Make Gradle Wrapper Executable
+        run: chmod +x ./gradlew
+
       - name: Publish to Github Packages
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
