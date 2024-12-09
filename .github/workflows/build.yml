@@ -85,14 +85,6 @@ jobs:
           embed-author-name: "${{steps.embed.outputs.EMBED_AUTHOR_NAME}}"
           embed-author-icon-url: "${{steps.embed.outputs.EMBED_AUTHOR_ICON_URL}}"
           embed-color: 58633
-        shell:
-        run:
-        id:
-        working-directory:
-        env:
-        if:
-        timeout-minutes:
-        continue-on-error: false
 
       - name: Cleanup Old Artifacts
         uses: actions/delete-package-versions@v5
