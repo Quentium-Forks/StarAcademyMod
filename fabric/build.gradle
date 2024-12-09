@@ -75,10 +75,6 @@ publishing {
             artifactId = rootProject.archives_name
             version = "mc${rootProject.minecraft_version}-v${rootProject.mod_version}${getBuildNumber()}-${project.name}"
             from components.java
-
-            artifacts = artifacts.findAll { artifact ->
-                artifact.classifier == null || artifact.classifier.isEmpty()
-            }
         }
     }
 }

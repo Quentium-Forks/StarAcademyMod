@@ -47,22 +47,3 @@ jobs:
           package-name: "abeshutt.StarAcademy"
           min-versions-to-keep: 10
           package-type: 'maven'
-
-#      - name: Build Fabric Project
-#        run: ./gradlew :fabric:build
-
-#      - name: Filter Non-Normal JARs
-#        run: |
-#          mkdir filtered-libs
-#          find fabric/build/libs -type f -name '*.jar' ! -name '*-dev*' ! -name '*-sources*' -exec cp {} filtered-libs/ \;
-#          find forge/build/libs -type f -name '*.jar' ! -name '*-dev*' ! -name '*-sources*' -exec cp {} filtered-libs/ \;
-#          cd filtered-libs
-#          for file in *.jar; do
-#            mv "$file" "$(echo "$file" | sed -E 's/-(.*-.*-.*)\.jar$/.jar/')"
-#          done
-
-#      - name: Upload Filtered Build Artifacts
-#        uses: actions/upload-artifact@v4
-#        with:
-#          name: final-build
-#          path: filtered-libs/
