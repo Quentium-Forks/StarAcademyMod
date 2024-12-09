@@ -1,0 +1,14 @@
+modLoader = "javafml"
+loaderVersion = "[47,)"
+#issueTrackerURL = ""
+license = "All Rights Reserved"
+
+[[mods]]
+modId = "academy"
+version = "${version}"
+displayName = "Star Academy"
+authors = "KaptainWutax"
+description = '''
+
+'''
+#logoFile = ""

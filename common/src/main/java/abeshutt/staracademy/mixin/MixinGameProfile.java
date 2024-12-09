@@ -1,0 +1,26 @@
+package abeshutt.staracademy.mixin;
+
+import com.mojang.authlib.GameProfile;
+import abeshutt.staracademy.util.ProxyGameProfile;
+import org.spongepowered.asm.mixin.Final;
+import org.spongepowered.asm.mixin.Mixin;
+import org.spongepowered.asm.mixin.Mutable;
+import org.spongepowered.asm.mixin.Shadow;
+
+@Mixin(value = GameProfile.class, remap = false)
+public class MixinGameProfile implements ProxyGameProfile {
+
+    @Shadow @Final @Mutable private String name;
+    @Shadow private boolean legacy;
+
+    @Override
+    public void setName(String name) {
+        this.name = name;
+    }
+
+    @Override
+    public void setLegacy(boolean legacy) {
+        this.legacy = legacy;
+    }
+
+}

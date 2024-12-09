@@ -1,0 +1,25 @@
+package abeshutt.staracademy.mixin.scout;
+
+import net.minecraft.entity.Entity;
+import net.minecraft.entity.player.PlayerEntity;
+import net.minecraft.item.ItemStack;
+import net.minecraft.world.World;
+import org.spongepowered.asm.mixin.Mixin;
+import org.spongepowered.asm.mixin.Shadow;
+import org.spongepowered.asm.mixin.injection.At;
+import org.spongepowered.asm.mixin.injection.Inject;
+import org.spongepowered.asm.mixin.injection.callback.CallbackInfo;
+
+@Mixin(targets = { "pm.c7.scout.item.BaseBagItem" }, remap = false)
+public abstract class MixinBaseBagItem {
+
+    @Shadow protected abstract void updateSlots(PlayerEntity player);
+
+    @Inject(method = { "method_7888", "inventoryTick" }, at = @At("HEAD"), require = 1)
+    public void inventoryTick(ItemStack stack, World world, Entity entity, int slot, boolean selected, CallbackInfo ci) {
+        if(entity instanceof PlayerEntity player) {
+            this.updateSlots(player);
+        }
+    }
+
+}

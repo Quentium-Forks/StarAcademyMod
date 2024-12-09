@@ -1,0 +1,28 @@
+{
+  "schemaVersion": 1,
+  "id": "academy",
+  "version": "${version}",
+  "name": "Star Academy",
+  "description": "",
+  "authors": [
+    "KaptainWutax"
+  ],
+  "contact": {
+    "homepage": ""
+  },
+  "license": "All-Rights-Reserved",
+  "icon": "assets/academy/icon.png",
+  "environment": "*",
+  "entrypoints": {
+    "main": [
+      "abeshutt.staracademy.fabric.StarAcademyFabricMod"
+    ]
+  },
+  "mixins": [
+    "academy-common.mixins.json"
+  ],
+  "depends": {
+  },
+  "suggests": {
+  }
+}
