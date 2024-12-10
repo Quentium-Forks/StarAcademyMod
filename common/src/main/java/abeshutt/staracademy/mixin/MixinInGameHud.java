@@ -24,7 +24,7 @@ public class MixinInGameHud {
         ClientPlayerEntity player = MinecraftClient.getInstance().player;
         if(player == null) return;
         StarterEntry entry = PokemonStarterData.CLIENT.getEntries().get(player.getUuid());
-        if(entry.getGranted() != null) return;
+        if(entry == null || entry.getGranted() != null) return;
 
         Identifier pick = PokemonStarterData.CLIENT.getPick(player.getUuid());
         Species species = pick == null ? null : PokemonSpecies.INSTANCE.getByIdentifier(pick);
