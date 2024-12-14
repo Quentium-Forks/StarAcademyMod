@@ -27,6 +27,7 @@ public class BaseInventory implements Inventory, RecipeInputProvider, INbtSerial
     private int size;
     private DefaultedList<ItemStack> stacks;
     private List<InventoryChangedListener> listeners;
+    private boolean dirty;
 
     public BaseInventory(int size) {
         this.size = size;
@@ -36,6 +37,14 @@ public class BaseInventory implements Inventory, RecipeInputProvider, INbtSerial
     public BaseInventory(ItemStack... items) {
         this.size = items.length;
         this.stacks = DefaultedList.copyOf(ItemStack.EMPTY, items);
+    }
+
+    public boolean isDirty() {
+        return this.dirty;
+    }
+
+    public void setDirty(boolean dirty) {
+        this.dirty = dirty;
     }
 
     public void addListener(InventoryChangedListener listener) {
@@ -163,15 +172,13 @@ public class BaseInventory implements Inventory, RecipeInputProvider, INbtSerial
 
     @Override
     public void markDirty() {
-        if (this.listeners != null) {
-            Iterator var1 = this.listeners.iterator();
+        this.setDirty(true);
 
-            while(var1.hasNext()) {
-                InventoryChangedListener inventoryChangedListener = (InventoryChangedListener)var1.next();
-                inventoryChangedListener.onInventoryChanged(this);
+        if(this.listeners != null) {
+            for(InventoryChangedListener listener : this.listeners) {
+                listener.onInventoryChanged(this);
             }
         }
-
     }
 
     @Override

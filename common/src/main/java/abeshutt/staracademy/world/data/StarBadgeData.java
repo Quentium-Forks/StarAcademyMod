@@ -77,10 +77,15 @@ public class StarBadgeData extends WorldData {
                     changed.add(uuid);
                 }
             }
+
+            if(inventory.isDirty()) {
+                changed.add(uuid);
+                inventory.setDirty(false);
+            }
         });
 
         if(!changed.isEmpty()) {
-            for (UUID uuid : changed) {
+            for(UUID uuid : changed) {
                 ModNetwork.CHANNEL.sendToPlayers(server.getPlayerManager().getPlayerList(),
                         new StarBadgeUpdateS2CPacket(uuid, this.inventories.get(uuid)));
             }

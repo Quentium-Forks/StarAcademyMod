@@ -18,4 +18,9 @@ dependencies {
     modImplementation files("jars/Scout-2.0.4+1.20.1.jar")
     modImplementation files("jars/Terrastorage-1.0.7+1.20-1.20.1.jar")
     modImplementation files("jars/trinkets-3.7.2.jar")
+    modImplementation files("jars/fancymenu_fabric_3.3.2_MC_1.20.1.jar")
+    modImplementation files("jars/numismatic-overhaul-0.2.14+1.20.jar")
+    modImplementation files("jars/konkrete_fabric_1.8.1_MC_1.20.1.jar")
+    modImplementation files("jars/melody_fabric_1.0.4_MC_1.20.1-1.20.4.jar")
+    modImplementation files("jars/owo-lib-0.11.2+1.20.jar")
 }
