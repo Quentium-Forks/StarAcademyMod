@@ -280,7 +280,7 @@ public class BaseInventory implements Inventory, RecipeInputProvider, INbtSerial
             int index = Adapters.INT.readNbt(entry.get("index")).orElse(-1);
             Item item = Adapters.ITEM.readNbt(entry.get("item")).orElse(Items.AIR);
             int count = Adapters.INT.readNbt(entry.get("count")).orElse(1);
-            NbtCompound compound = Adapters.COMPOUND_NBT.readNbt(nbt.get("nbt")).orElse(null);
+            NbtCompound compound = Adapters.COMPOUND_NBT.readNbt(entry.get("nbt")).orElse(null);
 
             ItemStack stack = new ItemStack(item, count);
 
