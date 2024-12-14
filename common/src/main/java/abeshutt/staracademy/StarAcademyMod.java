@@ -42,7 +42,7 @@ public final class StarAcademyMod {
             if(pokemon.getShiny() || pokemon.isLegendary()) {
                 MutableText message = Text.empty()
                     .append(Text.literal("A ").formatted(Formatting.BOLD))
-                    .append(Text.literal(String.join("", prefixes)).formatted(Formatting.BOLD))
+                    .append(Text.literal(String.join(" ", prefixes)).formatted(Formatting.BOLD))
                     .append(event.getEntity().getDisplayName().copy().formatted(Formatting.BOLD))
                     .append(Text.literal(" has spawned near someone!").formatted(Formatting.BOLD));
 
