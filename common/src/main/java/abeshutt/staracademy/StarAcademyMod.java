@@ -30,8 +30,8 @@ public final class StarAcademyMod {
             if(event.getEntity().getPokemon().isLegendary() && event.getEntity().getPokemon().getShiny()) {
                 for(ServerPlayerEntity player : server.getPlayerManager().getPlayerList()) {
                     player.sendMessage(Text.empty()
-                        .append(event.getEntity().getDisplayName())
-                        .append(Text.literal(" has spawned near someone!").formatted(Formatting.GRAY)));
+                        .append(event.getEntity().getDisplayName().copy().formatted(Formatting.BOLD))
+                        .append(Text.literal(" has spawned near someone!").formatted(Formatting.BOLD)));
                 }
             }
 
