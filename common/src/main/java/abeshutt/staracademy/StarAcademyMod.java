@@ -5,14 +5,20 @@ import com.cobblemon.mod.common.Cobblemon;
 import com.cobblemon.mod.common.api.Priority;
 import com.cobblemon.mod.common.api.events.CobblemonEvents;
 import com.cobblemon.mod.common.api.spawning.SpawnCause;
+import com.cobblemon.mod.common.pokemon.Pokemon;
 import kotlin.Unit;
 import net.minecraft.server.MinecraftServer;
 import net.minecraft.server.network.ServerPlayerEntity;
+import net.minecraft.text.MutableText;
 import net.minecraft.text.Text;
 import net.minecraft.util.Formatting;
 import net.minecraft.util.Identifier;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
+
+import java.util.ArrayList;
+import java.util.List;
+import java.util.stream.Collectors;
 
 public final class StarAcademyMod {
 
@@ -26,13 +32,21 @@ public final class StarAcademyMod {
         CobblemonEvents.POKEMON_ENTITY_SPAWN.subscribe(Priority.NORMAL, event -> {
             MinecraftServer server = event.getEntity().getWorld().getServer();
             if(server == null) return Unit.INSTANCE;
+            Pokemon pokemon = event.getEntity().getPokemon();
 
-            if(event.getEntity().getPokemon().isLegendary() && event.getEntity().getPokemon().getShiny()) {
+            List<String> prefixes = new ArrayList<>();
+            if(pokemon.getShiny()) prefixes.add("Shiny");
+            if(pokemon.isLegendary()) prefixes.add("Legendary");
+
+            MutableText message = Text.empty()
+                    .append(Text.literal("A ").formatted(Formatting.BOLD))
+                    .append(Text.literal(String.join("", prefixes)).formatted(Formatting.BOLD))
+                    .append(event.getEntity().getDisplayName().copy().formatted(Formatting.BOLD))
+                    .append(Text.literal(" has spawned near someone!").formatted(Formatting.BOLD));
+
+            if(!prefixes.isEmpty()) {
                 for(ServerPlayerEntity player : server.getPlayerManager().getPlayerList()) {
-                    player.sendMessage(Text.empty()
-                        .append(Text.literal("A ").formatted(Formatting.BOLD))
-                        .append(event.getEntity().getDisplayName().copy().formatted(Formatting.BOLD))
-                        .append(Text.literal(" has spawned near someone!").formatted(Formatting.BOLD)));
+                    player.sendMessage(message);
                 }
             }
 
