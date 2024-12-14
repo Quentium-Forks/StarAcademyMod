@@ -2,6 +2,14 @@ package abeshutt.staracademy;
 
 import abeshutt.staracademy.init.ModRegistries;
 import com.cobblemon.mod.common.Cobblemon;
+import com.cobblemon.mod.common.api.Priority;
+import com.cobblemon.mod.common.api.events.CobblemonEvents;
+import com.cobblemon.mod.common.api.spawning.SpawnCause;
+import kotlin.Unit;
+import net.minecraft.server.MinecraftServer;
+import net.minecraft.server.network.ServerPlayerEntity;
+import net.minecraft.text.Text;
+import net.minecraft.util.Formatting;
 import net.minecraft.util.Identifier;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
@@ -14,6 +22,21 @@ public final class StarAcademyMod {
     public static void init() {
         Cobblemon.INSTANCE.setStarterHandler(new GameStarterHandler());
         ModRegistries.register();
+
+        CobblemonEvents.POKEMON_ENTITY_SPAWN.subscribe(Priority.NORMAL, event -> {
+            MinecraftServer server = event.getEntity().getWorld().getServer();
+            if(server == null) return Unit.INSTANCE;
+
+            if(event.getEntity().getPokemon().isLegendary() && event.getEntity().getPokemon().getShiny()) {
+                for(ServerPlayerEntity player : server.getPlayerManager().getPlayerList()) {
+                    player.sendMessage(Text.empty()
+                        .append(event.getEntity().getDisplayName())
+                        .append(Text.literal(" has spawned near someone!").formatted(Formatting.GRAY)));
+                }
+            }
+
+            return Unit.INSTANCE;
+        });
     }
 
     public static Identifier id(String path) {
