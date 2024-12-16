@@ -109,7 +109,7 @@ public class BooleanAdapter implements ISimpleAdapter<Boolean, NbtElement, JsonE
     public final Optional<Boolean> readJson(JsonElement json) {
         if(json instanceof JsonArray array && array.size() == 1) {
             return this.readJson(array.get(0));
-        } else if(json instanceof JsonPrimitive primitive && !primitive.isBoolean()) {
+        } else if(json instanceof JsonPrimitive primitive && primitive.isBoolean()) {
             try { return Optional.of(primitive.getAsBoolean()); }
             catch(NumberFormatException e) { return Optional.empty(); }
         }

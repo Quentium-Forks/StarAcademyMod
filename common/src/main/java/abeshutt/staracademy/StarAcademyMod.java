@@ -37,12 +37,12 @@ public final class StarAcademyMod {
             List<String> prefixes = new ArrayList<>();
             if(pokemon.getShiny()) prefixes.add("Shiny");
             if(pokemon.isLegendary()) prefixes.add("Legendary");
-            if(!prefixes.isEmpty()) prefixes.add(" ");
 
             if(pokemon.getShiny() || pokemon.isLegendary()) {
                 MutableText message = Text.empty()
                     .append(Text.literal("A ").formatted(Formatting.BOLD))
                     .append(Text.literal(String.join(" ", prefixes)).formatted(Formatting.BOLD))
+                    .append(prefixes.isEmpty() ? Text.empty() : Text.literal(" "))
                     .append(event.getEntity().getDisplayName().copy().formatted(Formatting.BOLD))
                     .append(Text.literal(" has spawned near someone!").formatted(Formatting.BOLD));
 
