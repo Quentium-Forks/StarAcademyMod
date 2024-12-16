@@ -13,6 +13,12 @@ import abeshutt.staracademy.data.item.ItemPredicate;
 import abeshutt.staracademy.data.item.PartialItem;
 import abeshutt.staracademy.data.nbt.PartialCompoundNbt;
 import abeshutt.staracademy.data.tile.*;
+import abeshutt.staracademy.world.random.ChunkRandom;
+import abeshutt.staracademy.world.random.JavaRandom;
+import abeshutt.staracademy.world.random.LcgRandom;
+import abeshutt.staracademy.world.random.RandomSource;
+import abeshutt.staracademy.world.random.lcg.Lcg;
+import abeshutt.staracademy.world.roll.IntRoll;
 import net.minecraft.block.Block;
 import net.minecraft.item.Item;
 import net.minecraft.registry.Registries;
@@ -38,6 +44,7 @@ public class Adapters {
     public static final IntArrayAdapter INT_ARRAY = new IntArrayAdapter(INT, false);
     public static final SegmentedIntAdapter INT_SEGMENTED_3 = new SegmentedIntAdapter(3, false);
     public static final SegmentedIntAdapter INT_SEGMENTED_7 = new SegmentedIntAdapter(7, false);
+    public static final IntRoll.Adapter INT_ROLL = new IntRoll.Adapter();
 
     public static final FloatAdapter FLOAT = new FloatAdapter(false);
 
@@ -109,6 +116,13 @@ public class Adapters {
     public static final RegistryAdapter<Block> BLOCK = new RegistryAdapter<>(() -> Registries.BLOCK, false);
     public static final RegistryAdapter<Item> ITEM = new RegistryAdapter<>(() -> Registries.ITEM, false);
     public static final BlockPosAdapter BLOCK_POS = new BlockPosAdapter(false);
+
+    public static Lcg.Adapter LCG = new Lcg.Adapter(false);
+
+    public static TypeSupplierAdapter<RandomSource> RANDOM = new TypeSupplierAdapter<RandomSource>("type", false)
+            .register("lcg", LcgRandom.class, () -> LcgRandom.of(Lcg.JAVA, 0L))
+            .register("java", JavaRandom.class, () -> JavaRandom.ofInternal(0L))
+            .register("chunk", ChunkRandom.class, ChunkRandom::any);
 
     public static BoundedIntAdapter ofBoundedInt(int bound) {
         return new BoundedIntAdapter(0, bound - 1, false);

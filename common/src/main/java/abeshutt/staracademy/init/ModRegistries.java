@@ -9,6 +9,8 @@ import net.minecraft.block.Block;
 import net.minecraft.block.entity.BlockEntityType;
 import net.minecraft.entity.EntityType;
 import net.minecraft.item.Item;
+import net.minecraft.loot.function.LootFunctionType;
+import net.minecraft.loot.function.LootFunctionTypes;
 import net.minecraft.registry.RegistryKeys;
 import net.minecraft.screen.ScreenHandlerType;
 import net.minecraft.util.Identifier;
@@ -22,6 +24,7 @@ public class ModRegistries {
     public static DeferredRegister<EntityType<?>> ENTITIES = DeferredRegister.create(StarAcademyMod.ID, RegistryKeys.ENTITY_TYPE);
     public static DeferredRegister<BlockEntityType<?>> BLOCK_ENTITY_TYPES = DeferredRegister.create(StarAcademyMod.ID, RegistryKeys.BLOCK_ENTITY_TYPE);
     public static DeferredRegister<ScreenHandlerType<?>> SCREEN_HANDLERS = DeferredRegister.create(StarAcademyMod.ID, RegistryKeys.SCREEN_HANDLER);
+    public static DeferredRegister<LootFunctionType> LOOT_FUNCTION_TYPES = DeferredRegister.create(StarAcademyMod.ID, RegistryKeys.LOOT_FUNCTION_TYPE);
 
     public static void register() {
         ModItems.register();
@@ -30,12 +33,14 @@ public class ModRegistries {
         ModEntities.register();
         ModScreenHandlers.register();
         ModNetwork.register();
+        ModLootFunctionTypes.register();
 
         BLOCKS.register();
         ITEMS.register();
         ENTITIES.register();
         BLOCK_ENTITY_TYPES.register();
         SCREEN_HANDLERS.register();
+        LOOT_FUNCTION_TYPES.register();
 
         if(Platform.getEnvironment() == Env.CLIENT) {
             ModScreens.register();
