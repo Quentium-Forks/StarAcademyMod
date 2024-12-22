@@ -33,7 +33,7 @@ public abstract class MixinPlayerScreenHandler extends AbstractRecipeScreenHandl
 
     @Inject(method = "<init>", at = @At("RETURN"))
     public void ctor(PlayerInventory inventory, boolean onServer, PlayerEntity owner, CallbackInfo ci) {
-        if(onServer) {
+        if(onServer && owner.getServer() != null) {
             StarBadgeData data = ModWorldData.STAR_BADGE.getGlobal(owner.getServer());
             this.starBadges = new StarBadgeScreenHandler(this, data.getOrCreate(owner));
         } else {
