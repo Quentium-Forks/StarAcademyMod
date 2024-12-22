@@ -4,6 +4,7 @@ import abeshutt.staracademy.data.adapter.Adapters;
 import abeshutt.staracademy.data.entity.EntityPredicate;
 import abeshutt.staracademy.data.item.ItemPredicate;
 import abeshutt.staracademy.data.tile.TilePredicate;
+import abeshutt.staracademy.world.roll.IntRoll;
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
 
@@ -22,6 +23,7 @@ public abstract class Config {
             .registerTypeHierarchyAdapter(TilePredicate.class, Adapters.TILE_PREDICATE)
             .registerTypeHierarchyAdapter(EntityPredicate.class, Adapters.ENTITY_PREDICATE)
             .registerTypeHierarchyAdapter(ItemPredicate.class, Adapters.ITEM_PREDICATE)
+            .registerTypeHierarchyAdapter(IntRoll.class, Adapters.INT_ROLL)
             .create();
 
     public abstract void write() throws IOException;

@@ -1,9 +1,6 @@
 package abeshutt.staracademy.init;
 
-import abeshutt.staracademy.config.EntityGroupsConfig;
-import abeshutt.staracademy.config.ItemGroupsConfig;
-import abeshutt.staracademy.config.StarterRaffleConfig;
-import abeshutt.staracademy.config.TileGroupsConfig;
+import abeshutt.staracademy.config.*;
 import dev.architectury.event.events.common.LifecycleEvent;
 
 import java.util.ArrayList;
@@ -18,9 +15,11 @@ public class ModConfigs extends ModRegistries {
     public static ItemGroupsConfig ITEM_GROUPS;
 
     public static StarterRaffleConfig STARTER_RAFFLE;
+    public static PokemonSpawnConfig POKEMON_SPAWN;
 
     public static void register(boolean initialization) {
         STARTER_RAFFLE = new StarterRaffleConfig().read();
+        POKEMON_SPAWN = new PokemonSpawnConfig().read();
 
         if(!initialization) {
             POST_LOAD.forEach(Runnable::run);
