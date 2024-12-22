@@ -1,11 +1,11 @@
 package abeshutt.staracademy.data.adapter.number;
 
+import abeshutt.staracademy.data.bit.BitBuffer;
 import com.google.gson.JsonArray;
 import com.google.gson.JsonElement;
 import com.google.gson.JsonObject;
 import com.google.gson.JsonPrimitive;
 import io.netty.buffer.ByteBuf;
-import abeshutt.staracademy.data.bit.BitBuffer;
 import net.minecraft.nbt.AbstractNbtNumber;
 import net.minecraft.nbt.NbtElement;
 import net.minecraft.nbt.NbtList;

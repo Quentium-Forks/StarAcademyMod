@@ -1,8 +1,5 @@
 package abeshutt.staracademy.data.nbt;
 
-import com.google.gson.JsonElement;
-import com.mojang.brigadier.StringReader;
-import com.mojang.brigadier.exceptions.CommandSyntaxException;
 import abeshutt.staracademy.data.adapter.Adapters;
 import abeshutt.staracademy.data.adapter.ISimpleAdapter;
 import abeshutt.staracademy.data.entity.EntityPlacement;
@@ -10,6 +7,9 @@ import abeshutt.staracademy.data.item.ItemPlacement;
 import abeshutt.staracademy.data.item.PartialItem;
 import abeshutt.staracademy.data.tile.PartialBlockState;
 import abeshutt.staracademy.data.tile.TilePlacement;
+import com.google.gson.JsonElement;
+import com.mojang.brigadier.StringReader;
+import com.mojang.brigadier.exceptions.CommandSyntaxException;
 import net.minecraft.block.entity.BlockEntity;
 import net.minecraft.entity.Entity;
 import net.minecraft.entity.EntityType;

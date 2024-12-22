@@ -1,11 +1,11 @@
 package abeshutt.staracademy.config;
 
-import com.google.gson.Gson;
-import com.google.gson.GsonBuilder;
 import abeshutt.staracademy.data.adapter.Adapters;
 import abeshutt.staracademy.data.entity.EntityPredicate;
 import abeshutt.staracademy.data.item.ItemPredicate;
 import abeshutt.staracademy.data.tile.TilePredicate;
+import com.google.gson.Gson;
+import com.google.gson.GsonBuilder;
 
 import java.io.FileNotFoundException;
 import java.io.FileReader;

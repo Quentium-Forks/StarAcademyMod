@@ -1,7 +1,7 @@
 package abeshutt.staracademy.data.adapter.number;
 
-import io.netty.buffer.ByteBuf;
 import abeshutt.staracademy.data.bit.BitBuffer;
+import io.netty.buffer.ByteBuf;
 import net.minecraft.nbt.NbtElement;
 
 import java.io.DataInput;

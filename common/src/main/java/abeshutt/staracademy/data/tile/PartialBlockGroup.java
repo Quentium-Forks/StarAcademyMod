@@ -1,9 +1,9 @@
 package abeshutt.staracademy.data.tile;
 
-import com.mojang.brigadier.StringReader;
-import com.mojang.brigadier.exceptions.CommandSyntaxException;
 import abeshutt.staracademy.data.nbt.PartialCompoundNbt;
 import abeshutt.staracademy.init.ModConfigs;
+import com.mojang.brigadier.StringReader;
+import com.mojang.brigadier.exceptions.CommandSyntaxException;
 import net.minecraft.util.Identifier;
 import net.minecraft.util.InvalidIdentifierException;
 import net.minecraft.util.math.BlockPos;

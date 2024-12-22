@@ -1,9 +1,9 @@
 package abeshutt.staracademy.world;
 
-import com.google.gson.JsonObject;
 import abeshutt.staracademy.data.adapter.Adapters;
 import abeshutt.staracademy.data.bit.BitBuffer;
 import abeshutt.staracademy.data.serializable.ISerializable;
+import com.google.gson.JsonObject;
 import net.minecraft.nbt.NbtCompound;
 import net.minecraft.util.Identifier;
 

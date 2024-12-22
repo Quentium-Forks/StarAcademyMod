@@ -1,7 +1,5 @@
 package abeshutt.staracademy.world.data;
 
-import dev.architectury.event.events.common.PlayerEvent;
-import dev.architectury.event.events.common.TickEvent;
 import abeshutt.staracademy.init.ModItems;
 import abeshutt.staracademy.init.ModNetwork;
 import abeshutt.staracademy.init.ModWorldData;
@@ -9,6 +7,8 @@ import abeshutt.staracademy.item.StarBadgeItem;
 import abeshutt.staracademy.net.StarBadgeUpdateS2CPacket;
 import abeshutt.staracademy.world.StarOwnership;
 import abeshutt.staracademy.world.inventory.BaseInventory;
+import dev.architectury.event.events.common.PlayerEvent;
+import dev.architectury.event.events.common.TickEvent;
 import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.NbtCompound;

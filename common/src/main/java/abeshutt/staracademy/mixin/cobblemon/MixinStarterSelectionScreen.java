@@ -1,14 +1,14 @@
 package abeshutt.staracademy.mixin.cobblemon;
 
+import abeshutt.staracademy.util.ProxySelectionButton;
+import abeshutt.staracademy.util.ProxySelectionScreen;
+import abeshutt.staracademy.world.StarterEntry;
+import abeshutt.staracademy.world.data.PokemonStarterData;
 import com.cobblemon.mod.common.client.gui.startselection.StarterSelectionScreen;
 import com.cobblemon.mod.common.client.gui.startselection.widgets.CategoryList;
 import com.cobblemon.mod.common.client.gui.startselection.widgets.preview.SelectionButton;
 import com.cobblemon.mod.common.config.starter.RenderableStarterCategory;
 import com.cobblemon.mod.common.pokemon.RenderablePokemon;
-import abeshutt.staracademy.util.ProxySelectionButton;
-import abeshutt.staracademy.util.ProxySelectionScreen;
-import abeshutt.staracademy.world.StarterEntry;
-import abeshutt.staracademy.world.data.PokemonStarterData;
 import net.minecraft.client.MinecraftClient;
 import net.minecraft.client.gui.DrawContext;
 import net.minecraft.client.gui.Element;

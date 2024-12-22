@@ -1,5 +1,8 @@
 package abeshutt.staracademy;
 
+import abeshutt.staracademy.init.ModWorldData;
+import abeshutt.staracademy.world.StarterEntry;
+import abeshutt.staracademy.world.data.PokemonStarterData;
 import com.cobblemon.mod.common.Cobblemon;
 import com.cobblemon.mod.common.api.pokemon.PokemonProperties;
 import com.cobblemon.mod.common.api.pokemon.PokemonSpecies;
@@ -9,9 +12,6 @@ import com.cobblemon.mod.common.pokemon.Species;
 import com.cobblemon.mod.common.starter.CobblemonStarterHandler;
 import com.cobblemon.mod.common.util.LocalizationUtilsKt;
 import com.cobblemon.mod.common.util.ResourceLocationExtensionsKt;
-import abeshutt.staracademy.init.ModWorldData;
-import abeshutt.staracademy.world.StarterEntry;
-import abeshutt.staracademy.world.data.PokemonStarterData;
 import net.minecraft.server.network.ServerPlayerEntity;
 import net.minecraft.util.Formatting;
 import net.minecraft.util.Identifier;

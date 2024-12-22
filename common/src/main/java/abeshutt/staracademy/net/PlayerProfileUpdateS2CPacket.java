@@ -1,9 +1,9 @@
 package abeshutt.staracademy.net;
 
-import com.mojang.authlib.GameProfile;
 import abeshutt.staracademy.data.adapter.Adapters;
 import abeshutt.staracademy.data.bit.BitBuffer;
 import abeshutt.staracademy.world.data.PlayerProfileData;
+import com.mojang.authlib.GameProfile;
 import net.minecraft.client.network.ClientPlayNetworkHandler;
 
 import java.util.HashMap;

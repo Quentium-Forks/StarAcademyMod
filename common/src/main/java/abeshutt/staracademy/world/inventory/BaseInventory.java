@@ -1,8 +1,8 @@
 package abeshutt.staracademy.world.inventory;
 
-import com.google.common.collect.Lists;
 import abeshutt.staracademy.data.adapter.Adapters;
 import abeshutt.staracademy.data.serializable.INbtSerializable;
+import com.google.common.collect.Lists;
 import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.inventory.Inventories;
 import net.minecraft.inventory.Inventory;

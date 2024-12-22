@@ -1,12 +1,12 @@
 package abeshutt.staracademy.item;
 
-import com.mojang.authlib.GameProfile;
-import dev.architectury.platform.Platform;
 import abeshutt.staracademy.entity.StarBadgeEntity;
 import abeshutt.staracademy.util.ClientScheduler;
 import abeshutt.staracademy.util.ColorBlender;
 import abeshutt.staracademy.world.StarOwnership;
 import abeshutt.staracademy.world.data.PlayerProfileData;
+import com.mojang.authlib.GameProfile;
+import dev.architectury.platform.Platform;
 import net.fabricmc.api.EnvType;
 import net.minecraft.client.MinecraftClient;
 import net.minecraft.client.item.TooltipContext;

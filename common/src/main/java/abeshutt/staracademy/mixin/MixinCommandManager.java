@@ -1,7 +1,7 @@
 package abeshutt.staracademy.mixin;
 
-import com.mojang.brigadier.CommandDispatcher;
 import abeshutt.staracademy.init.ModCommands;
+import com.mojang.brigadier.CommandDispatcher;
 import net.minecraft.command.CommandRegistryAccess;
 import net.minecraft.server.command.CommandManager;
 import net.minecraft.server.command.ServerCommandSource;

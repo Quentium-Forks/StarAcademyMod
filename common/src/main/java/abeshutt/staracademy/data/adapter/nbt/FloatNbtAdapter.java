@@ -1,9 +1,9 @@
 package abeshutt.staracademy.data.adapter.nbt;
 
-import com.google.gson.JsonElement;
-import io.netty.buffer.ByteBuf;
 import abeshutt.staracademy.data.adapter.Adapters;
 import abeshutt.staracademy.data.bit.BitBuffer;
+import com.google.gson.JsonElement;
+import io.netty.buffer.ByteBuf;
 import net.minecraft.nbt.NbtElement;
 import net.minecraft.nbt.NbtFloat;
 

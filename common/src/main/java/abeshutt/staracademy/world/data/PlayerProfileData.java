@@ -1,13 +1,13 @@
 package abeshutt.staracademy.world.data;
 
-import com.mojang.authlib.GameProfile;
-import dev.architectury.event.events.common.PlayerEvent;
-import dev.architectury.event.events.common.TickEvent;
 import abeshutt.staracademy.data.adapter.Adapters;
 import abeshutt.staracademy.init.ModNetwork;
 import abeshutt.staracademy.init.ModWorldData;
 import abeshutt.staracademy.net.PlayerProfileUpdateS2CPacket;
 import abeshutt.staracademy.util.ProxyGameProfile;
+import com.mojang.authlib.GameProfile;
+import dev.architectury.event.events.common.PlayerEvent;
+import dev.architectury.event.events.common.TickEvent;
 import net.minecraft.nbt.NbtCompound;
 import net.minecraft.server.MinecraftServer;
 import net.minecraft.server.network.ServerPlayerEntity;

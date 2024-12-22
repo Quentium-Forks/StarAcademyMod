@@ -1,11 +1,11 @@
 package abeshutt.staracademy.data.adapter;
 
+import abeshutt.staracademy.data.bit.BitBuffer;
 import com.google.gson.JsonDeserializationContext;
 import com.google.gson.JsonElement;
 import com.google.gson.JsonNull;
 import com.google.gson.JsonSerializationContext;
 import io.netty.buffer.ByteBuf;
-import abeshutt.staracademy.data.bit.BitBuffer;
 import net.minecraft.nbt.NbtElement;
 
 import java.io.DataInput;

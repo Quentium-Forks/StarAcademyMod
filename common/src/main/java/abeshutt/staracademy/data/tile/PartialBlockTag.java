@@ -1,8 +1,8 @@
 package abeshutt.staracademy.data.tile;
 
+import abeshutt.staracademy.data.nbt.PartialCompoundNbt;
 import com.mojang.brigadier.StringReader;
 import com.mojang.brigadier.exceptions.CommandSyntaxException;
-import abeshutt.staracademy.data.nbt.PartialCompoundNbt;
 import net.minecraft.registry.Registries;
 import net.minecraft.util.Identifier;
 import net.minecraft.util.InvalidIdentifierException;

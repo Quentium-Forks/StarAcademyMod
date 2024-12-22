@@ -1,9 +1,9 @@
 package abeshutt.staracademy.config;
 
-import com.google.gson.annotations.Expose;
 import abeshutt.staracademy.data.entity.EntityPredicate;
 import abeshutt.staracademy.data.entity.PartialEntity;
 import abeshutt.staracademy.data.nbt.PartialCompoundNbt;
+import com.google.gson.annotations.Expose;
 import net.minecraft.entity.Entity;
 import net.minecraft.nbt.NbtCompound;
 import net.minecraft.util.Identifier;

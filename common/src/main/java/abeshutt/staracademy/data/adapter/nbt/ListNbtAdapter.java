@@ -1,13 +1,13 @@
 package abeshutt.staracademy.data.adapter.nbt;
 
+import abeshutt.staracademy.data.adapter.Adapters;
+import abeshutt.staracademy.data.bit.BitBuffer;
 import com.google.gson.JsonArray;
 import com.google.gson.JsonElement;
 import com.google.gson.JsonPrimitive;
 import io.netty.buffer.ByteBuf;
 import it.unimi.dsi.fastutil.objects.Object2IntMap;
 import it.unimi.dsi.fastutil.objects.Object2IntOpenHashMap;
-import abeshutt.staracademy.data.adapter.Adapters;
-import abeshutt.staracademy.data.bit.BitBuffer;
 import net.minecraft.nbt.NbtElement;
 import net.minecraft.nbt.NbtList;
 

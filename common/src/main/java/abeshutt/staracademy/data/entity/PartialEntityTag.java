@@ -1,8 +1,8 @@
 package abeshutt.staracademy.data.entity;
 
+import abeshutt.staracademy.data.nbt.PartialCompoundNbt;
 import com.mojang.brigadier.StringReader;
 import com.mojang.brigadier.exceptions.CommandSyntaxException;
-import abeshutt.staracademy.data.nbt.PartialCompoundNbt;
 import net.minecraft.entity.Entity;
 import net.minecraft.entity.EntityType;
 import net.minecraft.nbt.NbtElement;

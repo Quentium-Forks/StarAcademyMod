@@ -1,12 +1,12 @@
 package abeshutt.staracademy.data.adapter.util;
 
+import abeshutt.staracademy.data.adapter.Adapters;
+import abeshutt.staracademy.data.adapter.ISimpleAdapter;
+import abeshutt.staracademy.data.bit.BitBuffer;
 import com.google.gson.JsonElement;
 import com.google.gson.JsonObject;
 import com.google.gson.JsonPrimitive;
 import io.netty.buffer.ByteBuf;
-import abeshutt.staracademy.data.adapter.Adapters;
-import abeshutt.staracademy.data.adapter.ISimpleAdapter;
-import abeshutt.staracademy.data.bit.BitBuffer;
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
 import net.minecraft.item.Items;

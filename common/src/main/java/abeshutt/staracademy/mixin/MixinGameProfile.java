@@ -1,7 +1,7 @@
 package abeshutt.staracademy.mixin;
 
-import com.mojang.authlib.GameProfile;
 import abeshutt.staracademy.util.ProxyGameProfile;
+import com.mojang.authlib.GameProfile;
 import org.spongepowered.asm.mixin.Final;
 import org.spongepowered.asm.mixin.Mixin;
 import org.spongepowered.asm.mixin.Mutable;

@@ -1,10 +1,10 @@
 package abeshutt.staracademy.config;
 
-import com.google.gson.annotations.Expose;
 import abeshutt.staracademy.data.item.ItemPredicate;
 import abeshutt.staracademy.data.item.PartialItem;
 import abeshutt.staracademy.data.item.PartialStack;
 import abeshutt.staracademy.data.nbt.PartialCompoundNbt;
+import com.google.gson.annotations.Expose;
 import net.minecraft.util.Identifier;
 
 import java.util.HashSet;

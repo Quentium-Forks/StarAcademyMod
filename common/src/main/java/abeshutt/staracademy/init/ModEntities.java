@@ -1,9 +1,9 @@
 package abeshutt.staracademy.init;
 
+import abeshutt.staracademy.entity.StarBadgeEntity;
 import dev.architectury.event.events.client.ClientLifecycleEvent;
 import dev.architectury.platform.Platform;
 import dev.architectury.registry.registries.RegistrySupplier;
-import abeshutt.staracademy.entity.StarBadgeEntity;
 import net.fabricmc.api.EnvType;
 import net.minecraft.client.render.entity.EntityRenderers;
 import net.minecraft.client.render.entity.FlyingItemEntityRenderer;

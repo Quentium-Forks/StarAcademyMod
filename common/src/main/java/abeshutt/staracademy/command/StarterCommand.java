@@ -1,10 +1,10 @@
 package abeshutt.staracademy.command;
 
-import com.mojang.brigadier.CommandDispatcher;
-import com.mojang.brigadier.context.CommandContext;
 import abeshutt.staracademy.StarAcademyMod;
 import abeshutt.staracademy.init.ModWorldData;
 import abeshutt.staracademy.world.data.PokemonStarterData;
+import com.mojang.brigadier.CommandDispatcher;
+import com.mojang.brigadier.context.CommandContext;
 import net.minecraft.command.CommandRegistryAccess;
 import net.minecraft.command.argument.TimeArgumentType;
 import net.minecraft.server.MinecraftServer;

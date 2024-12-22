@@ -1,9 +1,9 @@
 package abeshutt.staracademy.net;
 
-import dev.architectury.platform.Platform;
 import abeshutt.staracademy.StarAcademyMod;
 import abeshutt.staracademy.data.bit.ArrayBitBuffer;
 import abeshutt.staracademy.data.serializable.IBitSerializable;
+import dev.architectury.platform.Platform;
 import net.fabricmc.api.EnvType;
 import net.fabricmc.api.Environment;
 import net.minecraft.client.MinecraftClient;

@@ -1,14 +1,14 @@
 package abeshutt.staracademy.init;
 
-import dev.architectury.networking.NetworkChannel;
-import dev.architectury.networking.NetworkManager;
-import dev.architectury.platform.Platform;
-import dev.architectury.utils.Env;
 import abeshutt.staracademy.StarAcademyMod;
 import abeshutt.staracademy.net.ModPacket;
 import abeshutt.staracademy.net.PlayerProfileUpdateS2CPacket;
 import abeshutt.staracademy.net.StarBadgeUpdateS2CPacket;
 import abeshutt.staracademy.net.StarterRaffleUpdateS2CPacket;
+import dev.architectury.networking.NetworkChannel;
+import dev.architectury.networking.NetworkManager;
+import dev.architectury.platform.Platform;
+import dev.architectury.utils.Env;
 import net.minecraft.client.MinecraftClient;
 import net.minecraft.client.network.ClientPlayNetworkHandler;
 import net.minecraft.network.listener.PacketListener;

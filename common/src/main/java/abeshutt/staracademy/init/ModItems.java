@@ -1,7 +1,7 @@
 package abeshutt.staracademy.init;
 
-import dev.architectury.registry.registries.RegistrySupplier;
 import abeshutt.staracademy.item.StarBadgeItem;
+import dev.architectury.registry.registries.RegistrySupplier;
 import net.minecraft.item.Item;
 import net.minecraft.util.Identifier;
 

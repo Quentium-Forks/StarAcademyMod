@@ -1,10 +1,10 @@
 package abeshutt.staracademy.init;
 
-import dev.architectury.event.events.common.LifecycleEvent;
 import abeshutt.staracademy.config.EntityGroupsConfig;
 import abeshutt.staracademy.config.ItemGroupsConfig;
 import abeshutt.staracademy.config.StarterRaffleConfig;
 import abeshutt.staracademy.config.TileGroupsConfig;
+import dev.architectury.event.events.common.LifecycleEvent;
 
 import java.util.ArrayList;
 import java.util.List;

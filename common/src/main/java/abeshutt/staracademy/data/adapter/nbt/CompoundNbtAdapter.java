@@ -1,12 +1,12 @@
 package abeshutt.staracademy.data.adapter.nbt;
 
+import abeshutt.staracademy.data.adapter.Adapters;
+import abeshutt.staracademy.data.bit.BitBuffer;
 import com.google.gson.JsonElement;
 import com.google.gson.JsonObject;
 import com.google.gson.JsonPrimitive;
 import com.mojang.brigadier.exceptions.CommandSyntaxException;
 import io.netty.buffer.ByteBuf;
-import abeshutt.staracademy.data.adapter.Adapters;
-import abeshutt.staracademy.data.bit.BitBuffer;
 import net.minecraft.nbt.NbtCompound;
 import net.minecraft.nbt.NbtElement;
 import net.minecraft.nbt.StringNbtReader;

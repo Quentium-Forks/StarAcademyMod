@@ -1,15 +1,15 @@
 package abeshutt.staracademy.screen;
 
+import abeshutt.staracademy.StarAcademyMod;
+import abeshutt.staracademy.util.ClientScheduler;
+import abeshutt.staracademy.world.StarterEntry;
+import abeshutt.staracademy.world.data.PokemonStarterData;
 import com.cobblemon.mod.common.api.pokemon.PokemonSpecies;
 import com.cobblemon.mod.common.client.gui.trade.ModelWidget;
 import com.cobblemon.mod.common.client.keybind.CobblemonKeyBinds;
 import com.cobblemon.mod.common.pokemon.RenderablePokemon;
 import com.cobblemon.mod.common.pokemon.Species;
 import dev.architectury.event.events.client.ClientTickEvent;
-import abeshutt.staracademy.StarAcademyMod;
-import abeshutt.staracademy.util.ClientScheduler;
-import abeshutt.staracademy.world.StarterEntry;
-import abeshutt.staracademy.world.data.PokemonStarterData;
 import net.minecraft.client.MinecraftClient;
 import net.minecraft.client.font.TextRenderer;
 import net.minecraft.client.gui.DrawContext;

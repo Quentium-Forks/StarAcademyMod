@@ -1,9 +1,9 @@
 package abeshutt.staracademy.init;
 
-import com.mojang.brigadier.CommandDispatcher;
 import abeshutt.staracademy.command.Command;
 import abeshutt.staracademy.command.ReloadCommand;
 import abeshutt.staracademy.command.StarterCommand;
+import com.mojang.brigadier.CommandDispatcher;
 import net.minecraft.command.CommandRegistryAccess;
 import net.minecraft.server.command.CommandManager;
 import net.minecraft.server.command.ServerCommandSource;
