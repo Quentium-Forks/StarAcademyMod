@@ -24,7 +24,7 @@ public class StarBadgeWidget extends ButtonWidget {
     protected void renderButton(DrawContext context, int mouseX, int mouseY, float delta) {
         context.getMatrices().push();
         context.getMatrices().translate(this.getX(), this.getY(), 300);
-        context.drawTexture(TEXTURE, 0, 0, this.hovered ? 13.0F : 0.0F, 32.0F, 13, 13, 256, 256);
+        context.drawTexture(TEXTURE, 0, 0, this.hovered ? 13.0F : 0.0F, 51.0F, 13, 13, 256, 256);
         context.getMatrices().pop();
 
         if(this.hovered) {
@@ -34,8 +34,8 @@ public class StarBadgeWidget extends ButtonWidget {
 
         ProxyStarBadges.of(this.screen.getScreenHandler()).ifPresent(proxy -> {
             if(proxy.getHandler().isEnabled()) {
-                context.drawTexture(TEXTURE, this.screen.x - 9, this.screen.y - 34, 0, 0,
-                        194, 32, 256, 256);
+                context.drawTexture(TEXTURE, this.screen.x - 5, this.screen.y - 42, 0, 0,
+                        194, 39, 256, 256);
             }
         });
     }
