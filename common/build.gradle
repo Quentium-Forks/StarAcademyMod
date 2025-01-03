@@ -25,5 +25,5 @@ dependencies {
     modImplementation files("jars/owo-lib-0.11.2+1.20.jar")
     modImplementation files("jars/solara_dimension-0.1A-fabric-1.20.1.jar")
     modImplementation files("jars/Corgilib-Fabric-1.20.1-4.0.3.3.jar")
-    modImplementation files("jars/Enhanced-Celestials-Fabric-1.20.1-5.0.2.3.jar")
+    modImplementation files("jars/Enhanced-Celestials-Fabric-1.20.1-5.0.1.0.jar")
 }
