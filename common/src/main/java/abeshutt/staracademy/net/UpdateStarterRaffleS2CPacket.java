@@ -9,7 +9,7 @@ import net.minecraft.util.Identifier;
 
 import java.util.*;
 
-public class StarterRaffleUpdateS2CPacket extends ModPacket<ClientPlayNetworkHandler> {
+public class UpdateStarterRaffleS2CPacket extends ModPacket<ClientPlayNetworkHandler> {
 
     private Set<Identifier> starters;
     private Map<UUID, StarterEntry> entries;
@@ -18,11 +18,11 @@ public class StarterRaffleUpdateS2CPacket extends ModPacket<ClientPlayNetworkHan
     private boolean paused;
     private int selectionCooldown;
 
-    public StarterRaffleUpdateS2CPacket() {
+    public UpdateStarterRaffleS2CPacket() {
 
     }
 
-    public StarterRaffleUpdateS2CPacket(Set<Identifier> starters, Map<UUID, StarterEntry> entries, long timeInterval,
+    public UpdateStarterRaffleS2CPacket(Set<Identifier> starters, Map<UUID, StarterEntry> entries, long timeInterval,
                                         long timeLeft, boolean paused, int selectionCooldown) {
         this.starters = starters;
         this.entries = entries;

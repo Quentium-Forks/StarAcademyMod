@@ -1,10 +1,7 @@
 package abeshutt.staracademy.init;
 
 import abeshutt.staracademy.StarAcademyMod;
-import abeshutt.staracademy.net.ModPacket;
-import abeshutt.staracademy.net.PlayerProfileUpdateS2CPacket;
-import abeshutt.staracademy.net.StarBadgeUpdateS2CPacket;
-import abeshutt.staracademy.net.StarterRaffleUpdateS2CPacket;
+import abeshutt.staracademy.net.*;
 import dev.architectury.networking.NetworkChannel;
 import dev.architectury.networking.NetworkManager;
 import dev.architectury.platform.Platform;
@@ -35,9 +32,11 @@ public class ModNetwork extends ModRegistries {
         public static final Function<NetworkManager.PacketContext, ServerPlayNetworkHandler> SERVER_PLAY = context -> ((ServerPlayerEntity)context.getPlayer()).networkHandler;
 
         public static void register() {
-            ModNetwork.register(PlayerProfileUpdateS2CPacket.class, PlayerProfileUpdateS2CPacket::new, CLIENT_PLAY);
-            ModNetwork.register(StarBadgeUpdateS2CPacket.class, StarBadgeUpdateS2CPacket::new, CLIENT_PLAY);
-            ModNetwork.register(StarterRaffleUpdateS2CPacket.class, StarterRaffleUpdateS2CPacket::new, CLIENT_PLAY);
+            ModNetwork.register(UpdatePlayerProfileS2CPacket.class, UpdatePlayerProfileS2CPacket::new, CLIENT_PLAY);
+            ModNetwork.register(UpdateStarBadgeS2CPacket.class, UpdateStarBadgeS2CPacket::new, CLIENT_PLAY);
+            ModNetwork.register(UpdateStarterRaffleS2CPacket.class, UpdateStarterRaffleS2CPacket::new, CLIENT_PLAY);
+            ModNetwork.register(UpdateSafariS2CPacket.class, UpdateSafariS2CPacket::new, CLIENT_PLAY);
+            ModNetwork.register(UpdateBetterStructureBlockC2SPacket.class, UpdateBetterStructureBlockC2SPacket::new, SERVER_PLAY);
         }
     }
 
@@ -45,9 +44,11 @@ public class ModNetwork extends ModRegistries {
         public static final Function<NetworkManager.PacketContext, ServerPlayNetworkHandler> SERVER_PLAY = context -> ((ServerPlayerEntity)context.getPlayer()).networkHandler;
 
         public static void register() {
-            ModNetwork.register(PlayerProfileUpdateS2CPacket.class, PlayerProfileUpdateS2CPacket::new, null);
-            ModNetwork.register(StarBadgeUpdateS2CPacket.class, StarBadgeUpdateS2CPacket::new, null);
-            ModNetwork.register(StarterRaffleUpdateS2CPacket.class, StarterRaffleUpdateS2CPacket::new, null);
+            ModNetwork.register(UpdatePlayerProfileS2CPacket.class, UpdatePlayerProfileS2CPacket::new, null);
+            ModNetwork.register(UpdateStarBadgeS2CPacket.class, UpdateStarBadgeS2CPacket::new, null);
+            ModNetwork.register(UpdateStarterRaffleS2CPacket.class, UpdateStarterRaffleS2CPacket::new, null);
+            ModNetwork.register(UpdateSafariS2CPacket.class, UpdateSafariS2CPacket::new, null);
+            ModNetwork.register(UpdateBetterStructureBlockC2SPacket.class, UpdateBetterStructureBlockC2SPacket::new, SERVER_PLAY);
         }
     }
 

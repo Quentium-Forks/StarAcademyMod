@@ -1,0 +1,18 @@
+{
+  "type": "academy:safari",
+  "generator": {
+    "type": "academy:safari",
+    "settings": {
+      "biome": "solara_dimension:solara",
+      "lakes": false,
+      "features": false,
+      "layers": [
+        {
+          "height": 0,
+          "block": "minecraft:air"
+        }
+      ],
+      "structure_overrides": []
+    }
+  }
+}

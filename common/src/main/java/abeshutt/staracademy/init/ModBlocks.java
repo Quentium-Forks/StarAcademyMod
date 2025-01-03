@@ -1,13 +1,19 @@
 package abeshutt.staracademy.init;
 
+import abeshutt.staracademy.block.BetterStructureBlock;
+import abeshutt.staracademy.block.SafariPortalBlock;
+import abeshutt.staracademy.block.entity.BetterStructureBlockEntity;
+import abeshutt.staracademy.block.entity.SafariPortalBlockEntity;
 import com.mojang.datafixers.types.Type;
 import dev.architectury.registry.registries.RegistrySupplier;
 import net.minecraft.block.Block;
+import net.minecraft.block.Blocks;
 import net.minecraft.block.entity.BlockEntity;
 import net.minecraft.block.entity.BlockEntityType;
 import net.minecraft.block.entity.BlockEntityType.BlockEntityFactory;
 import net.minecraft.datafixer.TypeReferences;
 import net.minecraft.item.BlockItem;
+import net.minecraft.item.Item;
 import net.minecraft.util.Identifier;
 import net.minecraft.util.Util;
 
@@ -16,13 +22,28 @@ import java.util.function.Supplier;
 
 public class ModBlocks extends ModRegistries {
 
-    public static void register() {
+    public static RegistrySupplier<Block> ERROR;
+    public static RegistrySupplier<BetterStructureBlock> STRUCTURE_BLOCK;
+    public static RegistrySupplier<SafariPortalBlock> SAFARI_PORTAL;
 
+    public static void register() {
+        ERROR = register("error", () -> new Block(Block.Settings.copy(Blocks.SLIME_BLOCK)),
+                block -> new BlockItem(block.get(), new Item.Settings()));
+
+        STRUCTURE_BLOCK = register("structure_block", BetterStructureBlock::new,
+                block -> new BlockItem(block.get(), new Item.Settings()));
+
+        SAFARI_PORTAL = register("safari_portal", SafariPortalBlock::new,
+                block -> new BlockItem(block.get(), new Item.Settings()));
     }
 
     public static class Entities extends ModBlocks {
-        public static void register() {
+        public static RegistrySupplier<BlockEntityType<BetterStructureBlockEntity>> STRUCTURE_BLOCK;
+        public static RegistrySupplier<BlockEntityType<SafariPortalBlockEntity>> SAFARI_PORTAL;
 
+        public static void register() {
+            STRUCTURE_BLOCK = register("structure_block", BetterStructureBlockEntity::new, ModBlocks.STRUCTURE_BLOCK);
+            SAFARI_PORTAL = register("safari_portal", SafariPortalBlockEntity::new, ModBlocks.SAFARI_PORTAL);
         }
     }
 

@@ -1,0 +1,10 @@
+{
+  "variants": {
+    "axis=x": {
+      "model": "academy:block/safari_portal_ns"
+    },
+    "axis=z": {
+      "model": "academy:block/safari_portal_ew"
+    }
+  }
+}

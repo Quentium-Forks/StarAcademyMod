@@ -1,6 +1,6 @@
 package abeshutt.staracademy.mixin;
 
-import abeshutt.staracademy.entity.StarBadgeBeltRenderer;
+import abeshutt.staracademy.entity.renderer.StarBadgeBeltRenderer;
 import net.minecraft.client.network.AbstractClientPlayerEntity;
 import net.minecraft.client.render.entity.EntityRendererFactory;
 import net.minecraft.client.render.entity.LivingEntityRenderer;

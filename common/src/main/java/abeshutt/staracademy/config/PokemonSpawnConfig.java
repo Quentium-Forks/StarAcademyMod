@@ -10,11 +10,16 @@ import java.util.TreeMap;
 
 public class PokemonSpawnConfig extends FileConfig {
 
+    @Expose private double spawnProtectionDistance;
     @Expose private Map<Double, IntRoll> distanceToLevel;
 
     @Override
     public String getPath() {
         return "pokemon_spawn";
+    }
+
+    public double getSpawnProtectionDistance() {
+        return this.spawnProtectionDistance;
     }
 
     public Optional<IntRoll> getLevel(double distance) {
@@ -33,6 +38,7 @@ public class PokemonSpawnConfig extends FileConfig {
 
     @Override
     protected void reset() {
+        this.spawnProtectionDistance = 100.0D;
         this.distanceToLevel = new LinkedHashMap<>();
         this.distanceToLevel.put(0.0D, IntRoll.ofUniform(0, 2));
         this.distanceToLevel.put(100.0D, IntRoll.ofUniform(0, 4));

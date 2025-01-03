@@ -2,6 +2,7 @@ package abeshutt.staracademy.init;
 
 import abeshutt.staracademy.command.Command;
 import abeshutt.staracademy.command.ReloadCommand;
+import abeshutt.staracademy.command.SafariCommand;
 import abeshutt.staracademy.command.StarterCommand;
 import com.mojang.brigadier.CommandDispatcher;
 import net.minecraft.command.CommandRegistryAccess;
@@ -15,6 +16,7 @@ public class ModCommands {
     public static void register(CommandDispatcher<ServerCommandSource> dispatcher, CommandRegistryAccess access, CommandManager.RegistrationEnvironment environment) {
         new ReloadCommand().register(dispatcher, access, environment);
         new StarterCommand().register(dispatcher, access, environment);
+        new SafariCommand().register(dispatcher, access, environment);
     }
 
     private static <T extends Command> T register(Supplier<T> supplier, CommandDispatcher<ServerCommandSource> dispatcher,

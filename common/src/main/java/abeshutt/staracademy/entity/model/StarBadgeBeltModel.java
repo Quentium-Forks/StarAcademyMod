@@ -1,4 +1,4 @@
-package abeshutt.staracademy.entity;
+package abeshutt.staracademy.entity.model;
 
 import abeshutt.staracademy.StarAcademyMod;
 import net.minecraft.client.model.*;

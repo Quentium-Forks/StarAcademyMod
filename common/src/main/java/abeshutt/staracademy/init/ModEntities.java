@@ -1,6 +1,8 @@
 package abeshutt.staracademy.init;
 
+import abeshutt.staracademy.entity.ProfessorHansEntity;
 import abeshutt.staracademy.entity.StarBadgeEntity;
+import abeshutt.staracademy.entity.renderer.HumanEntityRenderer;
 import dev.architectury.event.events.client.ClientLifecycleEvent;
 import dev.architectury.platform.Platform;
 import dev.architectury.registry.registries.RegistrySupplier;
@@ -17,14 +19,19 @@ import java.util.function.Consumer;
 public class ModEntities extends ModRegistries {
 
     public static RegistrySupplier<EntityType<StarBadgeEntity>> STAR_BADGE;
+    public static RegistrySupplier<EntityType<ProfessorHansEntity>> PARTNER_NPC;
 
     public static void register() {
         STAR_BADGE = register("star_badge", StarBadgeEntity::new, SpawnGroup.MISC,
                 builder -> builder.setDimensions(0.98F, 0.7F).maxTrackingRange(128));
 
+        PARTNER_NPC = register("partner_npc", ProfessorHansEntity::new, SpawnGroup.MISC,
+                builder -> builder.setDimensions(0.6F, 1.8F).maxTrackingRange(128));
+
         if(Platform.getEnv() == EnvType.CLIENT) {
             ClientLifecycleEvent.CLIENT_SETUP.register(minecraft -> {
                 EntityRenderers.register(STAR_BADGE.get(), FlyingItemEntityRenderer::new);
+                EntityRenderers.register(PARTNER_NPC.get(), ctx -> new HumanEntityRenderer<>(ctx, false));
             });
         }
     }

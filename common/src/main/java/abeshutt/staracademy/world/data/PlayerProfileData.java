@@ -3,7 +3,7 @@ package abeshutt.staracademy.world.data;
 import abeshutt.staracademy.data.adapter.Adapters;
 import abeshutt.staracademy.init.ModNetwork;
 import abeshutt.staracademy.init.ModWorldData;
-import abeshutt.staracademy.net.PlayerProfileUpdateS2CPacket;
+import abeshutt.staracademy.net.UpdatePlayerProfileS2CPacket;
 import abeshutt.staracademy.util.ProxyGameProfile;
 import com.mojang.authlib.GameProfile;
 import dev.architectury.event.events.common.PlayerEvent;
@@ -50,7 +50,7 @@ public class PlayerProfileData extends WorldData {
                 this.futures.remove(uuid);
                 this.markDirty();
                 ModNetwork.CHANNEL.sendToPlayers(server.getPlayerManager().getPlayerList(),
-                        new PlayerProfileUpdateS2CPacket(uuid, profile));
+                        new UpdatePlayerProfileS2CPacket(uuid, profile));
                 return profile;
             });
 
@@ -62,7 +62,7 @@ public class PlayerProfileData extends WorldData {
 
     private void onJoin(ServerPlayerEntity player) {
         this.getProfileAsync(player.getServer(), player.getUuid());
-        ModNetwork.CHANNEL.sendToPlayer(player, new PlayerProfileUpdateS2CPacket(this.profiles));
+        ModNetwork.CHANNEL.sendToPlayer(player, new UpdatePlayerProfileS2CPacket(this.profiles));
     }
 
     private void onTick(MinecraftServer server) {
@@ -74,7 +74,7 @@ public class PlayerProfileData extends WorldData {
                     proxy.setName(player.getGameProfile().getName());
                     this.markDirty();
                     ModNetwork.CHANNEL.sendToPlayers(server.getPlayerManager().getPlayerList(),
-                            new PlayerProfileUpdateS2CPacket(player.getUuid(), profile));
+                            new UpdatePlayerProfileS2CPacket(player.getUuid(), profile));
                 });
             }
         }

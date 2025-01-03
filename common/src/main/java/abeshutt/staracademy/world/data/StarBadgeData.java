@@ -4,7 +4,7 @@ import abeshutt.staracademy.init.ModItems;
 import abeshutt.staracademy.init.ModNetwork;
 import abeshutt.staracademy.init.ModWorldData;
 import abeshutt.staracademy.item.StarBadgeItem;
-import abeshutt.staracademy.net.StarBadgeUpdateS2CPacket;
+import abeshutt.staracademy.net.UpdateStarBadgeS2CPacket;
 import abeshutt.staracademy.world.StarOwnership;
 import abeshutt.staracademy.world.inventory.BaseInventory;
 import dev.architectury.event.events.common.PlayerEvent;
@@ -51,7 +51,7 @@ public class StarBadgeData extends WorldData {
 
         if(player.getServer() != null) {
             ModNetwork.CHANNEL.sendToPlayers(player.getServer().getPlayerManager().getPlayerList(),
-                    new StarBadgeUpdateS2CPacket(player.getUuid(), inventory));
+                    new UpdateStarBadgeS2CPacket(player.getUuid(), inventory));
         }
 
         return inventory;
@@ -87,14 +87,14 @@ public class StarBadgeData extends WorldData {
         if(!changed.isEmpty()) {
             for(UUID uuid : changed) {
                 ModNetwork.CHANNEL.sendToPlayers(server.getPlayerManager().getPlayerList(),
-                        new StarBadgeUpdateS2CPacket(uuid, this.inventories.get(uuid)));
+                        new UpdateStarBadgeS2CPacket(uuid, this.inventories.get(uuid)));
             }
         }
     }
 
     private void onJoin(ServerPlayerEntity player) {
-        ModNetwork.CHANNEL.sendToPlayer(player, new StarBadgeUpdateS2CPacket(null));
-        ModNetwork.CHANNEL.sendToPlayer(player, new StarBadgeUpdateS2CPacket(this.inventories));
+        ModNetwork.CHANNEL.sendToPlayer(player, new UpdateStarBadgeS2CPacket(null));
+        ModNetwork.CHANNEL.sendToPlayer(player, new UpdateStarBadgeS2CPacket(this.inventories));
     }
 
     @Override

@@ -1,6 +1,7 @@
 package abeshutt.staracademy.init;
 
 import abeshutt.staracademy.StarAcademyMod;
+import com.mojang.serialization.Codec;
 import dev.architectury.platform.Platform;
 import dev.architectury.registry.registries.DeferredRegister;
 import dev.architectury.registry.registries.RegistrySupplier;
@@ -13,6 +14,7 @@ import net.minecraft.loot.function.LootFunctionType;
 import net.minecraft.registry.RegistryKeys;
 import net.minecraft.screen.ScreenHandlerType;
 import net.minecraft.util.Identifier;
+import net.minecraft.world.gen.chunk.ChunkGenerator;
 
 import java.util.function.Supplier;
 
@@ -24,6 +26,7 @@ public class ModRegistries {
     public static DeferredRegister<BlockEntityType<?>> BLOCK_ENTITY_TYPES = DeferredRegister.create(StarAcademyMod.ID, RegistryKeys.BLOCK_ENTITY_TYPE);
     public static DeferredRegister<ScreenHandlerType<?>> SCREEN_HANDLERS = DeferredRegister.create(StarAcademyMod.ID, RegistryKeys.SCREEN_HANDLER);
     public static DeferredRegister<LootFunctionType> LOOT_FUNCTION_TYPES = DeferredRegister.create(StarAcademyMod.ID, RegistryKeys.LOOT_FUNCTION_TYPE);
+    public static DeferredRegister<Codec<? extends ChunkGenerator>> CHUNK_GENERATORS = DeferredRegister.create(StarAcademyMod.ID, RegistryKeys.CHUNK_GENERATOR);
 
     public static void register() {
         ModItems.register();
@@ -33,6 +36,7 @@ public class ModRegistries {
         ModScreenHandlers.register();
         ModNetwork.register();
         ModLootFunctionTypes.register();
+        ModChunkGenerators.register();
 
         BLOCKS.register();
         ITEMS.register();
@@ -40,6 +44,7 @@ public class ModRegistries {
         BLOCK_ENTITY_TYPES.register();
         SCREEN_HANDLERS.register();
         LOOT_FUNCTION_TYPES.register();
+        CHUNK_GENERATORS.register();
 
         if(Platform.getEnvironment() == Env.CLIENT) {
             ModScreens.register();

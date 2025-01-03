@@ -1,0 +1,16 @@
+{
+  "variants": {
+    "mode=corner": {
+      "model": "academy:block/structure_block_corner"
+    },
+    "mode=data": {
+      "model": "academy:block/structure_block_data"
+    },
+    "mode=load": {
+      "model": "academy:block/structure_block_load"
+    },
+    "mode=save": {
+      "model": "academy:block/structure_block_save"
+    }
+  }
+}

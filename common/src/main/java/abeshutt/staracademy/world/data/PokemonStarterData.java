@@ -4,7 +4,7 @@ import abeshutt.staracademy.data.adapter.Adapters;
 import abeshutt.staracademy.init.ModConfigs;
 import abeshutt.staracademy.init.ModNetwork;
 import abeshutt.staracademy.init.ModWorldData;
-import abeshutt.staracademy.net.StarterRaffleUpdateS2CPacket;
+import abeshutt.staracademy.net.UpdateStarterRaffleS2CPacket;
 import abeshutt.staracademy.world.StarterEntry;
 import com.cobblemon.mod.common.Cobblemon;
 import com.cobblemon.mod.common.advancement.CobblemonCriteria;
@@ -178,7 +178,7 @@ public class PokemonStarterData extends WorldData {
                     }
                 });
 
-                ModNetwork.CHANNEL.sendToPlayer(player, new StarterRaffleUpdateS2CPacket(null,
+                ModNetwork.CHANNEL.sendToPlayer(player, new UpdateStarterRaffleS2CPacket(null,
                         message, this.timeInterval, this.timeLeft, this.paused, this.selectionCooldown));
             }
         }
@@ -201,7 +201,7 @@ public class PokemonStarterData extends WorldData {
             }
         });
 
-        ModNetwork.CHANNEL.sendToPlayer(player, new StarterRaffleUpdateS2CPacket(starters, message,
+        ModNetwork.CHANNEL.sendToPlayer(player, new UpdateStarterRaffleS2CPacket(starters, message,
                 this.timeInterval, this.timeLeft, this.paused, this.selectionCooldown));
     }
 

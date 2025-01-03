@@ -1,5 +1,6 @@
-package abeshutt.staracademy.entity;
+package abeshutt.staracademy.entity.renderer;
 
+import abeshutt.staracademy.entity.model.StarBadgeBeltModel;
 import abeshutt.staracademy.init.ModItems;
 import abeshutt.staracademy.world.data.StarBadgeData;
 import abeshutt.staracademy.world.inventory.BaseInventory;

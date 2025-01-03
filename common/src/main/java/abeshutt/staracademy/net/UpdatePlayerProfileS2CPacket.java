@@ -10,19 +10,19 @@ import java.util.HashMap;
 import java.util.Map;
 import java.util.UUID;
 
-public class PlayerProfileUpdateS2CPacket extends ModPacket<ClientPlayNetworkHandler> {
+public class UpdatePlayerProfileS2CPacket extends ModPacket<ClientPlayNetworkHandler> {
 
     private Map<UUID, GameProfile> profiles;
 
-    public PlayerProfileUpdateS2CPacket() {
+    public UpdatePlayerProfileS2CPacket() {
 
     }
 
-    public PlayerProfileUpdateS2CPacket(Map<UUID, GameProfile> profiles) {
+    public UpdatePlayerProfileS2CPacket(Map<UUID, GameProfile> profiles) {
         this.profiles = profiles;
     }
 
-    public PlayerProfileUpdateS2CPacket(UUID uuid, GameProfile profile) {
+    public UpdatePlayerProfileS2CPacket(UUID uuid, GameProfile profile) {
         this.profiles = new HashMap<>();
         this.profiles.put(uuid, profile);
     }

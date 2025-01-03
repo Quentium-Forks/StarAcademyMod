@@ -7,6 +7,8 @@ import abeshutt.staracademy.data.tile.TilePredicate;
 import abeshutt.staracademy.world.roll.IntRoll;
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
+import net.minecraft.util.Identifier;
+import net.minecraft.util.math.BlockPos;
 
 import java.io.FileNotFoundException;
 import java.io.FileReader;
@@ -24,11 +26,13 @@ public abstract class Config {
             .registerTypeHierarchyAdapter(EntityPredicate.class, Adapters.ENTITY_PREDICATE)
             .registerTypeHierarchyAdapter(ItemPredicate.class, Adapters.ITEM_PREDICATE)
             .registerTypeHierarchyAdapter(IntRoll.class, Adapters.INT_ROLL)
+            .registerTypeAdapter(BlockPos.class, Adapters.BLOCK_POS)
+            .registerTypeAdapter(Identifier.class, Adapters.IDENTIFIER)
             .create();
 
     public abstract void write() throws IOException;
 
-    public abstract  <C extends Config> C read() throws IOException;
+    public abstract <C extends Config> C read() throws IOException;
 
     protected abstract void reset();
 

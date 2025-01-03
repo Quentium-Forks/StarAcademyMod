@@ -10,19 +10,19 @@ import java.util.HashMap;
 import java.util.Map;
 import java.util.UUID;
 
-public class StarBadgeUpdateS2CPacket extends ModPacket<ClientPlayNetworkHandler> {
+public class UpdateStarBadgeS2CPacket extends ModPacket<ClientPlayNetworkHandler> {
 
     private Map<UUID, BaseInventory> inventories;
 
-    public StarBadgeUpdateS2CPacket() {
+    public UpdateStarBadgeS2CPacket() {
 
     }
 
-    public StarBadgeUpdateS2CPacket(Map<UUID, BaseInventory> profiles) {
+    public UpdateStarBadgeS2CPacket(Map<UUID, BaseInventory> profiles) {
         this.inventories = profiles;
     }
 
-    public StarBadgeUpdateS2CPacket(UUID uuid, BaseInventory inventory) {
+    public UpdateStarBadgeS2CPacket(UUID uuid, BaseInventory inventory) {
         this.inventories = new HashMap<>();
         this.inventories.put(uuid, inventory);
     }
