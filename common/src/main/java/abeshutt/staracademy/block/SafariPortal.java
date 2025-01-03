@@ -23,7 +23,7 @@ import java.util.function.Predicate;
 
 public class SafariPortal {
 
-    private static final AbstractBlock.ContextPredicate IS_VALID_FRAME_BLOCK = (state, world, pos) -> state.isOf(Blocks.MOSSY_COBBLESTONE);
+    private static final AbstractBlock.ContextPredicate IS_VALID_FRAME_BLOCK = (state, world, pos) -> state.isOf(ModBlocks.SAFARI_PORTAL_FRAME.get());
     private final WorldAccess world;
     private final Direction.Axis axis;
     private final Direction negativeDir;

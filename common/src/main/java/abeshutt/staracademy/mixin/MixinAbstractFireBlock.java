@@ -1,6 +1,7 @@
 package abeshutt.staracademy.mixin;
 
 import abeshutt.staracademy.block.SafariPortal;
+import abeshutt.staracademy.init.ModBlocks;
 import net.minecraft.block.AbstractFireBlock;
 import net.minecraft.block.BlockState;
 import net.minecraft.block.Blocks;
@@ -38,7 +39,7 @@ public class MixinAbstractFireBlock {
         boolean hasPortalFrame = false;
 
         for(Direction facing : Direction.values()) {
-            if(world.getBlockState(mutable.set(pos).move(facing)).isOf(Blocks.MOSSY_COBBLESTONE)) {
+            if(world.getBlockState(mutable.set(pos).move(facing)).isOf(ModBlocks.SAFARI_PORTAL_FRAME.get())) {
                 hasPortalFrame = true;
                 break;
             }
