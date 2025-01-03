@@ -3,10 +3,12 @@ package abeshutt.staracademy;
 import abeshutt.staracademy.event.CommonEvents;
 import abeshutt.staracademy.init.ModConfigs;
 import abeshutt.staracademy.init.ModRegistries;
+import abeshutt.staracademy.modsupport.enhancedcelestials.EnhancedCelestialsCompat;
 import abeshutt.staracademy.world.random.JavaRandom;
 import com.cobblemon.mod.common.Cobblemon;
 import com.cobblemon.mod.common.api.Priority;
 import com.cobblemon.mod.common.pokemon.Pokemon;
+import net.fabricmc.loader.api.FabricLoader;
 import net.minecraft.registry.RegistryKey;
 import net.minecraft.registry.RegistryKeys;
 import net.minecraft.server.MinecraftServer;
@@ -31,6 +33,10 @@ public final class StarAcademyMod {
     public static final RegistryKey<World> SAFARI = RegistryKey.of(RegistryKeys.WORLD, StarAcademyMod.id("safari"));
 
     public static void init() {
+        if(FabricLoader.getInstance().isModLoaded("enhancedcelestials")) {
+            EnhancedCelestialsCompat.init();
+        }
+
         Cobblemon.INSTANCE.setStarterHandler(new GameStarterHandler());
         ModRegistries.register();
 

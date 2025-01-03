@@ -10,8 +10,6 @@ public final class StarAcademyFabricMod implements ModInitializer {
     @Override
     public void onInitialize() {
         StarAcademyMod.init();
-        if (FabricLoader.getInstance().isModLoaded("enhancedcelestials")) {
-            EnhancedCelestialsCompat.init();
-        }
     }
+
 }
