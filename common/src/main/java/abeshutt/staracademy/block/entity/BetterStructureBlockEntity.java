@@ -3,6 +3,8 @@ package abeshutt.staracademy.block.entity;
 import abeshutt.staracademy.init.ModBlocks;
 import abeshutt.staracademy.screen.BetterStructureBlockScreen;
 import abeshutt.staracademy.util.ProxyStructureTemplate;
+import net.fabricmc.api.EnvType;
+import net.fabricmc.api.Environment;
 import net.minecraft.block.BlockState;
 import net.minecraft.block.Blocks;
 import net.minecraft.block.StructureBlock;
@@ -146,13 +148,9 @@ public class BetterStructureBlockEntity extends BlockEntity {
         return this.createNbt();
     }
 
-    public boolean openScreen(PlayerEntity player) {
-        if(!player.isCreativeLevelTwoOp()) {
-            return false;
-        } else if(player.getEntityWorld().isClient) {
-            MinecraftClient.getInstance().setScreen(new BetterStructureBlockScreen(this));
-        }
-
+    @Environment(EnvType.CLIENT)
+    public boolean openScreen() {
+        MinecraftClient.getInstance().setScreen(new BetterStructureBlockScreen(this));
         return true;
     }
 

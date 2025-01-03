@@ -47,6 +47,7 @@ public class ModRegistries {
         CHUNK_GENERATORS.register();
 
         if(Platform.getEnvironment() == Env.CLIENT) {
+            ModRenderers.Entities.register();
             ModScreens.register();
         }
 

@@ -36,7 +36,11 @@ public class BetterStructureBlock extends BlockWithEntity implements OperatorBlo
     @Override
     public ActionResult onUse(BlockState state, World world, BlockPos pos, PlayerEntity player, Hand hand, BlockHitResult hit) {
         if(world.getBlockEntity(pos) instanceof BetterStructureBlockEntity structure) {
-            return structure.openScreen(player) ? ActionResult.success(world.isClient) : ActionResult.PASS;
+            if(world.isClient()) {
+                structure.openScreen();
+            }
+
+            return ActionResult.success(world.isClient);
         } else {
             return ActionResult.PASS;
         }

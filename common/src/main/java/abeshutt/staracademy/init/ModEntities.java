@@ -27,13 +27,6 @@ public class ModEntities extends ModRegistries {
 
         PARTNER_NPC = register("partner_npc", ProfessorHansEntity::new, SpawnGroup.MISC,
                 builder -> builder.setDimensions(0.6F, 1.8F).maxTrackingRange(128));
-
-        if(Platform.getEnv() == EnvType.CLIENT) {
-            ClientLifecycleEvent.CLIENT_SETUP.register(minecraft -> {
-                EntityRenderers.register(STAR_BADGE.get(), FlyingItemEntityRenderer::new);
-                EntityRenderers.register(PARTNER_NPC.get(), ctx -> new HumanEntityRenderer<>(ctx, false));
-            });
-        }
     }
 
     public static <V extends Entity> RegistrySupplier<EntityType<V>> register(Identifier id, EntityType.EntityFactory<V> factory,

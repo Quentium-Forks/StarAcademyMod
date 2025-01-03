@@ -2,14 +2,26 @@ package abeshutt.staracademy.init;
 
 import abeshutt.staracademy.block.entity.BetterStructureBlockEntity;
 import abeshutt.staracademy.block.entity.renderer.BetterStructureBlockEntityRenderer;
+import abeshutt.staracademy.entity.renderer.HumanEntityRenderer;
 import dev.architectury.event.events.client.ClientLifecycleEvent;
 import net.minecraft.block.entity.BlockEntity;
 import net.minecraft.block.entity.BlockEntityType;
 import net.minecraft.client.render.block.entity.BlockEntityRendererFactory;
+import net.minecraft.client.render.entity.EntityRenderers;
+import net.minecraft.client.render.entity.FlyingItemEntityRenderer;
 
 import java.util.Map;
 
-public class ModRenderers {
+public class ModRenderers extends ModRegistries {
+
+    public static class Entities extends ModRenderers {
+        public static void register() {
+            ClientLifecycleEvent.CLIENT_SETUP.register(minecraft -> {
+                EntityRenderers.register(ModEntities.STAR_BADGE.get(), FlyingItemEntityRenderer::new);
+                EntityRenderers.register(ModEntities.PARTNER_NPC.get(), ctx -> new HumanEntityRenderer<>(ctx, false));
+            });
+        }
+    }
 
     public static class BlockEntities extends ModRenderers {
         public static BlockEntityRendererFactory<BetterStructureBlockEntity> STRUCTURE_BLOCK;
