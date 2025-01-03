@@ -37,6 +37,17 @@ subprojects {
         // for more information about repositories.
         maven { url = "https://maven.wispforest.io/" }
         maven { url = "https://maven.impactdev.net/repository/development/" }
+        exclusiveContent {
+            forRepository {
+                maven {
+                    name = "Modrinth"
+                    url = "https://api.modrinth.com/maven"
+                }
+            }
+            filter {
+                includeGroup "maven.modrinth"
+            }
+        }
     }
 
     dependencies {
