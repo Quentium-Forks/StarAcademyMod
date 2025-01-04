@@ -18,13 +18,13 @@ import net.minecraft.util.Identifier;
 
 import java.util.*;
 
-public class OutfitData extends WorldData {
+public class WardrobeData extends WorldData {
 
-    public static final OutfitData CLIENT = new OutfitData();
+    public static final WardrobeData CLIENT = new WardrobeData();
 
     private final Map<UUID, Entry> entries;
 
-    public OutfitData() {
+    public WardrobeData() {
         this.entries = new HashMap<>();
     }
 
@@ -213,12 +213,12 @@ public class OutfitData extends WorldData {
 
     public static void init() {
         PlayerEvent.PLAYER_JOIN.register(player -> {
-            OutfitData data = ModWorldData.OUTFIT.getGlobal(player.getWorld());
+            WardrobeData data = ModWorldData.WARDROBE.getGlobal(player.getWorld());
             data.onJoin(player);
         });
 
         TickEvent.SERVER_POST.register(server -> {
-            OutfitData data = ModWorldData.OUTFIT.getGlobal(server);
+            WardrobeData data = ModWorldData.WARDROBE.getGlobal(server);
             data.onTick(server);
         });
     }

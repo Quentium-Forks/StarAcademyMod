@@ -2,8 +2,8 @@ package abeshutt.staracademy.net;
 
 import abeshutt.staracademy.data.adapter.Adapters;
 import abeshutt.staracademy.data.bit.BitBuffer;
-import abeshutt.staracademy.world.data.OutfitData;
-import abeshutt.staracademy.world.data.OutfitData.Entry;
+import abeshutt.staracademy.world.data.WardrobeData;
+import abeshutt.staracademy.world.data.WardrobeData.Entry;
 import net.minecraft.client.network.ClientPlayNetworkHandler;
 
 import java.util.HashMap;
@@ -29,7 +29,7 @@ public class UpdateOutfitS2CPacket extends ModPacket<ClientPlayNetworkHandler> {
 
     @Override
     public void onReceive(ClientPlayNetworkHandler listener) {
-        Map<UUID, Entry> entries = OutfitData.CLIENT.getEntries();
+        Map<UUID, Entry> entries = WardrobeData.CLIENT.getEntries();
 
         if(this.entries == null) {
             entries.clear();
