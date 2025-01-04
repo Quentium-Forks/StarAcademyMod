@@ -61,7 +61,7 @@ public class ProfessorHansConversation {
     }
 
     public void attach() {
-        CommonEvents.POKEMON_RELEASED_POST.subscribe(this, Priority.NORMAL, event -> {
+        CommonEvents.POKEMON_SENT_POST.subscribe(this, Priority.NORMAL, event -> {
 
         });
     }
@@ -82,7 +82,7 @@ public class ProfessorHansConversation {
     }
 
     public void detach() {
-        CommonEvents.POKEMON_RELEASED_POST.unsubscribe(this);
+        CommonEvents.POKEMON_SENT_POST.unsubscribe(this);
     }
 
     public Optional<ServerPlayerEntity> getPlayer(World world) {

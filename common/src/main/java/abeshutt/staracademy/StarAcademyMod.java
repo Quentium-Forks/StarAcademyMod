@@ -8,9 +8,7 @@ import abeshutt.staracademy.world.random.JavaRandom;
 import com.cobblemon.mod.common.Cobblemon;
 import com.cobblemon.mod.common.CobblemonItems;
 import com.cobblemon.mod.common.api.Priority;
-import com.cobblemon.mod.common.api.events.CobblemonEvents;
 import com.cobblemon.mod.common.pokemon.Pokemon;
-import kotlin.Unit;
 import net.fabricmc.loader.api.FabricLoader;
 import net.minecraft.registry.RegistryKey;
 import net.minecraft.registry.RegistryKeys;
@@ -51,8 +49,8 @@ public final class StarAcademyMod {
             }
         });
 
-        CommonEvents.POKEMON_RELEASED_PRE.subscribe(Priority.NORMAL, event -> {
-            if(event.getPlayer().getWorld().getRegistryKey() == SAFARI) {
+        CommonEvents.POKEMON_SENT_PRE.subscribe(Priority.NORMAL, event -> {
+            if(event.getLevel().getRegistryKey() == SAFARI) {
                 event.cancel();
             }
         });
