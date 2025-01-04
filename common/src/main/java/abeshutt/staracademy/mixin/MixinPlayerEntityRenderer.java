@@ -1,6 +1,7 @@
 package abeshutt.staracademy.mixin;
 
 import abeshutt.staracademy.entity.renderer.StarBadgeBeltRenderer;
+import abeshutt.staracademy.outfit.core.OutfitFeatureRenderer;
 import net.minecraft.client.network.AbstractClientPlayerEntity;
 import net.minecraft.client.render.entity.EntityRendererFactory;
 import net.minecraft.client.render.entity.LivingEntityRenderer;
@@ -21,6 +22,7 @@ public abstract class MixinPlayerEntityRenderer extends LivingEntityRenderer<Abs
     @Inject(method = "<init>", at = @At("RETURN"))
     public void init(EntityRendererFactory.Context ctx, boolean slim, CallbackInfo ci) {
         this.addFeature(new StarBadgeBeltRenderer(this));
+        this.addFeature(new OutfitFeatureRenderer<>(this));
     }
 
 }
