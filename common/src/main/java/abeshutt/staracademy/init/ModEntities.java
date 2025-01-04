@@ -1,5 +1,6 @@
 package abeshutt.staracademy.init;
 
+import abeshutt.staracademy.entity.DuelingGloveEntity;
 import abeshutt.staracademy.entity.ProfessorHansEntity;
 import abeshutt.staracademy.entity.StarBadgeEntity;
 import abeshutt.staracademy.entity.renderer.HumanEntityRenderer;
@@ -19,10 +20,14 @@ import java.util.function.Consumer;
 public class ModEntities extends ModRegistries {
 
     public static RegistrySupplier<EntityType<StarBadgeEntity>> STAR_BADGE;
+    public static RegistrySupplier<EntityType<DuelingGloveEntity>> DUELING_GLOVE;
     public static RegistrySupplier<EntityType<ProfessorHansEntity>> PARTNER_NPC;
 
     public static void register() {
         STAR_BADGE = register("star_badge", StarBadgeEntity::new, SpawnGroup.MISC,
+                builder -> builder.setDimensions(0.98F, 0.7F).maxTrackingRange(128));
+
+        DUELING_GLOVE = register("dueling_glove", DuelingGloveEntity::new, SpawnGroup.MISC,
                 builder -> builder.setDimensions(0.98F, 0.7F).maxTrackingRange(128));
 
         PARTNER_NPC = register("partner_npc", ProfessorHansEntity::new, SpawnGroup.MISC,

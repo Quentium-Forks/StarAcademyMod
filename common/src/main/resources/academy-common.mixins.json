@@ -10,6 +10,7 @@
     "MixinInventoryScreen",
     "MixinPlayerEntityRenderer",
     "MixinRenderLayers",
+    "ProxyModelPredicateProviderRegistry",
     "cobblemon.MixinCategoryListEntry",
     "cobblemon.MixinSelectionButton",
     "cobblemon.MixinStarterSelectionScreen",

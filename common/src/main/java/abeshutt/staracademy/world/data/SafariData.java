@@ -92,7 +92,7 @@ public class SafariData extends WorldData {
 
         if(destination != null) {
             this.getOrCreate(player.getUuid()).setLastState(new EntityState(player));
-            player.interactionManager.changeGameMode(GameMode.ADVENTURE);
+            //player.interactionManager.changeGameMode(GameMode.ADVENTURE);
             player.moveToWorld(destination);
         }
     }
