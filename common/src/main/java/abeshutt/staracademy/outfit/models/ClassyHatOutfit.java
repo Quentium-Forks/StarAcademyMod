@@ -7,7 +7,7 @@ import net.minecraft.util.Identifier;
 
 public class ClassyHatOutfit extends OutfitPiece {
 
-    public ClassyHatOutfit(Identifier id) {
+    public ClassyHatOutfit(String id) {
         super(id);
     }
 

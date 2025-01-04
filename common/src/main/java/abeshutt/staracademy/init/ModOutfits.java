@@ -15,7 +15,7 @@ public class ModOutfits {
     public static ClassyHatOutfit CLASSY_HAT;
 
     public static void register() {
-        CLASSY_HAT = register(new ClassyHatOutfit(StarAcademyMod.id("classy_hat")));
+        CLASSY_HAT = register(new ClassyHatOutfit("classy_hat"));
     }
 
     public static <T extends OutfitPiece> T register(T piece) {
