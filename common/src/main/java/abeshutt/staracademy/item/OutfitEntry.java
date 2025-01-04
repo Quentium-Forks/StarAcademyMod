@@ -11,12 +11,20 @@ import net.minecraft.client.util.math.MatrixStack;
 import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.NbtCompound;
 
+import java.util.List;
 import java.util.Optional;
+import java.util.stream.Stream;
 
 public abstract class OutfitEntry implements ISerializable<NbtCompound, JsonObject> {
 
+    public abstract Stream<String> generate();
+
     public Optional<OutfitEntry> flatten(RandomSource random) {
         return Optional.of(this);
+    }
+
+    public String getNameKey() {
+        return null;
     }
 
     public abstract void render(OutfitItemRenderer renderer, ItemStack stack, ModelTransformationMode mode, MatrixStack matrices,

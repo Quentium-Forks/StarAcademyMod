@@ -14,13 +14,24 @@ import net.minecraft.nbt.NbtCompound;
 import net.minecraft.util.Identifier;
 
 import java.util.Optional;
+import java.util.stream.Stream;
 
 public class ValueOutfitEntry extends OutfitEntry {
 
-    private Identifier id;
+    private String id;
 
     public ValueOutfitEntry() {
 
+    }
+
+    @Override
+    public String getNameKey() {
+        return this.id;
+    }
+
+    @Override
+    public Stream<String> generate() {
+        return Stream.of(this.id);
     }
 
     @Override
@@ -34,7 +45,7 @@ public class ValueOutfitEntry extends OutfitEntry {
     @Override
     public Optional<NbtCompound> writeNbt() {
         return super.writeNbt().map(nbt -> {
-            Adapters.IDENTIFIER.writeNbt(this.id).ifPresent(tag -> nbt.put("id", tag));
+            Adapters.UTF_8.writeNbt(this.id).ifPresent(tag -> nbt.put("id", tag));
             return nbt;
         });
     }
@@ -42,13 +53,13 @@ public class ValueOutfitEntry extends OutfitEntry {
     @Override
     public void readNbt(NbtCompound nbt) {
         super.readNbt(nbt);
-        this.id = Adapters.IDENTIFIER.readNbt(nbt.get("id")).orElse(null);
+        this.id = Adapters.UTF_8.readNbt(nbt.get("id")).orElse(null);
     }
 
     @Override
     public Optional<JsonObject> writeJson() {
         return super.writeJson().map(json -> {
-            Adapters.IDENTIFIER.writeJson(this.id).ifPresent(tag -> json.add("id", tag));
+            Adapters.UTF_8.writeJson(this.id).ifPresent(tag -> json.add("id", tag));
             return json;
         });
     }
@@ -56,7 +67,7 @@ public class ValueOutfitEntry extends OutfitEntry {
     @Override
     public void readJson(JsonObject json) {
         super.readJson(json);
-        this.id = Adapters.IDENTIFIER.readJson(json.get("id")).orElse(null);
+        this.id = Adapters.UTF_8.readJson(json.get("id")).orElse(null);
     }
 
 }

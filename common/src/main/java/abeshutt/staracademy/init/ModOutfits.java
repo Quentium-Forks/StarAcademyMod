@@ -10,7 +10,7 @@ import java.util.Map;
 
 public class ModOutfits {
 
-    public static Map<Identifier, OutfitPiece> REGISTRY = new HashMap<>();
+    public static Map<String, OutfitPiece> REGISTRY = new HashMap<>();
 
     public static ClassyHatOutfit CLASSY_HAT;
 

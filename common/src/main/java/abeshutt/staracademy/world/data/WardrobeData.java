@@ -40,15 +40,24 @@ public class WardrobeData extends WorldData {
         return this.entries.computeIfAbsent(uuid, key -> new Entry());
     }
 
-    public boolean isUnlocked(UUID uuid, Identifier id) {
+    public boolean isUnlocked(UUID uuid, String id) {
         return this.get(uuid).map(entry -> entry.getUnlocked().contains(id)).orElse(false);
     }
 
-    public boolean isEquipped(UUID uuid, Identifier id) {
+    public boolean isEquipped(UUID uuid, String id) {
         return this.get(uuid).map(entry -> entry.getEquipped().contains(id)).orElse(false);
     }
 
-    public boolean setUnlocked(UUID uuid, Identifier id, boolean unlocked) {
+    public boolean setUnlocked(ServerPlayerEntity player, String id, boolean unlocked) {
+        if(this.setUnlocked(player.getUuid(), id, unlocked)) {
+            //TODO: global print
+            return true;
+        }
+
+        return false;
+    }
+
+    public boolean setUnlocked(UUID uuid, String id, boolean unlocked) {
         Entry entry = this.getOrCreate(uuid);
 
         if((unlocked && entry.getUnlocked().add(id)) || (!unlocked && entry.getUnlocked().remove(id))) {
@@ -60,7 +69,7 @@ public class WardrobeData extends WorldData {
         return false;
     }
 
-    public boolean setEquipped(UUID uuid, Identifier id, boolean equipped) {
+    public boolean setEquipped(UUID uuid, String id, boolean equipped) {
         Entry entry = this.getOrCreate(uuid);
 
         if((equipped && entry.getEquipped().add(id)) || (!equipped && entry.getEquipped().remove(id))) {
@@ -114,8 +123,8 @@ public class WardrobeData extends WorldData {
     }
 
     public static class Entry implements ISerializable<NbtCompound, JsonObject> {
-        private final Set<Identifier> unlocked;
-        private final Set<Identifier> equipped;
+        private final Set<String> unlocked;
+        private final Set<String> equipped;
         private boolean dirty;
 
         public Entry() {
@@ -123,11 +132,11 @@ public class WardrobeData extends WorldData {
             this.equipped = new HashSet<>();
         }
 
-        public Set<Identifier> getUnlocked() {
+        public Set<String> getUnlocked() {
             return this.unlocked;
         }
 
-        public Set<Identifier> getEquipped() {
+        public Set<String> getEquipped() {
             return this.equipped;
         }
 
@@ -143,14 +152,14 @@ public class WardrobeData extends WorldData {
         public void writeBits(BitBuffer buffer) {
             Adapters.INT_SEGMENTED_7.writeBits(this.unlocked.size(), buffer);
 
-            for(Identifier id : this.unlocked) {
-               Adapters.IDENTIFIER.writeBits(id, buffer);
+            for(String id : this.unlocked) {
+               Adapters.UTF_8.writeBits(id, buffer);
             }
 
             Adapters.INT_SEGMENTED_7.writeBits(this.equipped.size(), buffer);
 
-            for(Identifier id : this.equipped) {
-                Adapters.IDENTIFIER.writeBits(id, buffer);
+            for(String id : this.equipped) {
+                Adapters.UTF_8.writeBits(id, buffer);
             }
         }
 
@@ -160,14 +169,14 @@ public class WardrobeData extends WorldData {
             int size = Adapters.INT_SEGMENTED_7.readBits(buffer).orElseThrow();
 
             for(int i = 0; i < size; i++) {
-               Adapters.IDENTIFIER.readBits(buffer).ifPresent(this.unlocked::add);
+               Adapters.UTF_8.readBits(buffer).ifPresent(this.unlocked::add);
             }
 
             this.equipped.clear();
             size = Adapters.INT_SEGMENTED_7.readBits(buffer).orElseThrow();
 
             for(int i = 0; i < size; i++) {
-                Adapters.IDENTIFIER.readBits(buffer).ifPresent(this.equipped::add);
+                Adapters.UTF_8.readBits(buffer).ifPresent(this.equipped::add);
             }
         }
 
@@ -176,15 +185,15 @@ public class WardrobeData extends WorldData {
             return Optional.of(new NbtCompound()).map(nbt -> {
                 NbtList unlocked = new NbtList();
 
-                for(Identifier id : this.unlocked) {
-                   Adapters.IDENTIFIER.writeNbt(id).ifPresent(unlocked::add);
+                for(String id : this.unlocked) {
+                   Adapters.UTF_8.writeNbt(id).ifPresent(unlocked::add);
                 }
 
                 nbt.put("unlocked", unlocked);
                 NbtList equipped = new NbtList();
 
-                for(Identifier id : this.equipped) {
-                    Adapters.IDENTIFIER.writeNbt(id).ifPresent(equipped::add);
+                for(String id : this.equipped) {
+                    Adapters.UTF_8.writeNbt(id).ifPresent(equipped::add);
                 }
 
                 nbt.put("equipped", equipped);
@@ -198,7 +207,7 @@ public class WardrobeData extends WorldData {
 
             if(nbt.get("unlocked") instanceof NbtList unlocked) {
                 for(NbtElement element : unlocked) {
-                    Adapters.IDENTIFIER.readNbt(element).ifPresent(this.unlocked::add);
+                    Adapters.UTF_8.readNbt(element).ifPresent(this.unlocked::add);
                 }
             }
 
@@ -206,7 +215,7 @@ public class WardrobeData extends WorldData {
 
             if(nbt.get("unlocked") instanceof NbtList equipped) {
                 for(NbtElement element : equipped) {
-                    Adapters.IDENTIFIER.readNbt(element).ifPresent(this.equipped::add);
+                    Adapters.UTF_8.readNbt(element).ifPresent(this.equipped::add);
                 }
             }
         }

@@ -16,6 +16,7 @@ import net.minecraft.nbt.NbtCompound;
 import net.minecraft.util.Identifier;
 
 import java.util.Optional;
+import java.util.stream.Stream;
 
 public class ReferenceOutfitEntry extends OutfitEntry {
 
@@ -23,6 +24,11 @@ public class ReferenceOutfitEntry extends OutfitEntry {
 
     public ReferenceOutfitEntry() {
 
+    }
+
+    @Override
+    public Stream<String> generate() {
+        return Stream.empty();
     }
 
     @Override

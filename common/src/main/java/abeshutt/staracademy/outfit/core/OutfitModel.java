@@ -7,9 +7,9 @@ import net.minecraft.client.network.AbstractClientPlayerEntity;
 import net.minecraft.client.render.entity.model.PlayerEntityModel;
 
 @Environment(EnvType.CLIENT)
-public class OutfitPieceModel extends PlayerEntityModel<AbstractClientPlayerEntity> {
+public class OutfitModel extends PlayerEntityModel<AbstractClientPlayerEntity> {
 
-    public OutfitPieceModel(ModelPart root) {
+    public OutfitModel(ModelPart root) {
         super(root, false);
     }
 

@@ -1,24 +1,42 @@
 package abeshutt.staracademy.outfit.core;
 
+import dev.architectury.platform.Platform;
+import dev.architectury.utils.Env;
 import net.fabricmc.api.EnvType;
 import net.fabricmc.api.Environment;
 import net.minecraft.client.model.*;
-import net.minecraft.util.Identifier;
 
 public abstract class OutfitPiece {
 
-    protected Identifier id;
+    private static final String[] BASE_PARTS = { "head",  "hat",  "body",  "right_arm",  "right_leg", "right_sleeve",
+            "right_pants", "left_arm", "left_leg", "left_sleeve", "left_pants", "ear", "cloak", "jacket" };
 
-    public OutfitPiece(Identifier id) {
+    private final String id;
+    private final OutfitTexture texture;
+
+    @Environment(EnvType.CLIENT)
+    private OutfitModel model;
+
+    public OutfitPiece(String id) {
         this.id = id;
+        this.texture = this.buildTexture();
+
+        if(Platform.getEnvironment() == Env.CLIENT) {
+            this.model = new OutfitModel(this.createMesh().createModel());
+        }
     }
 
-    public Identifier getId() {
+    public String getId() {
         return this.id;
     }
 
-    @Environment(EnvType.CLIENT)
-    protected abstract void buildMesh(ModelPartData root);
+    public OutfitTexture getTexture() {
+        return this.texture;
+    }
+
+    public OutfitModel getModel() {
+        return this.model;
+    }
 
     protected abstract OutfitTexture buildTexture();
 
@@ -27,40 +45,16 @@ public abstract class OutfitPiece {
         ModelData mesh = new ModelData();
         ModelPartData root = mesh.getRoot();
 
-        String[] partNames = {
-                "head",
-                "hat",
-                "body",
-                "right_arm",
-                "right_leg",
-                "right_sleeve",
-                "right_pants",
-                "left_arm",
-                "left_leg",
-                "left_sleeve",
-                "left_pants",
-                "ear",
-                "cloak",
-                "jacket",
-        };
-
-        for (String partName : partNames) {
-            root.addChild(partName,
-                    ModelPartBuilder.create(),
-                    ModelTransform.pivot(0.0F, 0.0F, 0.0F)
-            );
+        for(String name : BASE_PARTS) {
+            root.addChild(name, ModelPartBuilder.create(),
+                    ModelTransform.pivot(0.0F, 0.0F, 0.0F));
         }
 
         this.buildMesh(root);
-        return TexturedModelData.of(mesh, 128, 128);
+        return TexturedModelData.of(mesh, this.texture.getWidth(), this.texture.getHeight());
     }
 
-    public OutfitPieceModel getModel() {
-        return new OutfitPieceModel(this.createMesh().createModel());
-    }
-
-    public OutfitTexture getTexture() {
-        return this.buildTexture();
-    }
+    @Environment(EnvType.CLIENT)
+    protected abstract void buildMesh(ModelPartData root);
 
 }

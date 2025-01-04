@@ -11,7 +11,6 @@ import net.minecraft.client.render.entity.feature.FeatureRenderer;
 import net.minecraft.client.render.entity.feature.FeatureRendererContext;
 import net.minecraft.client.render.entity.model.PlayerEntityModel;
 import net.minecraft.client.util.math.MatrixStack;
-import net.minecraft.util.Identifier;
 
 public class OutfitFeatureRenderer<
         M extends PlayerEntityModel<AbstractClientPlayerEntity>
@@ -24,11 +23,11 @@ public class OutfitFeatureRenderer<
     @Override
     public void render(MatrixStack matrices, VertexConsumerProvider vertexConsumers, int light, AbstractClientPlayerEntity entity, float limbAngle, float limbDistance, float tickDelta, float animationProgress, float headYaw, float headPitch) {
         WardrobeData.CLIENT.get(entity.getUuid()).ifPresent(entry -> {
-            for(Identifier id : entry.getEquipped()) {
+            for(String id : entry.getEquipped()) {
                 OutfitPiece outfit = ModOutfits.REGISTRY.get(id);
                 if(outfit == null) continue;
 
-                OutfitPieceModel model = outfit.getModel();
+                OutfitModel model = outfit.getModel();
 
                 VertexConsumer vertices = vertexConsumers.getBuffer(RenderLayer.getArmorCutoutNoCull(
                         outfit.getTexture().getModel()
