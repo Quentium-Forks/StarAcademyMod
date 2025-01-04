@@ -10,6 +10,7 @@ import com.cobblemon.mod.common.CobblemonItems;
 import com.cobblemon.mod.common.api.Priority;
 import com.cobblemon.mod.common.pokemon.Pokemon;
 import net.fabricmc.loader.api.FabricLoader;
+import net.minecraft.client.util.ModelIdentifier;
 import net.minecraft.registry.RegistryKey;
 import net.minecraft.registry.RegistryKeys;
 import net.minecraft.server.MinecraftServer;
@@ -98,6 +99,10 @@ public final class StarAcademyMod {
 
     public static Identifier id(String path) {
         return new Identifier(ID, path);
+    }
+
+    public static ModelIdentifier mid(String path, String variant) {
+        return new ModelIdentifier(ID, path, variant);
     }
 
 }

@@ -13,6 +13,7 @@ import abeshutt.staracademy.data.item.ItemPredicate;
 import abeshutt.staracademy.data.item.PartialItem;
 import abeshutt.staracademy.data.nbt.PartialCompoundNbt;
 import abeshutt.staracademy.data.tile.*;
+import abeshutt.staracademy.item.OutfitEntry;
 import abeshutt.staracademy.world.random.ChunkRandom;
 import abeshutt.staracademy.world.random.JavaRandom;
 import abeshutt.staracademy.world.random.LcgRandom;
@@ -116,6 +117,7 @@ public class Adapters {
     public static final RegistryAdapter<Block> BLOCK = new RegistryAdapter<>(() -> Registries.BLOCK, false);
     public static final RegistryAdapter<Item> ITEM = new RegistryAdapter<>(() -> Registries.ITEM, false);
     public static final BlockPosAdapter BLOCK_POS = new BlockPosAdapter(false);
+    public static final OutfitEntry.Adapter OUTFIT_ENTRY = new OutfitEntry.Adapter();
 
     public static Lcg.Adapter LCG = new Lcg.Adapter(false);
 

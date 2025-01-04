@@ -5,9 +5,11 @@
   "minVersion": "0.8",
   "client": [
     "MixinBlockEntityRendererFactories",
+    "MixinBuiltinModelItemRenderer",
     "MixinClientWorld",
     "MixinInGameHud",
     "MixinInventoryScreen",
+    "MixinModelLoader",
     "MixinPlayerEntityRenderer",
     "MixinRenderLayers",
     "ProxyModelPredicateProviderRegistry",
