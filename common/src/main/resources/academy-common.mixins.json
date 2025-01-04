@@ -23,6 +23,7 @@
     "MixinPlayerScreenHandler",
     "MixinStructureTemplate",
     "bountiful.MixinBountyItem",
+    "cobblemon.MixinPokeBallItem",
     "mythsandlegends.MixinFormAndAspectUtils",
     "mythsandlegends.MixinPlayerEvents",
     "scout.MixinBaseBagItem",

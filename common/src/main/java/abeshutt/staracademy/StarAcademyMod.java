@@ -6,8 +6,11 @@ import abeshutt.staracademy.init.ModRegistries;
 import abeshutt.staracademy.modsupport.enhancedcelestials.EnhancedCelestialsCompat;
 import abeshutt.staracademy.world.random.JavaRandom;
 import com.cobblemon.mod.common.Cobblemon;
+import com.cobblemon.mod.common.CobblemonItems;
 import com.cobblemon.mod.common.api.Priority;
+import com.cobblemon.mod.common.api.events.CobblemonEvents;
 import com.cobblemon.mod.common.pokemon.Pokemon;
+import kotlin.Unit;
 import net.fabricmc.loader.api.FabricLoader;
 import net.minecraft.registry.RegistryKey;
 import net.minecraft.registry.RegistryKeys;
@@ -39,6 +42,20 @@ public final class StarAcademyMod {
 
         Cobblemon.INSTANCE.setStarterHandler(new GameStarterHandler());
         ModRegistries.register();
+
+        CommonEvents.POKEMON_CATCH_RATE.subscribe(Priority.LOWEST, event -> {
+            if(event.getThrower().getWorld().getRegistryKey() == SAFARI) {
+                if(event.getPokeBallEntity().getPokeBall().item() != CobblemonItems.SAFARI_BALL) {
+                    event.setCatchRate(0.0F);
+                }
+            }
+        });
+
+        CommonEvents.POKEMON_RELEASED_PRE.subscribe(Priority.NORMAL, event -> {
+            if(event.getPlayer().getWorld().getRegistryKey() == SAFARI) {
+                event.cancel();
+            }
+        });
 
         CommonEvents.POKEMON_ENTITY_SPAWN.subscribe(Priority.NORMAL, event -> {
             World world = event.getEntity().getEntityWorld();
