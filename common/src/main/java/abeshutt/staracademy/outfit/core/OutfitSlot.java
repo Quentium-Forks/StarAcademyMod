@@ -2,6 +2,7 @@ package abeshutt.staracademy.outfit.core;
 
 import net.minecraft.entity.EquipmentSlot;
 
+// TODO: Integrate later
 public enum OutfitSlot {
 
     HEAD(EquipmentSlot.HEAD),

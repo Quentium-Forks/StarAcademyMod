@@ -1,5 +1,7 @@
 package abeshutt.staracademy.outfit.core;
 
+import net.fabricmc.api.EnvType;
+import net.fabricmc.api.Environment;
 import net.minecraft.client.model.*;
 import net.minecraft.client.network.AbstractClientPlayerEntity;
 import net.minecraft.client.render.entity.model.PlayerEntityModel;
@@ -15,6 +17,7 @@ public abstract class OutfitPiece {
         this.thinArms = thinArms;
     }
 
+    @Environment(EnvType.CLIENT)
     protected ModelData getBaseModelData() {
         ModelData modelData = new ModelData();
         ModelPartData modelPartData = modelData.getRoot();
@@ -54,6 +57,7 @@ public abstract class OutfitPiece {
         return new OutfitPieceModel(root, this.thinArms);
     }
 
+    @Environment(EnvType.CLIENT)
     public static class OutfitPieceModel extends PlayerEntityModel<AbstractClientPlayerEntity> {
 
         public OutfitPieceModel(ModelPart root, boolean thinArms) {
