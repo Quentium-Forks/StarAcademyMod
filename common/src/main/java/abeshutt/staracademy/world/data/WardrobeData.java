@@ -80,7 +80,8 @@ public class WardrobeData extends WorldData {
         for(ServerPlayerEntity player : server.getPlayerManager().getPlayerList()) {
             this.get(player.getUuid()).ifPresent(entry -> {
                 if(!entry.isDirty()) return;
-                ModNetwork.CHANNEL.sendToPlayer(player, new UpdateOutfitS2CPacket(player.getUuid(), entry));
+                ModNetwork.CHANNEL.sendToPlayers(server.getPlayerManager().getPlayerList(),
+                        new UpdateOutfitS2CPacket(player.getUuid(), entry));
                 entry.setDirty(true);
             });
         }

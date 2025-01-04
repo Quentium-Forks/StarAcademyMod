@@ -2,12 +2,25 @@ package abeshutt.staracademy.item;
 
 import abeshutt.staracademy.data.adapter.basic.TypeSupplierAdapter;
 import abeshutt.staracademy.data.serializable.ISerializable;
+import abeshutt.staracademy.item.renderer.OutfitItemRenderer;
+import abeshutt.staracademy.world.random.RandomSource;
 import com.google.gson.JsonObject;
+import net.minecraft.client.render.VertexConsumerProvider;
+import net.minecraft.client.render.model.json.ModelTransformationMode;
+import net.minecraft.client.util.math.MatrixStack;
+import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.NbtCompound;
 
 import java.util.Optional;
 
-public class OutfitEntry implements ISerializable<NbtCompound, JsonObject> {
+public abstract class OutfitEntry implements ISerializable<NbtCompound, JsonObject> {
+
+    public Optional<OutfitEntry> flatten(RandomSource random) {
+        return Optional.of(this);
+    }
+
+    public abstract void render(OutfitItemRenderer renderer, ItemStack stack, ModelTransformationMode mode, MatrixStack matrices,
+                                VertexConsumerProvider vertexConsumers, int light, int overlay);
 
     @Override
     public Optional<NbtCompound> writeNbt() {
@@ -32,6 +45,8 @@ public class OutfitEntry implements ISerializable<NbtCompound, JsonObject> {
     public static class Adapter extends TypeSupplierAdapter<OutfitEntry> {
         public Adapter() {
             super("type", true);
+            this.register("value", ValueOutfitEntry.class, ValueOutfitEntry::new);
+            this.register("reference", ReferenceOutfitEntry.class, ReferenceOutfitEntry::new);
         }
     }
 

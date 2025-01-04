@@ -67,7 +67,7 @@ public class IdMapper<T> implements Iterable<T> {
     public T byIdOrThrow(int pId) {
         T t = this.byId(pId);
         if (t == null) {
-            throw new IllegalArgumentException("No value with id " + pId);
+            throw new IllegalArgumentException("No value with model " + pId);
         } else {
             return t;
         }

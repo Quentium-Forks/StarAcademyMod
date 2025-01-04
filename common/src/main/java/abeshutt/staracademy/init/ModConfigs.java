@@ -18,12 +18,14 @@ public class ModConfigs extends ModRegistries {
     public static PokemonSpawnConfig POKEMON_SPAWN;
     public static ECCobblemonConfig ENHANCED_CELESTIALS_COBBLEMON_CONFIG;
     public static SafariConfig SAFARI;
+    public static WardrobeConfig WARDROBE;
 
     public static void register(boolean initialization) {
         STARTER_RAFFLE = new StarterRaffleConfig().read();
         POKEMON_SPAWN = new PokemonSpawnConfig().read();
         ENHANCED_CELESTIALS_COBBLEMON_CONFIG = new ECCobblemonConfig().read();
         SAFARI = new SafariConfig().read();
+        WARDROBE = new WardrobeConfig().read();
 
         if(!initialization) {
             POST_LOAD.forEach(Runnable::run);

@@ -3,24 +3,29 @@ package abeshutt.staracademy.outfit.core;
 import net.fabricmc.api.EnvType;
 import net.fabricmc.api.Environment;
 import net.minecraft.client.model.*;
-import net.minecraft.client.network.AbstractClientPlayerEntity;
-import net.minecraft.client.render.entity.model.PlayerEntityModel;
 import net.minecraft.util.Identifier;
 
 public abstract class OutfitPiece {
 
     protected Identifier id;
-    protected boolean thinArms;
 
-    public OutfitPiece(Identifier id, boolean thinArms) {
+    public OutfitPiece(Identifier id) {
         this.id = id;
-        this.thinArms = thinArms;
+    }
+
+    public Identifier getId() {
+        return this.id;
     }
 
     @Environment(EnvType.CLIENT)
-    protected ModelData getBaseModelData() {
-        ModelData modelData = new ModelData();
-        ModelPartData modelPartData = modelData.getRoot();
+    protected abstract void buildMesh(ModelPartData root);
+
+    protected abstract OutfitTexture buildTexture();
+
+    @Environment(EnvType.CLIENT)
+    protected TexturedModelData createMesh() {
+        ModelData mesh = new ModelData();
+        ModelPartData root = mesh.getRoot();
 
         String[] partNames = {
                 "head",
@@ -40,30 +45,22 @@ public abstract class OutfitPiece {
         };
 
         for (String partName : partNames) {
-            modelPartData.addChild(partName,
+            root.addChild(partName,
                     ModelPartBuilder.create(),
                     ModelTransform.pivot(0.0F, 0.0F, 0.0F)
             );
         }
 
-        return modelData;
+        this.buildMesh(root);
+        return TexturedModelData.of(mesh, 128, 128);
     }
 
-    public abstract TexturedModelData getTexturedModelData();
-
-    public OutfitPieceModel buildModel() {
-        TexturedModelData texturedModelData = getTexturedModelData();
-        ModelPart root = texturedModelData.createModel();
-        return new OutfitPieceModel(root, this.thinArms);
+    public OutfitPieceModel getModel() {
+        return new OutfitPieceModel(this.createMesh().createModel());
     }
 
-    @Environment(EnvType.CLIENT)
-    public static class OutfitPieceModel extends PlayerEntityModel<AbstractClientPlayerEntity> {
-
-        public OutfitPieceModel(ModelPart root, boolean thinArms) {
-            super(root, thinArms);
-        }
-
+    public OutfitTexture getTexture() {
+        return this.buildTexture();
     }
 
 }
