@@ -38,8 +38,9 @@ public class ModOutfits {
     public static Formal2Outfit.Skirt FORMAL2_SKIRT;
     public static Formal2Outfit.Boots FORMAL2_BOOTS;
 
-    public static GengarHatOutfit GENGAR_HAT;
-    public static GoomyHatOutfit GOOMY_HAT;
+    public static PokemonHatOutfit.Gengar GENGAR_HAT;
+    public static PokemonHatOutfit.Goomy GOOMY_HAT;
+    public static PokemonHatOutfit.Pikachu PIKACHU_HAT;
 
     public static void register() {
         CLASSY1_HAT = register(new Classy1Outfit.Hat("classy1_hat"));
@@ -70,8 +71,9 @@ public class ModOutfits {
         FORMAL2_SKIRT = register(new Formal2Outfit.Skirt("formal2_jacket"));
         FORMAL2_BOOTS = register(new Formal2Outfit.Boots("formal2_jacket"));
 
-        GENGAR_HAT = register(new GengarHatOutfit("gengar_hat"));
-        GOOMY_HAT = register(new GoomyHatOutfit("goomy_hat"));
+        GENGAR_HAT = register(new PokemonHatOutfit.Gengar("gengar_hat"));
+        GOOMY_HAT = register(new PokemonHatOutfit.Goomy("goomy_hat"));
+        PIKACHU_HAT = register(new PokemonHatOutfit.Pikachu("pikachu_hat"));
     }
 
     public static <T extends OutfitPiece> T register(T piece) {
