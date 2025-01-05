@@ -1,10 +1,7 @@
 package abeshutt.staracademy.init;
 
 import abeshutt.staracademy.outfit.core.OutfitPiece;
-import abeshutt.staracademy.outfit.models.Classy1Outfit;
-import abeshutt.staracademy.outfit.models.Classy2Outfit;
-import abeshutt.staracademy.outfit.models.Comfy1Outfit;
-import abeshutt.staracademy.outfit.models.Comfy2Outfit;
+import abeshutt.staracademy.outfit.models.*;
 
 import java.util.HashMap;
 import java.util.Map;
@@ -33,6 +30,10 @@ public class ModOutfits {
     public static Comfy2Outfit.Skirt COMFY2_SKIRT;
     public static Comfy2Outfit.Shoes COMFY2_SHOES;
 
+    public static Formal1Outfit.Jacket FORMAL1_JACKET;
+    public static Formal1Outfit.Pants FORMAL1_PANTS;
+    public static Formal1Outfit.Boots FORMAL1_BOOTS;
+
     public static void register() {
         CLASSY1_HAT = register(new Classy1Outfit.Hat("classy1_hat"));
         CLASSY1_SHIRT = register(new Classy1Outfit.Shirt("classy1_shirt"));
@@ -53,6 +54,10 @@ public class ModOutfits {
         COMFY2_SHIRT = register(new Comfy2Outfit.Shirt("comfy2_shirt"));
         COMFY2_SKIRT = register(new Comfy2Outfit.Skirt("comfy2_skirt"));
         COMFY2_SHOES = register(new Comfy2Outfit.Shoes("comfy2_shoes"));
+
+        FORMAL1_JACKET = register(new Formal1Outfit.Jacket("formal1_jacket"));
+        FORMAL1_PANTS = register(new Formal1Outfit.Pants("formal1_pants"));
+        FORMAL1_BOOTS = register(new Formal1Outfit.Boots("formal1_boots"));
     }
 
     public static <T extends OutfitPiece> T register(T piece) {
