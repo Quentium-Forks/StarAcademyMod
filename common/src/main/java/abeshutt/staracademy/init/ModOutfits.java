@@ -4,6 +4,7 @@ import abeshutt.staracademy.outfit.core.OutfitPiece;
 import abeshutt.staracademy.outfit.models.Classy1Outfit;
 import abeshutt.staracademy.outfit.models.Classy2Outfit;
 import abeshutt.staracademy.outfit.models.Comfy1Outfit;
+import abeshutt.staracademy.outfit.models.Comfy2Outfit;
 
 import java.util.HashMap;
 import java.util.Map;
@@ -27,6 +28,11 @@ public class ModOutfits {
     public static Comfy1Outfit.Pants COMFY1_PANTS;
     public static Comfy1Outfit.Shoes COMFY1_SHOES;
 
+    public static Comfy2Outfit.Hat COMFY2_HAT;
+    public static Comfy2Outfit.Shirt COMFY2_SHIRT;
+    public static Comfy2Outfit.Skirt COMFY2_SKIRT;
+    public static Comfy2Outfit.Shoes COMFY2_SHOES;
+
     public static void register() {
         CLASSY1_HAT = register(new Classy1Outfit.Hat("classy1_hat"));
         CLASSY1_SHIRT = register(new Classy1Outfit.Shirt("classy1_shirt"));
@@ -42,6 +48,11 @@ public class ModOutfits {
         COMFY1_SHIRT = register(new Comfy1Outfit.Shirt("classy1_shirt"));
         COMFY1_PANTS = register(new Comfy1Outfit.Pants("classy1_pants"));
         COMFY1_SHOES = register(new Comfy1Outfit.Shoes("classy1_shoes"));
+
+        COMFY2_HAT = register(new Comfy2Outfit.Hat("comfy2_hat"));
+        COMFY2_SHIRT = register(new Comfy2Outfit.Shirt("comfy2_shirt"));
+        COMFY2_SKIRT = register(new Comfy2Outfit.Skirt("comfy2_skirt"));
+        COMFY2_SHOES = register(new Comfy2Outfit.Shoes("comfy2_shoes"));
     }
 
     public static <T extends OutfitPiece> T register(T piece) {
