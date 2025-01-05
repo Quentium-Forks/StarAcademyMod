@@ -15,6 +15,9 @@ public class SafariConfig extends FileConfig {
     @Expose private long safariDuration;
     @Expose private long playerDuration;
     @Expose private int providedSafariBalls;
+    @Expose private long startEpoch;
+    @Expose private long restartDelay;
+    @Expose private boolean paused;
 
     @Override
     public String getPath() {
@@ -53,6 +56,16 @@ public class SafariConfig extends FileConfig {
         return this.providedSafariBalls;
     }
 
+    public boolean isPaused() {
+        return this.paused;
+    }
+
+    public long getTimeLeft(long lastUpdated) {
+        long refreshes = (lastUpdated - this.startEpoch) / this.restartDelay;
+        long nextRefresh = this.startEpoch + (refreshes + 1) * this.restartDelay;
+        return nextRefresh - System.currentTimeMillis();
+    }
+
     @Override
     protected void reset() {
         this.structure = StarAcademyMod.id("test");
@@ -63,6 +76,9 @@ public class SafariConfig extends FileConfig {
         this.safariDuration = 24 * 60 * 60 * 20;
         this.playerDuration = 30 * 60 * 20;
         this.providedSafariBalls = 16;
+        this.startEpoch = 0;
+        this.restartDelay = 1000 * 60 * 60 * 24;
+        this.paused = false;
     }
 
 }

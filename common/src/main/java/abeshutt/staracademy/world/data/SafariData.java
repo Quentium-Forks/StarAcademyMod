@@ -48,10 +48,13 @@ public class SafariData extends WorldData {
     public static final SafariData CLIENT = new SafariData();
 
     private long timeLeft;
+    private boolean paused;
+    private long lastUpdated;
     private final Map<RegistryKey<World>, Set<BlockPos>> portals;
     private final Map<UUID, Entry> entries;
 
     public SafariData() {
+        this.paused = ModConfigs.SAFARI.isPaused();
         this.portals = new HashMap<>();
         this.entries = new HashMap<>();
     }
@@ -62,6 +65,14 @@ public class SafariData extends WorldData {
 
     public void setTimeLeft(long timeLeft) {
         this.timeLeft = timeLeft;
+    }
+
+    public boolean isPaused() {
+        return this.paused;
+    }
+
+    public void setPaused(boolean paused) {
+        this.paused = paused;
     }
 
     public Map<UUID, Entry> getEntries() {
@@ -168,11 +179,11 @@ public class SafariData extends WorldData {
     }
 
     public void onTick(MinecraftServer server) {
-        Set<UUID> dirty = new HashSet<>();
+        this.timeLeft = ModConfigs.SAFARI.getTimeLeft(this.lastUpdated) / 50;
 
-        if(this.timeLeft > 0) {
-            this.timeLeft--;
-            dirty.addAll(this.entries.keySet());
+        if(this.timeLeft <= 0) {
+            this.lastUpdated = System.currentTimeMillis();
+            this.onStart(server);
         }
 
         for(ServerPlayerEntity player : server.getPlayerManager().getPlayerList()) {
@@ -198,6 +209,8 @@ public class SafariData extends WorldData {
                 return !(world.getBlockEntity(pos) instanceof SafariPortalBlockEntity);
             });
         });
+
+        Set<UUID> dirty = new HashSet<>();
 
         this.entries.forEach((uuid, entry) -> {
             ServerPlayerEntity player = server.getPlayerManager().getPlayer(uuid);
@@ -239,15 +252,15 @@ public class SafariData extends WorldData {
             dirty.add(uuid);
         });
 
-        for(UUID uuid : dirty) {
-            ServerPlayerEntity player = server.getPlayerManager().getPlayer(uuid);
-            if(player == null) continue;
-            ModNetwork.CHANNEL.sendToPlayer(player, new UpdateSafariS2CPacket(this.timeLeft, uuid, this.entries.get(uuid)));
+        for(ServerPlayerEntity player : server.getPlayerManager().getPlayerList()) {
+            if(dirty.contains(player.getUuid())) {
+                ModNetwork.CHANNEL.sendToPlayer(player, new UpdateSafariS2CPacket(this.timeLeft, this.paused, player.getUuid(), this.entries.get(player.getUuid())));
+            } else {
+                ModNetwork.CHANNEL.sendToPlayer(player, new UpdateSafariS2CPacket(this.timeLeft, this.paused, new HashMap<>()));
+            }
         }
 
-        if(!dirty.isEmpty()) {
-            this.markDirty();
-        }
+        this.markDirty();
     }
 
     @Override

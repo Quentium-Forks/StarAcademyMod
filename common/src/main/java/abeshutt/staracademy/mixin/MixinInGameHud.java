@@ -43,7 +43,7 @@ public class MixinInGameHud {
     }
 
     private void renderSafari(DrawContext context, float tickDelta) {
-        if(SafariData.CLIENT.getTimeLeft() <= 0) {
+        if(SafariData.CLIENT.getTimeLeft() <= 0 || SafariData.CLIENT.isPaused()) {
             return;
         }
 
