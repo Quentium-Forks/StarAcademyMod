@@ -94,6 +94,7 @@ public class WardrobeData extends WorldData {
                 entry.getEquipped().removeIf(s -> {
                     if(!entry.getUnlocked().contains(s)) {
                         entry.setDirty(true);
+                        this.setDirty(true);
                         return true;
                     }
 
@@ -107,7 +108,7 @@ public class WardrobeData extends WorldData {
                 if(!entry.isDirty()) return;
                 ModNetwork.CHANNEL.sendToPlayers(server.getPlayerManager().getPlayerList(),
                         new UpdateOutfitS2CPacket(player.getUuid(), entry));
-                entry.setDirty(true);
+                entry.setDirty(false);
             });
         }
     }
