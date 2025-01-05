@@ -38,6 +38,11 @@ public class ModOutfits {
     public static Formal2Outfit.Skirt FORMAL2_SKIRT;
     public static Formal2Outfit.Boots FORMAL2_BOOTS;
 
+    public static Sporty1Outfit.Cap SPORTY1_CAP;
+    public static Sporty1Outfit.Shirt SPORTY1_SHIRT;
+    public static Sporty1Outfit.Pants SPORTY1_PANTS;
+    public static Sporty1Outfit.Shoes SPORTY1_SHOES;
+
     public static PokemonHatOutfit.Gengar GENGAR_HAT;
     public static PokemonHatOutfit.Goomy GOOMY_HAT;
     public static PokemonHatOutfit.Pikachu PIKACHU_HAT;
@@ -71,6 +76,11 @@ public class ModOutfits {
         FORMAL2_JACKET = register(new Formal2Outfit.Jacket("formal2_jacket"));
         FORMAL2_SKIRT = register(new Formal2Outfit.Skirt("formal2_jacket"));
         FORMAL2_BOOTS = register(new Formal2Outfit.Boots("formal2_jacket"));
+
+        SPORTY1_CAP = register(new Sporty1Outfit.Cap("sporty1_cap"));
+        SPORTY1_SHIRT = register(new Sporty1Outfit.Shirt("sporty1_shirt"));
+        SPORTY1_PANTS = register(new Sporty1Outfit.Pants("sporty1_pants"));
+        SPORTY1_SHOES = register(new Sporty1Outfit.Shoes("sporty1_shoes"));
 
         GENGAR_HAT = register(new PokemonHatOutfit.Gengar("gengar_hat"));
         GOOMY_HAT = register(new PokemonHatOutfit.Goomy("goomy_hat"));
