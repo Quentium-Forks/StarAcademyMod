@@ -25,7 +25,7 @@ public class Comfy1Outfit {
 
         @Override
         protected OutfitTexture buildTexture() {
-            return new OutfitTexture(128, 128,
+            return new OutfitTexture(64, 64,
                     StarAcademyMod.id("textures/entity/outfit/comfy1_top.png"),
                     StarAcademyMod.mid("outfit/comfy1_hat", "inventory")
             );
@@ -54,7 +54,7 @@ public class Comfy1Outfit {
 
         @Override
         protected OutfitTexture buildTexture() {
-            return new OutfitTexture(128, 128,
+            return new OutfitTexture(64, 64,
                     StarAcademyMod.id("textures/entity/outfit/comfy1_top.png"),
                     StarAcademyMod.mid("outfit/comfy1_shirt", "inventory")
             );
@@ -102,7 +102,7 @@ public class Comfy1Outfit {
 
         @Override
         protected OutfitTexture buildTexture() {
-            return new OutfitTexture(128, 128,
+            return new OutfitTexture(64, 64,
                     StarAcademyMod.id("textures/entity/outfit/comfy1_top.png"),
                     StarAcademyMod.mid("outfit/comfy1_shoes", "inventory")
             );

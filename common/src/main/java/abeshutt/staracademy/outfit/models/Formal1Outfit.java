@@ -29,7 +29,7 @@ public class Formal1Outfit {
 
         @Override
         protected OutfitTexture buildTexture() {
-            return new OutfitTexture(128, 128,
+            return new OutfitTexture(64, 64,
                     StarAcademyMod.id("textures/entity/outfit/formal1_top.png"),
                     StarAcademyMod.mid("outfit/formal1_jacket", "inventory")
             );
@@ -77,7 +77,7 @@ public class Formal1Outfit {
 
         @Override
         protected OutfitTexture buildTexture() {
-            return new OutfitTexture(128, 128,
+            return new OutfitTexture(64, 64,
                     StarAcademyMod.id("textures/entity/outfit/formal1_top.png"),
                     StarAcademyMod.mid("outfit/formal1_boots", "inventory")
             );
