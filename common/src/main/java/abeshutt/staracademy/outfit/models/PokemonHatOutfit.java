@@ -94,8 +94,8 @@ public class PokemonHatOutfit {
         @Override
         protected OutfitTexture buildTexture() {
             return new OutfitTexture(64, 64,
-                    StarAcademyMod.id("textures/entity/outfit/goomy_hat.png"),
-                    StarAcademyMod.mid("outfit/goomy_hat", "inventory")
+                    StarAcademyMod.id("textures/entity/outfit/pikachu_hat.png"),
+                    StarAcademyMod.mid("outfit/pikachu_hat", "inventory")
             );
         }
 
