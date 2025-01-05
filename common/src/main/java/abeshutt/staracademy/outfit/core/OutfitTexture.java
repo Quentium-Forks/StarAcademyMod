@@ -1,8 +1,11 @@
 package abeshutt.staracademy.outfit.core;
 
+import net.fabricmc.api.EnvType;
+import net.fabricmc.api.Environment;
 import net.minecraft.client.util.ModelIdentifier;
 import net.minecraft.util.Identifier;
 
+@Environment(EnvType.CLIENT)
 public class OutfitTexture {
     protected int width;
     protected int height;

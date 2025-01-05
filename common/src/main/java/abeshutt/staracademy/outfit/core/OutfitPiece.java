@@ -12,16 +12,16 @@ public abstract class OutfitPiece {
             "right_pants", "left_arm", "left_leg", "left_sleeve", "left_pants", "ear", "cloak", "jacket" };
 
     private final String id;
-    private final OutfitTexture texture;
+    private OutfitTexture texture;
 
     @Environment(EnvType.CLIENT)
     private OutfitModel model;
 
     public OutfitPiece(String id) {
         this.id = id;
-        this.texture = this.buildTexture();
 
         if(Platform.getEnvironment() == Env.CLIENT) {
+            this.texture = this.buildTexture();
             this.model = new OutfitModel(this.createMesh().createModel());
         }
     }
@@ -38,6 +38,7 @@ public abstract class OutfitPiece {
         return this.model;
     }
 
+    @Environment(EnvType.CLIENT)
     protected abstract OutfitTexture buildTexture();
 
     @Environment(EnvType.CLIENT)
