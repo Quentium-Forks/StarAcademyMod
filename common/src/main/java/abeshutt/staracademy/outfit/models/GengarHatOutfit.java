@@ -30,7 +30,7 @@ public class GengarHatOutfit extends OutfitPiece {
 
     @Override
     protected OutfitTexture buildTexture() {
-        return new OutfitTexture(128, 128,
+        return new OutfitTexture(32, 32,
                 StarAcademyMod.id("textures/entity/outfit/gengar_hat.png"),
                 StarAcademyMod.mid("outfit/gengar_hat", "inventory")
         );

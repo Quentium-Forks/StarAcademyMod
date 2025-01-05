@@ -39,6 +39,7 @@ public class ModOutfits {
     public static Formal2Outfit.Boots FORMAL2_BOOTS;
 
     public static GengarHatOutfit GENGAR_HAT;
+    public static GoomyHatOutfit GOOMY_HAT;
 
     public static void register() {
         CLASSY1_HAT = register(new Classy1Outfit.Hat("classy1_hat"));
@@ -70,6 +71,7 @@ public class ModOutfits {
         FORMAL2_BOOTS = register(new Formal2Outfit.Boots("formal2_jacket"));
 
         GENGAR_HAT = register(new GengarHatOutfit("gengar_hat"));
+        GOOMY_HAT = register(new GoomyHatOutfit("goomy_hat"));
     }
 
     public static <T extends OutfitPiece> T register(T piece) {
