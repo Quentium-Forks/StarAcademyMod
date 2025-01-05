@@ -2,6 +2,7 @@ package abeshutt.staracademy.init;
 
 import abeshutt.staracademy.entity.DuelingGloveEntity;
 import abeshutt.staracademy.entity.ProfessorHansEntity;
+import abeshutt.staracademy.entity.SafariNPCEntity;
 import abeshutt.staracademy.entity.StarBadgeEntity;
 import dev.architectury.registry.registries.RegistrySupplier;
 import net.minecraft.entity.Entity;
@@ -16,6 +17,7 @@ public class ModEntities extends ModRegistries {
     public static RegistrySupplier<EntityType<StarBadgeEntity>> STAR_BADGE;
     public static RegistrySupplier<EntityType<DuelingGloveEntity>> DUELING_GLOVE;
     public static RegistrySupplier<EntityType<ProfessorHansEntity>> PARTNER_NPC;
+    public static RegistrySupplier<EntityType<SafariNPCEntity>> SAFARI_NPC;
 
     public static void register() {
         STAR_BADGE = register("star_badge", StarBadgeEntity::new, SpawnGroup.MISC,
@@ -25,6 +27,9 @@ public class ModEntities extends ModRegistries {
                 builder -> builder.setDimensions(0.98F, 0.7F).maxTrackingRange(128));
 
         PARTNER_NPC = register("partner_npc", ProfessorHansEntity::new, SpawnGroup.MISC,
+                builder -> builder.setDimensions(0.6F, 1.8F).maxTrackingRange(128));
+
+        SAFARI_NPC = register("safari_npc", SafariNPCEntity::new, SpawnGroup.MISC,
                 builder -> builder.setDimensions(0.6F, 1.8F).maxTrackingRange(128));
     }
 
