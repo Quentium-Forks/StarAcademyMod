@@ -26,7 +26,7 @@ public abstract class OutfitEntry implements ISerializable<NbtCompound, JsonObje
         return null;
     }
 
-    public abstract void render(OutfitItemRenderer renderer, ItemStack stack, ModelTransformationMode mode, MatrixStack matrices,
+    public abstract void render(OutfitItemRenderer renderer, ItemStack stack, ModelTransformationMode mode, boolean leftHanded, MatrixStack matrices,
                                 VertexConsumerProvider vertexConsumers, int light, int overlay);
 
     @Override

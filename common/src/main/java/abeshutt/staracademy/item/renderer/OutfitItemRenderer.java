@@ -11,13 +11,11 @@ public class OutfitItemRenderer extends SpecialItemRenderer {
     public static final OutfitItemRenderer INSTANCE = new OutfitItemRenderer();
 
     @Override
-    public boolean render(ItemStack stack, ModelTransformationMode mode, MatrixStack matrices,
+    public void render(ItemStack stack, ModelTransformationMode mode, boolean leftHanded, MatrixStack matrices,
                           VertexConsumerProvider vertexConsumers, int light, int overlay) {
         OutfitItem.getEntry(stack).ifPresent(entry -> {
-            entry.render(this, stack, mode, matrices, vertexConsumers, light, overlay);
+            entry.render(this, stack, mode, leftHanded, matrices, vertexConsumers, light, overlay);
         });
-
-        return false;
     }
 
 }

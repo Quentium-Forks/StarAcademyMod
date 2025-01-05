@@ -34,11 +34,11 @@ public class ValueOutfitEntry extends OutfitEntry {
     }
 
     @Override
-    public void render(OutfitItemRenderer renderer, ItemStack stack, ModelTransformationMode mode, MatrixStack matrices, VertexConsumerProvider vertexConsumers, int light, int overlay) {
+    public void render(OutfitItemRenderer renderer, ItemStack stack, ModelTransformationMode mode, boolean leftHanded, MatrixStack matrices, VertexConsumerProvider vertexConsumers, int light, int overlay) {
         OutfitPiece outfit = ModOutfits.REGISTRY.get(this.id);
         if(outfit == null) return;
         ModelIdentifier icon = outfit.getTexture().getIcon();
-        renderer.renderModel(icon, stack, mode, matrices, vertexConsumers, light, overlay);
+        renderer.renderModel(icon, stack, mode, leftHanded, matrices, vertexConsumers, light, overlay);
     }
 
     @Override

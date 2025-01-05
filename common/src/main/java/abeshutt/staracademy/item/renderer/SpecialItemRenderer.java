@@ -4,10 +4,7 @@ import net.minecraft.block.Block;
 import net.minecraft.block.StainedGlassPaneBlock;
 import net.minecraft.block.TransparentBlock;
 import net.minecraft.client.MinecraftClient;
-import net.minecraft.client.render.RenderLayer;
-import net.minecraft.client.render.RenderLayers;
-import net.minecraft.client.render.VertexConsumer;
-import net.minecraft.client.render.VertexConsumerProvider;
+import net.minecraft.client.render.*;
 import net.minecraft.client.render.item.ItemRenderer;
 import net.minecraft.client.render.model.BakedModel;
 import net.minecraft.client.render.model.BakedQuad;
@@ -23,11 +20,22 @@ import java.util.List;
 
 public abstract class SpecialItemRenderer {
 
-    public abstract boolean render(ItemStack stack, ModelTransformationMode mode, MatrixStack matrices,
-                       VertexConsumerProvider vertexConsumers, int light, int overlay);
+    public abstract void render(ItemStack stack, ModelTransformationMode mode, boolean leftHanded, MatrixStack matrices,
+                                   VertexConsumerProvider vertexConsumers, int light, int overlay);
 
-    public void renderModel(ModelIdentifier id, ItemStack stack, ModelTransformationMode mode, MatrixStack matrices,
+    public void renderModel(ModelIdentifier id, ItemStack stack, ModelTransformationMode mode, boolean leftHanded, MatrixStack matrices,
                             VertexConsumerProvider vertexConsumers, int light, int overlay) {
+        matrices.push();
+        BakedModel model = MinecraftClient.getInstance().getBakedModelManager().getModel(id);
+
+        if(mode == ModelTransformationMode.GUI && !model.isSideLit()) {
+            DiffuseLighting.enableGuiDepthLighting();
+        }
+
+        matrices.translate(0.5F, 0.5F, 0.5F);
+        model.getTransformation().getTransformation(mode).apply(leftHanded, matrices);
+        matrices.translate(-0.5F, -0.5F, -0.5F);
+
         boolean transparent;
         if (mode != ModelTransformationMode.GUI && !mode.isFirstPerson() && stack.getItem() instanceof BlockItem) {
             Block block = ((BlockItem)stack.getItem()).getBlock();
@@ -45,8 +53,13 @@ public abstract class SpecialItemRenderer {
             vertexConsumer = ItemRenderer.getItemGlintConsumer(vertexConsumers, renderLayer, true, stack.hasGlint());
         }
 
-        BakedModel model = MinecraftClient.getInstance().getBakedModelManager().getModel(id);
         this.renderBakedItemModel(model, stack, light, overlay, matrices, vertexConsumer);
+
+        if(mode == ModelTransformationMode.GUI && !model.isSideLit()) {
+            DiffuseLighting.disableGuiDepthLighting();
+        }
+
+        matrices.pop();
     }
 
     private void renderBakedItemModel(BakedModel model, ItemStack stack, int light, int overlay, MatrixStack matrices, VertexConsumer vertices) {
