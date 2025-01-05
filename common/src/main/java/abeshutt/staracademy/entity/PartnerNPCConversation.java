@@ -1,28 +1,42 @@
 package abeshutt.staracademy.entity;
 
+import abeshutt.staracademy.data.adapter.Adapters;
 import abeshutt.staracademy.data.serializable.INbtSerializable;
-import abeshutt.staracademy.event.CommonEvents;
+import abeshutt.staracademy.init.ModWorldData;
+import abeshutt.staracademy.util.TextUtils;
+import abeshutt.staracademy.world.data.PartnerData;
 import abeshutt.staracademy.world.random.JavaRandom;
 import abeshutt.staracademy.world.random.RandomSource;
-import com.cobblemon.mod.common.api.Priority;
+import com.cobblemon.mod.common.api.events.pokemon.PokemonSentPostEvent;
 import com.cobblemon.mod.common.pokemon.Species;
 import net.minecraft.nbt.NbtCompound;
 import net.minecraft.server.MinecraftServer;
 import net.minecraft.server.network.ServerPlayerEntity;
+import net.minecraft.text.ClickEvent;
+import net.minecraft.text.MutableText;
+import net.minecraft.text.Style;
+import net.minecraft.text.Text;
+import net.minecraft.util.Formatting;
 import net.minecraft.world.World;
 
 import java.util.Optional;
 import java.util.UUID;
 import java.util.function.Function;
 
+import static net.minecraft.text.ClickEvent.Action.RUN_COMMAND;
+
 public class PartnerNPCConversation implements INbtSerializable<NbtCompound> {
 
     public static final Function<RandomSource, String> INITIAL_GREETING = create(
-        "Ah, a new trainer! Welcome to the academy, ${uuid}. I’m ${npc}. How wonderful to see a new fresh, eager face!"
+        "Ah, a new trainer! Welcome to the academy, ${player}. I’m ${npc}. How wonderful to see a new fresh, eager face!"
     );
 
     public static final Function<RandomSource, String> SUBSEQUENT_GREETING = create(
-        "Ah, a new trainer! Welcome to the academy, ${uuid}. I’m ${npc}. How wonderful to see a new fresh, eager face!"
+        "Hello, ${player}!"
+    );
+
+    public static final Function<RandomSource, String> PROMPT_ACTIONS = create(
+        "How can I help you?"
     );
 
     public static final Function<RandomSource, String> PARTNER_SUMMON = create(
@@ -53,48 +67,136 @@ public class PartnerNPCConversation implements INbtSerializable<NbtCompound> {
         "It looks like you've already chosen ${pokemon} as your partner."
     );
 
-    private UUID uuid;
+    private final UUID uuid;
     private Phase phase;
     private boolean initial;
     private Species selectedSpecies;
 
     public PartnerNPCConversation(UUID uuid) {
+        this.uuid = uuid;
         this.phase = Phase.NONE;
         this.initial = true;
     }
 
-    public void attach() {
-        CommonEvents.POKEMON_SENT_POST.subscribe(this, Priority.NORMAL, event -> {
-            if(!this.uuid.equals(event.getPokemon().getOwnerUUID())) return;
-            if(this.phase != Phase.AWAIT_PARTNER_SUMMON) return;
-            this.selectedSpecies = event.getPokemon().getSpecies();
-        });
-    }
+    public void onTick(ServerPlayerEntity player, PartnerNPCEntity npc) {
+        PartnerData data = ModWorldData.PARTNER.getGlobal(player.getWorld());
 
-    public void tick(PartnerNPCEntity entity) {
+        if(this.phase == Phase.AWAIT_PARTNER_SUMMON && data.getSelection(this.uuid).isPresent()) {
+            this.phase = Phase.GREETING;
+        }
 
-    }
-
-    public void onConfirmSpeciesSelection(MinecraftServer server) {
-        if(this.selectedSpecies == null) return;
-        ServerPlayerEntity player = server.getPlayerManager().getPlayer(this.uuid);
-
-
-    }
-
-    public void onInteract(PartnerNPCEntity entity) {
-        RandomSource random = JavaRandom.ofNanoTime();
-
-        if(this.phase == Phase.NONE) {
-            this.getPlayer(entity.getWorld()).ifPresent(player -> {
-                String greeting = (this.initial ? INITIAL_GREETING : SUBSEQUENT_GREETING).apply(random);
-                this.phase = Phase.GREETING;
-            });
+        if(player.distanceTo(npc) > 16.0D) {
+            this.phase = Phase.NONE;
         }
     }
 
-    public void detach() {
-        CommonEvents.POKEMON_SENT_POST.unsubscribe(this);
+    public void onPokemonSent(ServerPlayerEntity player, PartnerNPCEntity npc, PokemonSentPostEvent event) {
+        this.selectedSpecies = event.getPokemon().getSpecies();
+        RandomSource random = JavaRandom.ofNanoTime();
+
+        MutableText text = Text.empty();
+        text = text.append(Text.literal(PARTNER_SUMMON_CONFIRMATION.apply(random)).formatted(Formatting.GRAY));
+        text = this.format(text, player, null, this.selectedSpecies);
+        text = text.append(" ");
+        text = text.append(Text.literal("[Yes]").formatted(Formatting.GREEN)
+                .styled(style -> style.withClickEvent(new ClickEvent(RUN_COMMAND,
+                        "/academy partner " + npc.getUuid() + " confirm_partner_selection"))));
+        player.sendMessage(text, false);
+    }
+
+    public void onInteract(ServerPlayerEntity player, PartnerNPCEntity npc) {
+        RandomSource random = JavaRandom.ofNanoTime();
+
+        if(this.phase == Phase.NONE) {
+            MutableText text = Text.empty();
+            text = text.append(Text.literal((this.initial ? INITIAL_GREETING : SUBSEQUENT_GREETING).apply(random)).formatted(Formatting.GRAY));
+            text = text.append(" ");
+            text = text.append(Text.literal(PROMPT_ACTIONS.apply(random)).formatted(Formatting.GRAY));
+            text = this.format(text, player, npc, null);
+
+            text = text.append(" ");
+            text = text.append(Text.literal("[Select Partner]").formatted(Formatting.AQUA)
+                    .styled(style -> style.withClickEvent(new ClickEvent(RUN_COMMAND,
+                            "/academy partner " + npc.getUuid() + " select_partner"))));
+
+            player.sendMessage(text, false);
+            this.phase = Phase.GREETING;
+            this.initial = false;
+        } else if(this.phase == Phase.GREETING) {
+            MutableText text = Text.empty();
+            text = text.append(Text.literal(PROMPT_ACTIONS.apply(random)).formatted(Formatting.GRAY));
+            text = this.format(text, player, npc, null);
+
+            text = text.append(" ");
+            text = text.append(Text.literal("[Select Partner]").formatted(Formatting.AQUA)
+                    .styled(style -> style.withClickEvent(new ClickEvent(RUN_COMMAND,
+                            "/academy partner " + npc.getUuid() + " select_partner"))));
+
+            player.sendMessage(text, false);
+        } else if(this.phase == Phase.AWAIT_PARTNER_SUMMON) {
+            MutableText text = Text.empty();
+            text = text.append(Text.literal(PARTNER_SUMMON.apply(random)).formatted(Formatting.GRAY));
+            text = this.format(text, player, npc, null);
+            player.sendMessage(text, false);
+        }
+    }
+
+    public void onSelectPartner(ServerPlayerEntity player, PartnerNPCEntity npc) {
+        RandomSource random = JavaRandom.ofNanoTime();
+        MutableText text = null;
+
+        PartnerData data = ModWorldData.PARTNER.getGlobal(player.getWorld());
+
+        if(data.getSelection(this.uuid).isPresent()) {
+            text = Text.empty()
+                    .append(Text.literal(PARTNER_SUMMON_ALREADY_SET.apply(random)).formatted(Formatting.GRAY));
+        } else if(this.phase == Phase.GREETING) {
+            text = Text.empty()
+                    .append(Text.literal(PARTNER_SUMMON.apply(random)).formatted(Formatting.GRAY))
+                    .append(" ")
+                    .append(Text.literal(PARTNER_SUMMON_EXPLANATION.apply(random)).formatted(Formatting.GRAY));
+            this.phase = Phase.AWAIT_PARTNER_SUMMON;
+        } else if(this.phase == Phase.AWAIT_PARTNER_SUMMON) {
+            text = Text.empty()
+                    .append(Text.literal(PARTNER_SUMMON.apply(random)).formatted(Formatting.GRAY));
+        }
+
+        if(text != null) {
+            text = this.format(text, player, npc, data.getSelection(this.uuid).orElse(null));
+            player.sendMessage(text, false);
+        }
+    }
+
+    public void onConfirmPartnerSelection(ServerPlayerEntity player, PartnerNPCEntity npc) {
+        if(this.selectedSpecies == null) return;
+        PartnerData data = ModWorldData.PARTNER.getGlobal(player.getWorld());
+        if(data.getSelection(player.getUuid()).isPresent()) return;
+
+        JavaRandom random = JavaRandom.ofNanoTime();
+        MutableText text = Text.literal(PARTNER_SUMMON_SUCCESS.apply(random)).formatted(Formatting.GRAY);
+        player.sendMessage(this.format(text, player, npc, this.selectedSpecies));
+        data.setAndNotifySelection(player, this.selectedSpecies);
+        this.phase = Phase.GREETING;
+    }
+
+    public MutableText format(MutableText text, ServerPlayerEntity player, PartnerNPCEntity npc, Species species) {
+        MutableText result = text;
+
+        if(player != null) {
+            result = TextUtils.replace(result, "${player}", player.getName().copy().formatted(Formatting.WHITE));
+        }
+
+        if(npc != null) {
+            result = TextUtils.replace(result, "${npc}", npc.getName().copy().formatted(Formatting.WHITE));
+        }
+
+        if(species != null) {
+            int color = species.getPrimaryType().getHue();
+            result = TextUtils.replace(result, "${pokemon}", species.getTranslatedName()
+                    .setStyle(Style.EMPTY.withColor(color)));
+        }
+
+        return result;
     }
 
     public Optional<ServerPlayerEntity> getPlayer(World world) {
@@ -110,16 +212,19 @@ public class PartnerNPCConversation implements INbtSerializable<NbtCompound> {
 
     @Override
     public Optional<NbtCompound> writeNbt() {
-        return Optional.empty();
+        return Optional.of(new NbtCompound()).map(nbt -> {
+            Adapters.BOOLEAN.writeNbt(this.initial).ifPresent(tag -> nbt.put("initial", tag));
+            return nbt;
+        });
     }
 
     @Override
     public void readNbt(NbtCompound nbt) {
-
+        this.initial = Adapters.BOOLEAN.readNbt(nbt.get("initial")).orElse(true);
     }
 
-    private enum Phase {
-        NONE, GREETING, AWAIT_PARTNER_SUMMON, DONE
+    public enum Phase {
+        NONE, GREETING, AWAIT_PARTNER_SUMMON
     }
 
 }

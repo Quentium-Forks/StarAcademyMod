@@ -12,7 +12,6 @@ public class SafariConfig extends FileConfig {
     @Expose private BlockPos spawnPositionRelative;
     @Expose private float spawnYaw;
     @Expose private float spawnPitch;
-    @Expose private long safariDuration;
     @Expose private long playerDuration;
     @Expose private int providedSafariBalls;
     @Expose private long startEpoch;
@@ -42,10 +41,6 @@ public class SafariConfig extends FileConfig {
 
     public float getSpawnPitch() {
         return this.spawnPitch;
-    }
-
-    public long getSafariDuration() {
-        return this.safariDuration;
     }
 
     public long getPlayerDuration() {

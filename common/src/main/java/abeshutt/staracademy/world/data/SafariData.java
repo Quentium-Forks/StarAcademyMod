@@ -180,7 +180,7 @@ public class SafariData extends WorldData {
         server.getOverworld().getWorldBorder().addListener(new WorldBorderSyncer(newWorld.getWorldBorder()));
         server.worlds.put(world.getRegistryKey(), newWorld);
 
-        this.timeLeft = ModConfigs.SAFARI.getSafariDuration();
+        this.timeLeft = ModConfigs.SAFARI.getTimeLeft(this.lastUpdated) / 50;
         this.entries.clear();
     }
 

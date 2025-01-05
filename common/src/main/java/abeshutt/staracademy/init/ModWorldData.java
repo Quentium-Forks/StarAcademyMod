@@ -10,6 +10,7 @@ public class ModWorldData extends ModRegistries {
     public static WorldDataType<PokemonStarterData> POKEMON_STARTER;
     public static WorldDataType<SafariData> SAFARI;
     public static WorldDataType<WardrobeData> WARDROBE;
+    public static WorldDataType<PartnerData> PARTNER;
 
     public static void register() {
         PLAYER_NAME = new WorldDataType<>(StarAcademyMod.ID + ".player_profile", PlayerProfileData::new);
@@ -17,12 +18,14 @@ public class ModWorldData extends ModRegistries {
         POKEMON_STARTER = new WorldDataType<>(StarAcademyMod.ID + ".pokemon_starter", PokemonStarterData::new);
         SAFARI = new WorldDataType<>(StarAcademyMod.ID + ".safari", SafariData::new);
         WARDROBE = new WorldDataType<>(StarAcademyMod.ID + ".wardrobe", WardrobeData::new);
+        PARTNER = new WorldDataType<>(StarAcademyMod.ID + ".partner", PartnerData::new);
 
         PlayerProfileData.init();
         StarBadgeData.init();
         PokemonStarterData.init();
         SafariData.init();
         WardrobeData.init();
+        PartnerData.init();
     }
 
 }

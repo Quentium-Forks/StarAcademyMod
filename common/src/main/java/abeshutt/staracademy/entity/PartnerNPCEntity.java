@@ -1,20 +1,25 @@
 package abeshutt.staracademy.entity;
 
 import abeshutt.staracademy.StarAcademyMod;
+import abeshutt.staracademy.event.CommonEvents;
+import com.cobblemon.mod.common.api.Priority;
 import net.minecraft.entity.EntityType;
-import net.minecraft.entity.ai.goal.*;
+import net.minecraft.entity.ai.goal.LookAroundGoal;
+import net.minecraft.entity.ai.goal.LookAtEntityGoal;
+import net.minecraft.entity.ai.goal.SwimGoal;
 import net.minecraft.entity.mob.PathAwareEntity;
 import net.minecraft.entity.player.PlayerEntity;
-import net.minecraft.item.Items;
 import net.minecraft.nbt.NbtCompound;
-import net.minecraft.recipe.Ingredient;
+import net.minecraft.server.network.ServerPlayerEntity;
 import net.minecraft.util.ActionResult;
 import net.minecraft.util.Hand;
 import net.minecraft.util.Identifier;
+import net.minecraft.util.math.Box;
 import net.minecraft.world.World;
 
 import java.util.HashMap;
 import java.util.Map;
+import java.util.Optional;
 import java.util.UUID;
 
 public class PartnerNPCEntity extends HumanEntity {
@@ -26,19 +31,42 @@ public class PartnerNPCEntity extends HumanEntity {
         this.conversations = new HashMap<>();
     }
 
+    public Optional<PartnerNPCConversation> getConversation(UUID uuid) {
+        return Optional.ofNullable(this.conversations.get(uuid));
+    }
+
     @Override
     protected void initGoals() {
         this.goalSelector.add(0, new SwimGoal(this));
-        this.goalSelector.add(1, new EscapeDangerGoal(this, 2.0));
-        this.goalSelector.add(3, new TemptGoal(this, 1.25, Ingredient.ofItems(Items.WHEAT), false));
-        this.goalSelector.add(5, new WanderAroundFarGoal(this, 1.0));
-        this.goalSelector.add(6, new LookAtEntityGoal(this, PlayerEntity.class, 6.0F));
-        this.goalSelector.add(7, new LookAroundGoal(this));
+        this.goalSelector.add(1, new LookAtEntityGoal(this, PlayerEntity.class, 6.0F, 0.1F));
+        this.goalSelector.add(2, new LookAroundGoal(this));
+    }
+
+    @Override
+    public void tick() {
+        this.setInvulnerable(true);
+
+        if(!this.getWorld().isClient() && this.getServer() != null) {
+            this.conversations.forEach((uuid, conversation) -> {
+                ServerPlayerEntity player = this.getServer().getPlayerManager().getPlayer(uuid);
+
+                if(player != null) {
+                    conversation.onTick(player, this);
+                }
+            });
+        }
+
+        super.tick();
     }
 
     @Override
     protected ActionResult interactMob(PlayerEntity player, Hand hand) {
-        return super.interactMob(player, hand);
+        if(player instanceof ServerPlayerEntity serverPlayer && hand == Hand.MAIN_HAND) {
+            this.conversations.computeIfAbsent(player.getUuid(), PartnerNPCConversation::new)
+                    .onInteract(serverPlayer, this);
+        }
+
+        return ActionResult.SUCCESS;
     }
 
     @Override
@@ -69,6 +97,28 @@ public class PartnerNPCEntity extends HumanEntity {
             conversation.readNbt(nbt.getCompound(key));
             this.conversations.put(uuid, conversation);
         }
+    }
+
+    static {
+        CommonEvents.POKEMON_SENT_POST.subscribe(Priority.NORMAL, event -> {
+            World world = event.getPokemonEntity().getWorld();
+            if(world.isClient() || world.getServer() == null) return;
+            UUID owner = event.getPokemonEntity().getOwnerUuid();
+            ServerPlayerEntity player = world.getServer().getPlayerManager().getPlayer(owner);
+            if(player == null) return;
+
+            Box area = event.getPokemonEntity().getBoundingBox().expand(48.0D);
+
+            world.getEntitiesByClass(PartnerNPCEntity.class, area, npc -> {
+                PartnerNPCConversation convo = npc.conversations.get(owner);
+
+                if(convo != null) {
+                    convo.onPokemonSent(player, npc, event);
+                }
+
+                return false;
+            });
+        });
     }
 
 }
