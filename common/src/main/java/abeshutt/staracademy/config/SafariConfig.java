@@ -73,7 +73,6 @@ public class SafariConfig extends FileConfig {
         this.spawnPositionRelative = new BlockPos(0, 2, 0);
         this.spawnYaw = 0.0F;
         this.spawnPitch = 0.0F;
-        this.safariDuration = 24 * 60 * 60 * 20;
         this.playerDuration = 30 * 60 * 20;
         this.providedSafariBalls = 16;
         this.startEpoch = 0;

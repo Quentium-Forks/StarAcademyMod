@@ -49,7 +49,7 @@ public class SafariNPCEntity extends HumanEntity {
             }
         }
 
-        return super.interactMob(player, hand);
+        return ActionResult.SUCCESS;
     }
 
     @Override

@@ -71,6 +71,10 @@ public class WardrobeData extends WorldData {
     public boolean setEquipped(UUID uuid, String id, boolean equipped) {
         Entry entry = this.getOrCreate(uuid);
 
+        if(equipped && !entry.getUnlocked().contains(id)) {
+            return false;
+        }
+
         if((equipped && entry.getEquipped().add(id)) || (!equipped && entry.getEquipped().remove(id))) {
             entry.setDirty(true);
             this.setDirty(true);
@@ -85,6 +89,19 @@ public class WardrobeData extends WorldData {
     }
 
     public void onTick(MinecraftServer server) {
+        for(ServerPlayerEntity player : server.getPlayerManager().getPlayerList()) {
+            this.get(player.getUuid()).ifPresent(entry -> {
+                entry.getEquipped().removeIf(s -> {
+                    if(!entry.getUnlocked().contains(s)) {
+                        entry.setDirty(true);
+                        return true;
+                    }
+
+                    return false;
+                });
+            });
+        }
+
         for(ServerPlayerEntity player : server.getPlayerManager().getPlayerList()) {
             this.get(player.getUuid()).ifPresent(entry -> {
                 if(!entry.isDirty()) return;
