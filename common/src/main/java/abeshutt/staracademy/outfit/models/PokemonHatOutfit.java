@@ -101,4 +101,48 @@ public class PokemonHatOutfit {
 
     }
 
+    public static class Slowking extends OutfitPiece {
+
+        public Slowking(String id) {
+            super(id);
+        }
+
+        @Override
+        protected void buildMesh(ModelPartData modelPartData) {
+            ModelPartData head = modelPartData.addChild("head", ModelPartBuilder.create().uv(0, 0).cuboid(-6.0F, -12.0F, -6.0F, 12.0F, 7.0F, 12.0F, new Dilation(0.0F))
+                    .uv(32, 19).cuboid(-4.0F, -17.0F, -4.0F, 8.0F, 5.0F, 8.0F, new Dilation(0.0F))
+                    .uv(16, 35).cuboid(-2.0F, -22.0F, -2.0F, 4.0F, 5.0F, 4.0F, new Dilation(0.0F))
+                    .uv(0, 19).cuboid(-4.0F, -8.0F, -4.0F, 8.0F, 8.0F, 8.0F, new Dilation(1.0F))
+                    .uv(48, 0).cuboid(-1.0F, -19.0F, -3.0F, 2.0F, 2.0F, 2.0F, new Dilation(0.0F))
+                    .uv(48, 4).cuboid(1.0F, -6.0F, -5.5F, 2.0F, 2.0F, 1.0F, new Dilation(0.0F))
+                    .uv(48, 7).cuboid(-3.0F, -6.0F, -5.5F, 2.0F, 2.0F, 1.0F, new Dilation(0.0F))
+                    .uv(48, 13).cuboid(-3.0F, -6.0F, 4.5F, 2.0F, 2.0F, 1.0F, new Dilation(0.0F))
+                    .uv(48, 10).cuboid(1.0F, -6.0F, 4.5F, 2.0F, 2.0F, 1.0F, new Dilation(0.0F)), ModelTransform.pivot(0.0F, 0.0F, 0.0F));
+
+            ModelPartData cube_r1 = head.addChild("cube_r1", ModelPartBuilder.create().uv(0, 46).cuboid(-1.0F, -2.5F, -1.0F, 2.0F, 5.0F, 2.0F, new Dilation(0.0F)), ModelTransform.of(2.3536F, -17.5F, -2.3536F, 2.5261F, -0.5236F, -2.1863F));
+
+            ModelPartData cube_r2 = head.addChild("cube_r2", ModelPartBuilder.create().uv(24, 44).cuboid(-1.0F, -2.5F, -1.0F, 2.0F, 5.0F, 2.0F, new Dilation(0.0F)), ModelTransform.of(2.3536F, -17.5F, 2.3964F, -2.5261F, 0.5236F, -2.1863F));
+
+            ModelPartData cube_r3 = head.addChild("cube_r3", ModelPartBuilder.create().uv(16, 44).cuboid(-1.0F, -2.5F, -1.0F, 2.0F, 5.0F, 2.0F, new Dilation(0.0F)), ModelTransform.of(-2.6464F, -17.5F, 2.3964F, -0.6155F, 0.5236F, -0.9553F));
+
+            ModelPartData cube_r4 = head.addChild("cube_r4", ModelPartBuilder.create().uv(8, 46).cuboid(-1.0F, -2.5F, -1.5F, 2.0F, 5.0F, 2.0F, new Dilation(0.0F))
+                    .uv(32, 32).cuboid(-10.0F, -0.5F, -2.5F, 4.0F, 7.0F, 4.0F, new Dilation(0.0F)), ModelTransform.of(-3.0F, -17.5F, -2.0F, 0.6155F, -0.5236F, -0.9553F));
+
+            ModelPartData cube_r5 = head.addChild("cube_r5", ModelPartBuilder.create().uv(0, 35).cuboid(-2.183F, -1.799F, -2.0F, 4.0F, 7.0F, 4.0F, new Dilation(0.0F)), ModelTransform.of(6.0946F, -11.054F, -5.6125F, 2.5261F, -0.5236F, -2.1863F));
+
+            ModelPartData cube_r6 = head.addChild("cube_r6", ModelPartBuilder.create().uv(40, 43).cuboid(-1.692F, -4.5646F, -1.0F, 2.0F, 6.0F, 2.0F, new Dilation(0.0F)), ModelTransform.of(6.0946F, -11.054F, -5.6125F, 2.8883F, -0.7519F, -2.7794F));
+
+            ModelPartData cube_r7 = head.addChild("cube_r7", ModelPartBuilder.create().uv(32, 43).cuboid(0.0F, 0.0F, -1.0F, 2.0F, 6.0F, 2.0F, new Dilation(0.0F)), ModelTransform.of(-7.8964F, -15.0251F, -7.6036F, 0.2533F, -0.7519F, -0.3622F));
+        }
+
+        @Override
+        protected OutfitTexture buildTexture() {
+            return new OutfitTexture(64, 64,
+                    StarAcademyMod.id("textures/entity/outfit/slowking_hat.png"),
+                    StarAcademyMod.mid("outfit/slowking_hat", "inventory")
+            );
+        }
+
+    }
+
 }
