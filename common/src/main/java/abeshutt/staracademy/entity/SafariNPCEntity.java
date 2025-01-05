@@ -33,14 +33,16 @@ public class SafariNPCEntity extends HumanEntity {
 
     @Override
     protected ActionResult interactMob(PlayerEntity player, Hand hand) {
-        SafariData data = ModWorldData.SAFARI.getGlobal(player.getWorld());
+        if(!player.getWorld().isClient() && hand == Hand.MAIN_HAND) {
+            SafariData data = ModWorldData.SAFARI.getGlobal(player.getWorld());
 
-        if(data.isPaused()) {
-            player.sendMessage(Text.empty()
-                    .append(Text.literal("Sorry, Trainer, but the Safari is off-limits at the moment. Please come back later!")));
-        } else {
-            player.sendMessage(Text.empty()
-                    .append(Text.literal("Hello, Trainer! The Safari is open for exploration. Step right through and enjoy the hunt!")));
+            if(data.isPaused()) {
+                player.sendMessage(Text.empty()
+                        .append(Text.literal("Sorry, Trainer, but the Safari is off-limits at the moment. Please come back later!").formatted(Formatting.GRAY)));
+            } else {
+                player.sendMessage(Text.empty()
+                        .append(Text.literal("Hello, Trainer! The Safari is open for exploration. Step right through and enjoy the hunt!").formatted(Formatting.GRAY)));
+            }
         }
 
         return super.interactMob(player, hand);

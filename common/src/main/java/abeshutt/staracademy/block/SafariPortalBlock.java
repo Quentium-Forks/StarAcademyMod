@@ -88,7 +88,7 @@ public class SafariPortalBlock extends Block implements BlockEntityProvider {
             if(world.getRegistryKey() == StarAcademyMod.SAFARI) {
                 data.leaveSafari(player);
             } else {
-                if(data.getTimeLeft() <= 0) {
+                if(data.getTimeLeft() <= 0 || data.isPaused()) {
                     player.sendMessage(Text.empty()
                             .append(Text.literal("The Safari is currently unavailable.")
                                     .formatted(Formatting.RED)), true);

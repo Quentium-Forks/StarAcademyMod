@@ -45,7 +45,7 @@ import java.util.*;
 
 public class SafariData extends WorldData {
 
-    public static final SafariData CLIENT = new SafariData();
+    public static final SafariData CLIENT = new SafariData(false);
 
     private long timeLeft;
     private boolean paused;
@@ -53,10 +53,14 @@ public class SafariData extends WorldData {
     private final Map<RegistryKey<World>, Set<BlockPos>> portals;
     private final Map<UUID, Entry> entries;
 
-    public SafariData() {
-        this.paused = ModConfigs.SAFARI.isPaused();
+    private SafariData(boolean paused) {
+        this.paused = paused;
         this.portals = new HashMap<>();
         this.entries = new HashMap<>();
+    }
+
+    public SafariData() {
+        this(ModConfigs.SAFARI.isPaused());
     }
 
     public long getTimeLeft() {
@@ -71,8 +75,10 @@ public class SafariData extends WorldData {
         return this.paused;
     }
 
-    public void setPaused(boolean paused) {
+    public boolean setPaused(boolean paused) {
+        boolean changed = this.paused != paused;
         this.paused = paused;
+        return changed;
     }
 
     public Map<UUID, Entry> getEntries() {

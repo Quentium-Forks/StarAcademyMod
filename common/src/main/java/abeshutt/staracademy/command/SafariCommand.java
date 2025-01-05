@@ -20,14 +20,49 @@ public class SafariCommand extends Command {
         dispatcher.register(literal(StarAcademyMod.ID)
                 .requires(source -> source.hasPermissionLevel(4))
                 .then(literal("safari")
-                    .then(literal("restart")
-                        .executes(this::onRestart))));
+                    .then(literal("pause")
+                        .executes(this::onPause))
+                    .then(literal("unpause")
+                        .executes(this::onUnpause))));
     }
 
-    private int onRestart(CommandContext<ServerCommandSource> context) {
+    private int onPause(CommandContext<ServerCommandSource> context) {
         SafariData data = ModWorldData.SAFARI.getGlobal(context.getSource().getServer());
-        data.onStart(context.getSource().getServer());
-        context.getSource().sendFeedback(() -> Text.literal("Started safari event successfully.").formatted(Formatting.GRAY), true);
+
+        if(data.setPaused(true)) {
+            context.getSource().sendFeedback(() -> {
+                return Text.empty().append(Text.literal("The Safari is now ").formatted(Formatting.GRAY))
+                        .append(Text.literal("paused").formatted(Formatting.RED)
+                        .append(Text.literal(".").formatted(Formatting.GRAY)));
+            }, true);
+        } else {
+            context.getSource().sendFeedback(() -> {
+                return Text.empty().append(Text.literal("The Safari is already ").formatted(Formatting.GRAY))
+                        .append(Text.literal("paused").formatted(Formatting.RED)
+                        .append(Text.literal(".").formatted(Formatting.GRAY)));
+            }, true);
+        }
+
+        return 0;
+    }
+
+    private int onUnpause(CommandContext<ServerCommandSource> context) {
+        SafariData data = ModWorldData.SAFARI.getGlobal(context.getSource().getServer());
+
+        if(data.setPaused(false)) {
+            context.getSource().sendFeedback(() -> {
+                return Text.empty().append(Text.literal("The Safari is now ").formatted(Formatting.GRAY))
+                        .append(Text.literal("unpaused").formatted(Formatting.GREEN)
+                        .append(Text.literal(".").formatted(Formatting.GRAY)));
+            }, true);
+        } else {
+            context.getSource().sendFeedback(() -> {
+                return Text.empty().append(Text.literal("The Safari is already ").formatted(Formatting.GRAY))
+                        .append(Text.literal("unpaused").formatted(Formatting.GREEN)
+                        .append(Text.literal(".").formatted(Formatting.GRAY)));
+            }, true);
+        }
+
         return 0;
     }
 
