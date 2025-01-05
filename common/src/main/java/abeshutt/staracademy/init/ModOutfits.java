@@ -38,6 +38,8 @@ public class ModOutfits {
     public static Formal2Outfit.Skirt FORMAL2_SKIRT;
     public static Formal2Outfit.Boots FORMAL2_BOOTS;
 
+    public static GengarHatOutfit GENGAR_HAT;
+
     public static void register() {
         CLASSY1_HAT = register(new Classy1Outfit.Hat("classy1_hat"));
         CLASSY1_SHIRT = register(new Classy1Outfit.Shirt("classy1_shirt"));
@@ -66,6 +68,8 @@ public class ModOutfits {
         FORMAL2_JACKET = register(new Formal2Outfit.Jacket("formal2_jacket"));
         FORMAL2_SKIRT = register(new Formal2Outfit.Skirt("formal2_jacket"));
         FORMAL2_BOOTS = register(new Formal2Outfit.Boots("formal2_jacket"));
+
+        GENGAR_HAT = register(new GengarHatOutfit("gengar_hat"));
     }
 
     public static <T extends OutfitPiece> T register(T piece) {
