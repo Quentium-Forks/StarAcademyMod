@@ -2,18 +2,14 @@ package abeshutt.staracademy.item;
 
 import abeshutt.staracademy.data.adapter.Adapters;
 import abeshutt.staracademy.init.ModConfigs;
-import abeshutt.staracademy.init.ModOutfits;
 import abeshutt.staracademy.item.renderer.OutfitItemRenderer;
-import abeshutt.staracademy.outfit.core.OutfitPiece;
 import abeshutt.staracademy.world.random.RandomSource;
 import com.google.gson.JsonObject;
 import net.minecraft.client.render.VertexConsumerProvider;
 import net.minecraft.client.render.model.json.ModelTransformationMode;
-import net.minecraft.client.util.ModelIdentifier;
 import net.minecraft.client.util.math.MatrixStack;
 import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.NbtCompound;
-import net.minecraft.util.Identifier;
 
 import java.util.Optional;
 import java.util.stream.Stream;

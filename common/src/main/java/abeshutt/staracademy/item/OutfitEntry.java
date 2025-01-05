@@ -11,7 +11,6 @@ import net.minecraft.client.util.math.MatrixStack;
 import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.NbtCompound;
 
-import java.util.List;
 import java.util.Optional;
 import java.util.stream.Stream;
 

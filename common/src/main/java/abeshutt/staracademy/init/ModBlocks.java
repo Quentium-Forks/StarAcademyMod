@@ -13,7 +13,6 @@ import net.minecraft.block.MapColor;
 import net.minecraft.block.entity.BlockEntity;
 import net.minecraft.block.entity.BlockEntityType;
 import net.minecraft.block.entity.BlockEntityType.BlockEntityFactory;
-import net.minecraft.block.enums.Instrument;
 import net.minecraft.datafixer.TypeReferences;
 import net.minecraft.item.BlockItem;
 import net.minecraft.item.Item;

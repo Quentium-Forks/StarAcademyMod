@@ -12,7 +12,6 @@ import net.minecraft.block.entity.BlockEntity;
 import net.minecraft.block.enums.StructureBlockMode;
 import net.minecraft.client.MinecraftClient;
 import net.minecraft.entity.LivingEntity;
-import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.nbt.NbtCompound;
 import net.minecraft.network.packet.s2c.play.BlockEntityUpdateS2CPacket;
 import net.minecraft.server.world.ServerWorld;

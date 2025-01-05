@@ -2,17 +2,18 @@ package abeshutt.staracademy.entity;
 
 import abeshutt.staracademy.init.ModEntities;
 import net.minecraft.entity.EntityType;
-import net.minecraft.entity.ItemEntity;
 import net.minecraft.entity.LivingEntity;
 import net.minecraft.entity.projectile.thrown.ThrownItemEntity;
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
 import net.minecraft.item.Items;
+import net.minecraft.server.network.ServerPlayerEntity;
 import net.minecraft.sound.SoundCategory;
 import net.minecraft.sound.SoundEvents;
+import net.minecraft.text.Text;
+import net.minecraft.util.Formatting;
 import net.minecraft.util.hit.EntityHitResult;
 import net.minecraft.util.hit.HitResult;
-import net.minecraft.util.math.Vec3d;
 import net.minecraft.world.World;
 
 public class DuelingGloveEntity extends ThrownItemEntity {
@@ -38,6 +39,16 @@ public class DuelingGloveEntity extends ThrownItemEntity {
             entity.takeKnockback(1.5D, -this.getVelocity().x, -this.getVelocity().z);
             this.getWorld().playSound(null, entity.getX(), entity.getY(), entity.getZ(),
                     SoundEvents.ENTITY_PLAYER_ATTACK_KNOCKBACK, SoundCategory.PLAYERS, 1.0F, 1.2F);
+        }
+
+        if(this.getOwner() instanceof ServerPlayerEntity thrower && result.getEntity() instanceof ServerPlayerEntity target) {
+            for(ServerPlayerEntity player : thrower.getServer().getPlayerManager().getPlayerList()) {
+                player.sendMessage(Text.empty()
+                        .append(thrower.getName())
+                        .append(Text.literal(" has challenged ").formatted(Formatting.GRAY))
+                        .append(target.getName())
+                        .append(Text.literal(" to a duel!").formatted(Formatting.GRAY)));
+            }
         }
     }
 
