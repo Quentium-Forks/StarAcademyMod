@@ -37,6 +37,7 @@ public class ModRegistries {
         ModNetwork.register();
         ModLootFunctionTypes.register();
         ModChunkGenerators.register();
+        ModOutfits.register();
 
         BLOCKS.register();
         ITEMS.register();
