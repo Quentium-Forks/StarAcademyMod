@@ -8,7 +8,7 @@ import net.minecraft.client.model.ModelPartBuilder;
 import net.minecraft.client.model.ModelPartData;
 import net.minecraft.client.model.ModelTransform;
 
-public class Sporty1Outfit {
+public class Sporty2Outfit {
 
     public static class Cap extends OutfitPiece {
 
@@ -25,8 +25,8 @@ public class Sporty1Outfit {
         @Override
         protected OutfitTexture buildTexture() {
             return new OutfitTexture(64, 64,
-                    StarAcademyMod.id("textures/entity/outfit/sporty1_top.png"),
-                    StarAcademyMod.mid("outfit/sporty1_cap", "inventory")
+                    StarAcademyMod.id("textures/entity/outfit/sporty2_top.png"),
+                    StarAcademyMod.mid("outfit/sporty2_cap", "inventory")
             );
         }
 
@@ -50,8 +50,8 @@ public class Sporty1Outfit {
         @Override
         protected OutfitTexture buildTexture() {
             return new OutfitTexture(64, 64,
-                    StarAcademyMod.id("textures/entity/outfit/sporty1_top.png"),
-                    StarAcademyMod.mid("outfit/sporty1_shirt", "inventory")
+                    StarAcademyMod.id("textures/entity/outfit/sporty2_top.png"),
+                    StarAcademyMod.mid("outfit/sporty2_shirt", "inventory")
             );
         }
 
@@ -67,6 +67,14 @@ public class Sporty1Outfit {
         protected void buildMesh(ModelPartData modelPartData) {
             ModelPartData body = modelPartData.addChild("body", ModelPartBuilder.create().uv(0, 0).cuboid(-4.0F, 0.0F, -2.0F, 8.0F, 12.0F, 4.0F, new Dilation(0.51F)), ModelTransform.pivot(0.0F, 0.0F, 0.0F));
 
+            ModelPartData cube_r1 = body.addChild("cube_r1", ModelPartBuilder.create().uv(24, 5).cuboid(-4.0F, -3.0F, -0.5F, 8.0F, 4.0F, 1.0F, new Dilation(0.0F)), ModelTransform.of(0.0F, 14.0F, -3.6722F, -0.3927F, 0.0F, 0.0F));
+
+            ModelPartData cube_r2 = body.addChild("cube_r2", ModelPartBuilder.create().uv(0, 32).cuboid(-3.0F, -3.0F, -0.5F, 6.0F, 4.0F, 1.0F, new Dilation(0.0F)), ModelTransform.of(-4.6861F, 14.0F, 0.0139F, 0.0F, 1.5708F, 0.3927F));
+
+            ModelPartData cube_r3 = body.addChild("cube_r3", ModelPartBuilder.create().uv(24, 10).cuboid(-3.0F, -3.0F, -0.5F, 6.0F, 4.0F, 1.0F, new Dilation(0.0F)), ModelTransform.of(4.6861F, 14.0F, 0.0139F, 0.0F, -1.5708F, -0.3927F));
+
+            ModelPartData cube_r4 = body.addChild("cube_r4", ModelPartBuilder.create().uv(24, 0).cuboid(-4.0F, -3.0F, -0.5F, 8.0F, 4.0F, 1.0F, new Dilation(0.0F)), ModelTransform.of(0.0F, 14.0F, 3.7F, 2.7489F, 0.0F, -3.1416F));
+
             ModelPartData right_leg = modelPartData.addChild("right_leg", ModelPartBuilder.create().uv(0, 16).cuboid(-2.0F, 0.0F, -2.0F, 4.0F, 12.0F, 4.0F, new Dilation(0.5F)), ModelTransform.pivot(-1.9F, 12.0F, 0.0F));
 
             ModelPartData left_leg = modelPartData.addChild("left_leg", ModelPartBuilder.create().uv(16, 16).cuboid(-2.0F, 0.0F, -2.0F, 4.0F, 12.0F, 4.0F, new Dilation(0.5F)), ModelTransform.pivot(1.9F, 12.0F, 0.0F));
@@ -74,9 +82,9 @@ public class Sporty1Outfit {
 
         @Override
         protected OutfitTexture buildTexture() {
-            return new OutfitTexture(32, 32,
-                    StarAcademyMod.id("textures/entity/outfit/sporty1_bottom.png"),
-                    StarAcademyMod.mid("outfit/sporty1_pants", "inventory")
+            return new OutfitTexture(64, 64,
+                    StarAcademyMod.id("textures/entity/outfit/sporty2_bottom.png"),
+                    StarAcademyMod.mid("outfit/sporty2_pants", "inventory")
             );
         }
 
@@ -98,8 +106,8 @@ public class Sporty1Outfit {
         @Override
         protected OutfitTexture buildTexture() {
             return new OutfitTexture(64, 64,
-                    StarAcademyMod.id("textures/entity/outfit/sporty1_top.png"),
-                    StarAcademyMod.mid("outfit/sporty1_shoes", "inventory")
+                    StarAcademyMod.id("textures/entity/outfit/sporty2_top.png"),
+                    StarAcademyMod.mid("outfit/sporty2_shoes", "inventory")
             );
         }
 
