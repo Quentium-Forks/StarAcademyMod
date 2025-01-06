@@ -4,7 +4,7 @@ import abeshutt.staracademy.data.adapter.Adapters;
 import abeshutt.staracademy.init.ModWorldData;
 import com.cobblemon.mod.common.Cobblemon;
 import com.cobblemon.mod.common.api.pokemon.PokemonSpecies;
-import com.cobblemon.mod.common.api.storage.party.PartyPosition;
+import com.cobblemon.mod.common.api.storage.NoPokemonStoreException;
 import com.cobblemon.mod.common.api.storage.party.PlayerPartyStore;
 import com.cobblemon.mod.common.api.storage.pc.PCPosition;
 import com.cobblemon.mod.common.api.storage.pc.PCStore;
@@ -19,10 +19,7 @@ import net.minecraft.text.Style;
 import net.minecraft.text.Text;
 import net.minecraft.util.Identifier;
 
-import java.util.HashMap;
-import java.util.Map;
-import java.util.Optional;
-import java.util.UUID;
+import java.util.*;
 
 public class PartnerData extends WorldData {
 
@@ -57,26 +54,35 @@ public class PartnerData extends WorldData {
     }
 
     public void onTick(MinecraftServer server) {
+        Set<Identifier> picked = new HashSet<>(this.selections.values());
+
         for(ServerPlayerEntity player : server.getPlayerManager().getPlayerList()) {
             PlayerPartyStore party = Cobblemon.INSTANCE.getStorage().getParty(player);
-            PCStore pc = PCLinkManager.INSTANCE.getPC(player);
-            if(pc == null) continue;
+            PCStore pc;
+
+            try {
+                pc = Cobblemon.INSTANCE.getStorage().getPC(player.getUuid());
+            } catch(NoPokemonStoreException e) {
+                continue;
+            }
 
             for(int i = 0; i < party.size(); i++) {
                 Pokemon entry = party.get(i);
                 if(entry == null) continue;
+                if(!picked.contains(entry.getSpecies().getResourceIdentifier())) continue;
+
                 PCPosition target = pc.getFirstAvailablePosition();
 
                 if(target != null) {
+                    party.remove(entry);
                     pc.set(target, entry);
                 } else {
                     if(party.getOverflowPC() == null) continue;
                     target = party.getOverflowPC().getFirstAvailablePosition();
                     if(target == null) continue;
+                    party.remove(entry);
                     party.getOverflowPC().set(target, entry);
                 }
-
-                party.remove(new PartyPosition(i));
             }
         }
     }
