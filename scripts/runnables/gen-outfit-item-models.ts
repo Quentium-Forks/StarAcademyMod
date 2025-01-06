@@ -1,3 +1,9 @@
+/**
+ * Reads every outfit icon sprite,
+ * and generates an "item/generated" model for it
+ * academy:item/outfit/id.png -> academy:item/outfit/id.json
+ */
+
 import fs from "node:fs";
 import path from "node:path";
 
