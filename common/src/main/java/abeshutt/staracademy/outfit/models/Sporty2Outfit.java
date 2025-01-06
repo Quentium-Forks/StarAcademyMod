@@ -84,7 +84,7 @@ public class Sporty2Outfit {
         protected OutfitTexture buildTexture() {
             return new OutfitTexture(64, 64,
                     StarAcademyMod.id("textures/entity/outfit/sporty2_bottom.png"),
-                    StarAcademyMod.mid("outfit/sporty2_pants", "inventory")
+                    StarAcademyMod.mid("outfit/sporty2_skirt", "inventory")
             );
         }
 
