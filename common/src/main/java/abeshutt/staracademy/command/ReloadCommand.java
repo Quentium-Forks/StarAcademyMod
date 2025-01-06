@@ -17,8 +17,8 @@ public class ReloadCommand extends Command {
     @Override
     public void register(CommandDispatcher<ServerCommandSource> dispatcher, CommandRegistryAccess access, CommandManager.RegistrationEnvironment environment) {
         dispatcher.register(literal(StarAcademyMod.ID)
-                .requires(source -> source.hasPermissionLevel(4))
                 .then(literal("reload")
+                    .requires(source -> source.hasPermissionLevel(4))
                     .executes(this::onReload)));
     }
 

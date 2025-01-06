@@ -31,6 +31,11 @@ public class PartnerNPCEntity extends HumanEntity {
         this.conversations = new HashMap<>();
     }
 
+    @Override
+    public boolean cannotDespawn() {
+        return true;
+    }
+
     public Optional<PartnerNPCConversation> getConversation(UUID uuid) {
         return Optional.ofNullable(this.conversations.get(uuid));
     }

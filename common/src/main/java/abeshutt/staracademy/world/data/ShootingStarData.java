@@ -6,6 +6,8 @@ import java.util.Optional;
 
 public class ShootingStarData extends WorldData {
 
+    private Map<>
+
     @Override
     public Optional<NbtCompound> writeNbt() {
         return Optional.empty();

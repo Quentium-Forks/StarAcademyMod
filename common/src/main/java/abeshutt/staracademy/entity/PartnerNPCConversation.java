@@ -91,6 +91,10 @@ public class PartnerNPCConversation implements INbtSerializable<NbtCompound> {
     }
 
     public void onPokemonSent(ServerPlayerEntity player, PartnerNPCEntity npc, PokemonSentPostEvent event) {
+        if(this.phase != Phase.AWAIT_PARTNER_SUMMON) {
+            return;
+        }
+
         this.selectedSpecies = event.getPokemon().getSpecies();
         RandomSource random = JavaRandom.ofNanoTime();
 
