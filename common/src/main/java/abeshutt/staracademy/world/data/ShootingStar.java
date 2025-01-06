@@ -1,11 +1,15 @@
 package abeshutt.staracademy.world.data;
 
+import abeshutt.staracademy.StarAcademyMod;
 import abeshutt.staracademy.data.adapter.Adapters;
 import abeshutt.staracademy.data.bit.BitBuffer;
 import abeshutt.staracademy.data.serializable.ISerializable;
 import com.google.gson.JsonObject;
 import net.minecraft.nbt.NbtCompound;
+import net.minecraft.registry.RegistryKey;
+import net.minecraft.registry.RegistryKeys;
 import net.minecraft.util.math.Vec3d;
+import net.minecraft.world.World;
 
 import java.util.Optional;
 
@@ -19,8 +23,9 @@ public class ShootingStar implements ISerializable<NbtCompound, JsonObject> {
     private double speed;
     private Vec3d position;
     private Vec3d lastPosition;
+    public RegistryKey<World> dimension;
 
-    public ShootingStar(Vec3d start, Vec3d mid, Vec3d end, double speed) {
+    public ShootingStar(Vec3d start, Vec3d mid, Vec3d end, double speed, RegistryKey<World> dimension) {
         this.start = start;
         this.mid = mid;
         this.end = end;
@@ -28,6 +33,7 @@ public class ShootingStar implements ISerializable<NbtCompound, JsonObject> {
         this.speed = speed;
         this.position = this.start;
         this.lastPosition = this.position;
+        this.dimension = dimension;
     }
 
     public void tick() {
@@ -47,6 +53,7 @@ public class ShootingStar implements ISerializable<NbtCompound, JsonObject> {
         Adapters.DOUBLE.writeBits(this.speed, buffer);
         Adapters.VEC_3D.writeBits(this.position, buffer);
         Adapters.VEC_3D.writeBits(this.lastPosition, buffer);
+        Adapters.IDENTIFIER.writeBits(this.dimension.getValue(), buffer);
     }
 
     @Override
@@ -58,6 +65,7 @@ public class ShootingStar implements ISerializable<NbtCompound, JsonObject> {
         this.speed = Adapters.DOUBLE.readBits(buffer).orElseThrow();
         this.position = Adapters.VEC_3D.readBits(buffer).orElseThrow();
         this.lastPosition = Adapters.VEC_3D.readBits(buffer).orElseThrow();
+        this.dimension = RegistryKey.of(RegistryKeys.WORLD, Adapters.IDENTIFIER.readBits(buffer).orElseThrow());
     }
 
     @Override
@@ -70,6 +78,7 @@ public class ShootingStar implements ISerializable<NbtCompound, JsonObject> {
             Adapters.DOUBLE.writeNbt(this.speed).ifPresent(tag -> nbt.put("speed", tag));
             Adapters.VEC_3D.writeNbt(this.position).ifPresent(tag -> nbt.put("position", tag));
             Adapters.VEC_3D.writeNbt(this.lastPosition).ifPresent(tag -> nbt.put("lastPosition", tag));
+            Adapters.IDENTIFIER.writeNbt(this.dimension.getValue()).ifPresent(tag -> nbt.put("dimension", tag));
             return nbt;
         });
     }
@@ -83,6 +92,7 @@ public class ShootingStar implements ISerializable<NbtCompound, JsonObject> {
         this.speed = Adapters.DOUBLE.readNbt(nbt.get("speed")).orElse(0.0D);
         this.position = Adapters.VEC_3D.readNbt(nbt.get("position")).orElse(Vec3d.ZERO);
         this.lastPosition = Adapters.VEC_3D.readNbt(nbt.get("lastPosition")).orElse(Vec3d.ZERO);
+        this.dimension = RegistryKey.of(RegistryKeys.WORLD, Adapters.IDENTIFIER.readNbt(nbt.get("dimension")).orElseThrow());
     }
 
 }

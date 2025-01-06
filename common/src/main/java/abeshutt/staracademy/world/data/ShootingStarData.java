@@ -15,6 +15,21 @@ public class ShootingStarData extends WorldData {
         this.stars = new HashMap<>();
     }
 
+    public UUID add(ShootingStar star) {
+        UUID uuid = UUID.randomUUID();
+        this.stars.put(uuid, star);
+        this.setDirty(true);
+        return uuid;
+    }
+
+    public void onTick() {
+        for(ShootingStar star : this.stars.values()) {
+            star.tick();
+        }
+
+
+    }
+
     @Override
     public Optional<NbtCompound> writeNbt() {
         return Optional.of(new NbtCompound()).map(nbt -> {

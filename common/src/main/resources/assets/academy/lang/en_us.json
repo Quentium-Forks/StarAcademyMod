@@ -8,5 +8,6 @@
   "item.academy.outfit": "Outfit",
   "cobblemon.ui.starter.choosebutton.same": "I don't choose you!",
   "entity.academy.partner_npc": "Partner NPC",
-  "entity.academy.safari_npc": "Safari NPC"
+  "entity.academy.safari_npc": "Safari NPC",
+  "entity.academy.nurse_npc": "Nurse NPC"
 }
