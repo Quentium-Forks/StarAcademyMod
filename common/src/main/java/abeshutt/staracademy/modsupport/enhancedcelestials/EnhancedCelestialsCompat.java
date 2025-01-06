@@ -14,6 +14,7 @@ import com.cobblemon.mod.common.api.spawning.detail.SpawnAction;
 import com.cobblemon.mod.common.api.spawning.detail.SpawnDetail;
 import com.cobblemon.mod.common.api.spawning.influence.SpawningInfluence;
 import com.cobblemon.mod.common.api.spawning.spawner.PlayerSpawnerFactory;
+import com.cobblemon.mod.common.entity.pokemon.PokemonEntity;
 import com.cobblemon.mod.common.pokemon.IVs;
 import corgitaco.enhancedcelestials.EnhancedCelestialsWorldData;
 import corgitaco.enhancedcelestials.api.EnhancedCelestialsRegistry;
@@ -35,7 +36,9 @@ public class EnhancedCelestialsCompat {
     public static void init() {
         CobblemonEvents.EXPERIENCE_GAINED_EVENT_PRE.subscribe(Priority.NORMAL, experienceGainedPreEvent -> {
             if(experienceGainedPreEvent.getPokemon().heldItem().isOf(CobblemonItems.EXP_SHARE)) {
-                World world = experienceGainedPreEvent.getPokemon().getEntity().getEntityWorld();
+                PokemonEntity entity = experienceGainedPreEvent.getPokemon().getEntity();
+                if(entity == null) return Unit.INSTANCE;
+                World world = entity.getEntityWorld();
                 if (!world.isClient && world instanceof EnhancedCelestialsWorldData celestialsContext) {
                     EnhancedCelestialsContext lunarContext = celestialsContext.getLunarContext();
                     if (lunarContext != null) {
