@@ -1,7 +1,7 @@
 package abeshutt.staracademy.screen;
 
 import abeshutt.staracademy.StarAcademyMod;
-import abeshutt.staracademy.world.data.WardrobeData;
+import abeshutt.staracademy.screen.helper.Texture9SliceRegion;
 import com.mojang.blaze3d.systems.RenderSystem;
 import net.minecraft.client.MinecraftClient;
 import net.minecraft.client.gui.DrawContext;
@@ -20,24 +20,41 @@ public class WardrobeScreen extends Screen {
 
     private static final Identifier TEXTURE = StarAcademyMod.id("textures/gui/wardrobe.png");
 
+    private static final Texture9SliceRegion PREVIEW_BG = new Texture9SliceRegion(0, 0, 9, 9, 256, 256);
+    private static final Texture9SliceRegion PREVIEW_INNER = new Texture9SliceRegion(10, 0, 7, 7, 256, 256);
+    private static final Texture9SliceRegion OUTFITS_BG = new Texture9SliceRegion(0, 0, 9, 9, 256, 256);
+
     protected int x, y;
     protected int backgroundWidth = 176;
     protected int backgroundHeight = 166;
 
+    protected WardrobeOutfitsWidget outfitsWidget;
+
     public WardrobeScreen() {
         super(Text.literal("Wardrobe"));
+        this.width = 270;
+        this.height = 162;
     }
 
-//    @Override
-//    public boolean shouldPause() {
-//        return false;
-//    }
+    @Override
+    public boolean shouldPause() {
+        return false;
+    }
+
+    @Override
+    public boolean mouseScrolled(double mouseX, double mouseY, double amount) {
+        return super.mouseScrolled(mouseX, mouseY, amount);
+    }
 
     @Override
     protected void init() {
         super.init();
         this.x = (this.width - this.backgroundWidth) / 2;
         this.y = (this.height - this.backgroundHeight) / 2;
+
+        this.outfitsWidget = addDrawableChild(new WardrobeOutfitsWidget(this.x + (int) (this.backgroundWidth * 0.5f) / 2 + 9, this.y + 6,
+                this.backgroundWidth - 14 - 6, this.backgroundHeight - 14,
+                Text.literal("")));
     }
 
     @Override
@@ -48,30 +65,26 @@ public class WardrobeScreen extends Screen {
     @Override
     public void render(DrawContext context, int mouseX, int mouseY, float delta) {
         renderBackground(context);
-        super.render(context, mouseX, mouseY, delta);
 
+        OUTFITS_BG.draw(context, TEXTURE,
+                this.x + (int) (this.backgroundWidth * 0.5f) / 2 + 4, this.y,
+                this.backgroundWidth, this.backgroundHeight);
+
+        int padding = 6;
+        PREVIEW_BG.draw(context, TEXTURE, this.x - 50, this.y,
+                (int) (this.backgroundWidth * 0.55f), this.backgroundHeight);
+        PREVIEW_INNER.draw(context, TEXTURE, this.x + padding - 50, this.y + padding,
+                (int) (this.backgroundWidth * 0.55f) - 2 * padding, this.backgroundHeight - 2 * padding);
+
+        int playerHeight = 50;
         ClientPlayerEntity player = MinecraftClient.getInstance().player;
-        WardrobeData.Entry wardrobe = WardrobeData.CLIENT.getOrCreate(player.getUuid());
+        if (player != null) {
+            drawEntity(context, this.x - 1, this.y + backgroundWidth / 2 + playerHeight, playerHeight,
+                    (float) (this.x + 51) - mouseX,
+                    (float) (this.y + 75 - 50) - mouseY, player);
+        }
 
-        draw9Slice(context, TEXTURE, this.x - 50, this.y,
-                (int) (this.backgroundWidth * 0.5f), this.backgroundHeight,
-                18, 0,
-                19, 19,
-                256, 256);
-
-        draw9Slice(context, TEXTURE, this.x + (int) (this.backgroundWidth * 0.5f) / 2 + 4, this.y,
-                this.backgroundWidth, this.backgroundHeight,
-                18, 0,
-                19, 19,
-                256, 256);
-
-        drawEntity(context, this.x, this.y + backgroundWidth / 2 + 50 + 10, 50,
-                (float) (this.x + 51) - mouseX,
-                (float) (this.y + 75 - 50) - mouseY, player);
-
-
-//        render9Slice(context, TEXTURE, 10, 10, 300, 300, 18, 0, 19, 19, 256, 256);
-//        render9Slice(context, TEXTURE, 320, 10, 150, 150, 18, 0, 19, 19, 256, 256);
+        super.render(context, mouseX, mouseY, delta);
     }
 
     public static void drawEntity(DrawContext context, int x, int y, int size, float mouseX, float mouseY, LivingEntity entity) {
@@ -118,32 +131,6 @@ public class WardrobeScreen extends Screen {
         entityRenderDispatcher.setRenderShadows(true);
         context.getMatrices().pop();
         DiffuseLighting.enableGuiDepthLighting();
-    }
-
-    // TODO: Move to a helper or smth
-    protected void draw9Slice(DrawContext context, Identifier texture,
-                              int x, int y,
-                              int width, int height,
-                              int u, int v,
-                              int sliceW, int sliceH,
-                              int texW, int texH) {
-        int cornerWidth = (sliceW - 1) / 2;
-        int cornerHeight = (sliceH - 1) / 2;
-
-        // Corners
-        context.drawTexture(texture, x, y, cornerWidth, cornerHeight, u, v, cornerWidth, cornerHeight, texW, texH);
-        context.drawTexture(texture, x + width - 1, y, cornerWidth, cornerHeight, u + cornerWidth + 2, v, cornerWidth, cornerHeight, texW, texH);
-        context.drawTexture(texture, x + width - 1, y + height - 1, cornerWidth, cornerHeight, u + cornerWidth + 2, v + cornerHeight + 2, cornerWidth, cornerHeight, texW, texH);
-        context.drawTexture(texture, x, y + height - 1, cornerWidth, cornerHeight, u, v + cornerHeight + 2, cornerWidth, cornerHeight, texW, texH);
-
-        // Edges
-        context.drawTexture(texture, x + cornerWidth - 1, y, width - cornerWidth, cornerHeight, u + cornerWidth, v, 1, cornerHeight, texW, texH);
-        context.drawTexture(texture, x, y + cornerHeight - 1, cornerWidth, height - cornerHeight, u, v + cornerHeight, cornerWidth, 1, texW, texH);
-        context.drawTexture(texture, x + width - 2, y + cornerHeight - 1, cornerWidth, height - cornerHeight, u + cornerWidth + 1, v + cornerHeight, cornerWidth, 1, texW, texH);
-        context.drawTexture(texture, x + cornerWidth - 1, y + height - 1, width - cornerWidth, cornerHeight, u + cornerWidth, v + cornerHeight + 2, 1, cornerHeight, texW, texH);
-
-        // Center
-        context.drawTexture(texture, x + cornerWidth - 1, y + cornerHeight - 1, width - cornerWidth, height - cornerHeight, u + cornerWidth, v + cornerHeight, 1, 1, texW, texH);
     }
 
 }
