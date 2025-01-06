@@ -2,7 +2,10 @@ package abeshutt.staracademy.mixin;
 
 import abeshutt.staracademy.screen.StarBadgeSlot;
 import abeshutt.staracademy.screen.StarBadgeWidget;
+import abeshutt.staracademy.screen.WardrobeScreen;
+import abeshutt.staracademy.screen.WardrobeWidget;
 import abeshutt.staracademy.util.ProxyStarBadges;
+import net.minecraft.client.MinecraftClient;
 import net.minecraft.client.gui.DrawContext;
 import net.minecraft.client.gui.screen.ingame.AbstractInventoryScreen;
 import net.minecraft.client.gui.screen.ingame.InventoryScreen;
@@ -21,6 +24,7 @@ import org.spongepowered.asm.mixin.injection.callback.CallbackInfoReturnable;
 public abstract class MixinInventoryScreen extends AbstractInventoryScreen<PlayerScreenHandler> implements RecipeBookProvider {
 
     @Unique private StarBadgeWidget starBadgeButton;
+    @Unique private WardrobeWidget wardrobeButton;
 
     public MixinInventoryScreen(PlayerScreenHandler screenHandler, PlayerInventory playerInventory, Text text) {
         super(screenHandler, playerInventory, text);
@@ -38,6 +42,10 @@ public abstract class MixinInventoryScreen extends AbstractInventoryScreen<Playe
             });
         }));
 
+        this.wardrobeButton = this.addDrawableChild(new WardrobeWidget(this, this.x + 160 - 14 - 120, this.y + 5 + 14, widget -> {
+            MinecraftClient.getInstance().setScreen(new WardrobeScreen());
+        }));
+
         this.addSelectableChild(this.starBadgeButton);
     }
 
@@ -45,6 +53,10 @@ public abstract class MixinInventoryScreen extends AbstractInventoryScreen<Playe
     public void render(DrawContext context, int mouseX, int mouseY, float delta, CallbackInfo ci) {
         if(this.starBadgeButton != null) {
             this.starBadgeButton.setPosition(this.x + 160 - 14, this.y + 5);
+        }
+
+        if (this.wardrobeButton != null) {
+            this.wardrobeButton.setPosition(this.x + 160 - 14, this.y + 50);
         }
     }
 
