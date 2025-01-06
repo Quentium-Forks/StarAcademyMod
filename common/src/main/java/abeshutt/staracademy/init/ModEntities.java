@@ -1,9 +1,6 @@
 package abeshutt.staracademy.init;
 
-import abeshutt.staracademy.entity.DuelingGloveEntity;
-import abeshutt.staracademy.entity.PartnerNPCEntity;
-import abeshutt.staracademy.entity.SafariNPCEntity;
-import abeshutt.staracademy.entity.StarBadgeEntity;
+import abeshutt.staracademy.entity.*;
 import dev.architectury.registry.registries.RegistrySupplier;
 import net.minecraft.entity.Entity;
 import net.minecraft.entity.EntityType;
@@ -18,6 +15,7 @@ public class ModEntities extends ModRegistries {
     public static RegistrySupplier<EntityType<DuelingGloveEntity>> DUELING_GLOVE;
     public static RegistrySupplier<EntityType<PartnerNPCEntity>> PARTNER_NPC;
     public static RegistrySupplier<EntityType<SafariNPCEntity>> SAFARI_NPC;
+    public static RegistrySupplier<EntityType<ShootingStarEntity>> SHOOTING_STAR;
 
     public static void register() {
         STAR_BADGE = register("star_badge", StarBadgeEntity::new, SpawnGroup.MISC,
@@ -31,6 +29,9 @@ public class ModEntities extends ModRegistries {
 
         SAFARI_NPC = register("safari_npc", SafariNPCEntity::new, SpawnGroup.MISC,
                 builder -> builder.setDimensions(0.6F, 1.8F).maxTrackingRange(128));
+
+        SHOOTING_STAR = register("shooting_star", ShootingStarEntity::new, SpawnGroup.MISC,
+                builder -> builder.setDimensions(0.5F, 0.5F).maxTrackingRange(4096));
     }
 
     public static <V extends Entity> RegistrySupplier<EntityType<V>> register(Identifier id, EntityType.EntityFactory<V> factory,

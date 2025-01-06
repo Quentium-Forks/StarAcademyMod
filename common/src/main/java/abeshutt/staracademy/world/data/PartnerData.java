@@ -4,6 +4,7 @@ import abeshutt.staracademy.data.adapter.Adapters;
 import abeshutt.staracademy.init.ModWorldData;
 import com.cobblemon.mod.common.Cobblemon;
 import com.cobblemon.mod.common.api.pokemon.PokemonSpecies;
+import com.cobblemon.mod.common.api.storage.party.PartyPosition;
 import com.cobblemon.mod.common.api.storage.party.PlayerPartyStore;
 import com.cobblemon.mod.common.api.storage.pc.PCPosition;
 import com.cobblemon.mod.common.api.storage.pc.PCStore;
@@ -75,7 +76,7 @@ public class PartnerData extends WorldData {
                     party.getOverflowPC().set(target, entry);
                 }
 
-                party.remove(entry);
+                party.remove(new PartyPosition(i));
             }
         }
     }

@@ -3,6 +3,7 @@ package abeshutt.staracademy.init;
 import abeshutt.staracademy.block.entity.BetterStructureBlockEntity;
 import abeshutt.staracademy.block.entity.renderer.BetterStructureBlockEntityRenderer;
 import abeshutt.staracademy.entity.renderer.HumanEntityRenderer;
+import abeshutt.staracademy.entity.renderer.ShootingStarRenderer;
 import abeshutt.staracademy.mixin.ProxyModelPredicateProviderRegistry;
 import dev.architectury.event.events.client.ClientLifecycleEvent;
 import net.minecraft.block.entity.BlockEntity;
@@ -40,6 +41,7 @@ public class ModRenderers extends ModRegistries {
                 EntityRenderers.register(ModEntities.DUELING_GLOVE.get(), FlyingItemEntityRenderer::new);
                 EntityRenderers.register(ModEntities.PARTNER_NPC.get(), ctx -> new HumanEntityRenderer<>(ctx, false));
                 EntityRenderers.register(ModEntities.SAFARI_NPC.get(), ctx -> new HumanEntityRenderer<>(ctx, false));
+                EntityRenderers.register(ModEntities.SHOOTING_STAR.get(), ShootingStarRenderer::new);
             });
         }
     }

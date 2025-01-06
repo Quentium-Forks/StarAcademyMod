@@ -37,6 +37,7 @@ public class ModNetwork extends ModRegistries {
             ModNetwork.register(UpdateStarterRaffleS2CPacket.class, UpdateStarterRaffleS2CPacket::new, CLIENT_PLAY);
             ModNetwork.register(UpdateSafariS2CPacket.class, UpdateSafariS2CPacket::new, CLIENT_PLAY);
             ModNetwork.register(UpdateOutfitS2CPacket.class, UpdateOutfitS2CPacket::new, CLIENT_PLAY);
+            ModNetwork.register(UpdateShootingStarS2CPacket.class, UpdateShootingStarS2CPacket::new, CLIENT_PLAY);
             ModNetwork.register(UpdateBetterStructureBlockC2SPacket.class, UpdateBetterStructureBlockC2SPacket::new, SERVER_PLAY);
         }
     }
@@ -50,6 +51,7 @@ public class ModNetwork extends ModRegistries {
             ModNetwork.register(UpdateStarterRaffleS2CPacket.class, UpdateStarterRaffleS2CPacket::new, null);
             ModNetwork.register(UpdateSafariS2CPacket.class, UpdateSafariS2CPacket::new, null);
             ModNetwork.register(UpdateOutfitS2CPacket.class, UpdateOutfitS2CPacket::new, null);
+            ModNetwork.register(UpdateShootingStarS2CPacket.class, UpdateShootingStarS2CPacket::new, null);
             ModNetwork.register(UpdateBetterStructureBlockC2SPacket.class, UpdateBetterStructureBlockC2SPacket::new, SERVER_PLAY);
         }
     }
