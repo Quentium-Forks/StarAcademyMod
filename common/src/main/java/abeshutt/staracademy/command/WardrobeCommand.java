@@ -41,7 +41,9 @@ public class WardrobeCommand extends Command {
                         .then(literal("unlock")
                                 .then(argument("id", StringArgumentType.word())
                                         .suggests(OUTFIT_ID_SUGGESTIONS)
-                                        .executes(this::onUnlockOutfit)))));
+                                        .executes(this::onUnlockOutfit))
+                                .then(literal("all")
+                                        .executes(this::onUnlockOutfitAll)))));
     }
 
     private int onListUnlockedOutfits(CommandContext<ServerCommandSource> context) throws CommandSyntaxException {
@@ -72,6 +74,19 @@ public class WardrobeCommand extends Command {
 
         WardrobeData data = ModWorldData.WARDROBE.getGlobal(sender.getWorld());
         data.setUnlocked(sender, outfitId, true);
+        return 0;
+    }
+
+    private int onUnlockOutfitAll(CommandContext<ServerCommandSource> context) throws CommandSyntaxException {
+        ServerPlayerEntity sender = context.getSource().getPlayerOrThrow();
+
+        for (OutfitPiece outfit : ModOutfits.REGISTRY.values()) {
+            if (outfit == null) throw INVALID_OUTFIT_ID.create();
+
+            WardrobeData data = ModWorldData.WARDROBE.getGlobal(sender.getWorld());
+            data.setUnlocked(sender, outfit.getId(), true);
+        }
+
         return 0;
     }
 

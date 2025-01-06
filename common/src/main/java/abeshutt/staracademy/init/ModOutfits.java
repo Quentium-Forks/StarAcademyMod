@@ -45,7 +45,7 @@ public class ModOutfits {
 
     public static Sporty2Outfit.Cap SPORTY2_CAP;
     public static Sporty2Outfit.Shirt SPORTY2_SHIRT;
-    public static Sporty2Outfit.Pants SPORTY2_PANTS;
+    public static Sporty2Outfit.Skirt SPORTY2_SKIRT;
     public static Sporty2Outfit.Shoes SPORTY2_SHOES;
 
     public static SailorOutfit.Shirt SAILOR_SHIRT;
@@ -68,10 +68,10 @@ public class ModOutfits {
         CLASSY2_SKIRT = register(new Classy2Outfit.Skirt("classy2_skirt"));
         CLASSY2_SHOES = register(new Classy2Outfit.Shoes("classy2_shoes"));
 
-        COMFY1_HAT = register(new Comfy1Outfit.Hat("classy1_hat"));
-        COMFY1_SHIRT = register(new Comfy1Outfit.Shirt("classy1_shirt"));
-        COMFY1_PANTS = register(new Comfy1Outfit.Pants("classy1_pants"));
-        COMFY1_SHOES = register(new Comfy1Outfit.Shoes("classy1_shoes"));
+        COMFY1_HAT = register(new Comfy1Outfit.Hat("comfy1_hat"));
+        COMFY1_SHIRT = register(new Comfy1Outfit.Shirt("comfy1_shirt"));
+        COMFY1_PANTS = register(new Comfy1Outfit.Pants("comfy1_pants"));
+        COMFY1_SHOES = register(new Comfy1Outfit.Shoes("comfy1_shoes"));
 
         COMFY2_HAT = register(new Comfy2Outfit.Hat("comfy2_hat"));
         COMFY2_SHIRT = register(new Comfy2Outfit.Shirt("comfy2_shirt"));
@@ -83,8 +83,8 @@ public class ModOutfits {
         FORMAL1_BOOTS = register(new Formal1Outfit.Boots("formal1_boots"));
 
         FORMAL2_JACKET = register(new Formal2Outfit.Jacket("formal2_jacket"));
-        FORMAL2_SKIRT = register(new Formal2Outfit.Skirt("formal2_jacket"));
-        FORMAL2_BOOTS = register(new Formal2Outfit.Boots("formal2_jacket"));
+        FORMAL2_SKIRT = register(new Formal2Outfit.Skirt("formal2_skirt"));
+        FORMAL2_BOOTS = register(new Formal2Outfit.Boots("formal2_boots"));
 
         SPORTY1_CAP = register(new Sporty1Outfit.Cap("sporty1_cap"));
         SPORTY1_SHIRT = register(new Sporty1Outfit.Shirt("sporty1_shirt"));
@@ -93,7 +93,7 @@ public class ModOutfits {
 
         SPORTY2_CAP = register(new Sporty2Outfit.Cap("sporty2_cap"));
         SPORTY2_SHIRT = register(new Sporty2Outfit.Shirt("sporty2_shirt"));
-        SPORTY2_PANTS = register(new Sporty2Outfit.Pants("sporty2_pants"));
+        SPORTY2_SKIRT = register(new Sporty2Outfit.Skirt("sporty2_skirt"));
         SPORTY2_SHOES = register(new Sporty2Outfit.Shoes("sporty2_shoes"));
 
         SAILOR_SHIRT = register(new SailorOutfit.Shirt("sailor_shirt"));

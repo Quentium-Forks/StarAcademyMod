@@ -57,9 +57,9 @@ public class Sporty2Outfit {
 
     }
 
-    public static class Pants extends OutfitPiece {
+    public static class Skirt extends OutfitPiece {
 
-        public Pants(String id) {
+        public Skirt(String id) {
             super(id);
         }
 
