@@ -16,7 +16,7 @@ public class WardrobeWidget extends ButtonWidget {
     private final AbstractInventoryScreen<?> screen;
 
     public WardrobeWidget(AbstractInventoryScreen<?> screen, int x, int y, PressAction onPress) {
-        super(x, y, 13, 13, Text.of("Star Badges"), onPress, ButtonWidget.DEFAULT_NARRATION_SUPPLIER);
+        super(x, y, 12, 12, Text.of("Wardrobe"), onPress, ButtonWidget.DEFAULT_NARRATION_SUPPLIER);
         this.screen = screen;
     }
 
@@ -24,20 +24,13 @@ public class WardrobeWidget extends ButtonWidget {
     protected void renderButton(DrawContext context, int mouseX, int mouseY, float delta) {
         context.getMatrices().push();
         context.getMatrices().translate(this.getX(), this.getY(), 300);
-        context.drawTexture(TEXTURE, 0, 0, this.hovered ? 13.0F : 0.0F, 51.0F, 13, 13, 256, 256);
+        context.drawTexture(TEXTURE, 0, 0, this.hovered ? 12.0F : 0.0F, 24.0F, 12, 12, 256, 256);
         context.getMatrices().pop();
 
-        if (this.hovered) {
-            context.drawTooltip(this.screen.textRenderer, Text.of("Badges")
+        if(this.hovered) {
+            context.drawTooltip(this.screen.textRenderer, Text.of("Wardrobe")
                     .getWithStyle(Style.EMPTY.withColor(0xBF971C)), mouseX, mouseY);
         }
-
-        ProxyStarBadges.of(this.screen.getScreenHandler()).ifPresent(proxy -> {
-            if (proxy.getHandler().isEnabled()) {
-                context.drawTexture(TEXTURE, this.screen.x - 5, this.screen.y - 42, 0, 0,
-                        194, 39, 256, 256);
-            }
-        });
     }
 
 }

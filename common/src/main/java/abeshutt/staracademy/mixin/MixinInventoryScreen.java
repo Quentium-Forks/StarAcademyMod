@@ -32,7 +32,7 @@ public abstract class MixinInventoryScreen extends AbstractInventoryScreen<Playe
 
     @Inject(method = "init", at = @At("HEAD"))
     protected void init(CallbackInfo ci) {
-        if (this.client != null && this.client.interactionManager != null && this.client.interactionManager.hasCreativeInventory()) {
+        if(this.client != null && this.client.interactionManager != null && this.client.interactionManager.hasCreativeInventory()) {
             return;
         }
 
@@ -42,7 +42,7 @@ public abstract class MixinInventoryScreen extends AbstractInventoryScreen<Playe
             });
         }));
 
-        this.wardrobeButton = this.addDrawableChild(new WardrobeWidget(this, this.x + 160 - 14 - 120, this.y + 5 + 14, widget -> {
+        this.wardrobeButton = this.addDrawableChild(new WardrobeWidget(this, this.x + 160 - 14 - 120 + 1, this.y + 5 + 14 + 48, widget -> {
             MinecraftClient.getInstance().setScreen(new WardrobeScreen());
         }));
 
@@ -55,8 +55,8 @@ public abstract class MixinInventoryScreen extends AbstractInventoryScreen<Playe
             this.starBadgeButton.setPosition(this.x + 160 - 14, this.y + 5);
         }
 
-        if (this.wardrobeButton != null) {
-            this.wardrobeButton.setPosition(this.x + 160 - 14, this.y + 50);
+        if(this.wardrobeButton != null) {
+            this.wardrobeButton.setPosition(this.x + 160 - 14 - 120 + 1, this.y + 5 + 14 + 48);
         }
     }
 
