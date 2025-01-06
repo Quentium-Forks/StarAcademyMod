@@ -23,6 +23,16 @@ public class NurseNPCEntity extends HumanEntity {
     }
 
     @Override
+    public boolean isPushable() {
+        return false;
+    }
+
+    @Override
+    public boolean isPushedByFluids() {
+        return false;
+    }
+
+    @Override
     public boolean cannotDespawn() {
         return true;
     }
