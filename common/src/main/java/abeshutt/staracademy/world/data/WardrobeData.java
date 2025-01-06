@@ -4,8 +4,10 @@ import abeshutt.staracademy.data.adapter.Adapters;
 import abeshutt.staracademy.data.bit.BitBuffer;
 import abeshutt.staracademy.data.serializable.ISerializable;
 import abeshutt.staracademy.init.ModNetwork;
+import abeshutt.staracademy.init.ModOutfits;
 import abeshutt.staracademy.init.ModWorldData;
 import abeshutt.staracademy.net.UpdateOutfitS2CPacket;
+import abeshutt.staracademy.outfit.core.OutfitPiece;
 import com.google.gson.JsonObject;
 import dev.architectury.event.events.common.PlayerEvent;
 import dev.architectury.event.events.common.TickEvent;
@@ -14,6 +16,9 @@ import net.minecraft.nbt.NbtElement;
 import net.minecraft.nbt.NbtList;
 import net.minecraft.server.MinecraftServer;
 import net.minecraft.server.network.ServerPlayerEntity;
+import net.minecraft.text.Style;
+import net.minecraft.text.Text;
+import net.minecraft.util.Formatting;
 
 import java.util.*;
 
@@ -49,7 +54,18 @@ public class WardrobeData extends WorldData {
 
     public boolean setUnlocked(ServerPlayerEntity player, String id, boolean unlocked) {
         if(this.setUnlocked(player.getUuid(), id, unlocked)) {
-            //TODO: global print
+            OutfitPiece outfit = ModOutfits.REGISTRY.get(id);
+
+            if(player.getServer() != null && outfit != null) {
+                for(ServerPlayerEntity other : player.getServer().getPlayerManager().getPlayerList()) {
+                    other.sendMessage(Text.empty()
+                        .append(player.getName())
+                        .append(Text.literal(" unlocked a new outfit: ").formatted(Formatting.GRAY))
+                        .append(Text.literal(outfit.getId()))
+                        .append(Text.literal(".").formatted(Formatting.GRAY)));
+                }
+            }
+
             return true;
         }
 

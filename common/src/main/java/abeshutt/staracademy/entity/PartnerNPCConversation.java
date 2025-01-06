@@ -203,13 +203,6 @@ public class PartnerNPCConversation implements INbtSerializable<NbtCompound> {
         return result;
     }
 
-    public Optional<ServerPlayerEntity> getPlayer(World world) {
-        MinecraftServer server = world.getServer();
-        if(server == null) return Optional.empty();
-        ServerPlayerEntity player = server.getPlayerManager().getPlayer(this.uuid);
-        return Optional.ofNullable(player);
-    }
-
     public static Function<RandomSource, String> create(String... lines) {
         return random -> lines[random.nextInt(lines.length)];
     }

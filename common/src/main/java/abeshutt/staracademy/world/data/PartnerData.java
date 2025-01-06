@@ -17,6 +17,7 @@ import net.minecraft.server.MinecraftServer;
 import net.minecraft.server.network.ServerPlayerEntity;
 import net.minecraft.text.Style;
 import net.minecraft.text.Text;
+import net.minecraft.util.Formatting;
 import net.minecraft.util.Identifier;
 
 import java.util.*;
@@ -47,9 +48,9 @@ public class PartnerData extends WorldData {
         for(ServerPlayerEntity other : player.getServer().getPlayerManager().getPlayerList()) {
             other.sendMessage(Text.empty()
                     .append(player.getName())
-                    .append(Text.literal(" selected "))
+                    .append(Text.literal(" selected ").formatted(Formatting.GRAY))
                     .append(species.getTranslatedName().setStyle(Style.EMPTY.withColor(color)))
-                    .append(Text.literal(" as their companion!")));
+                    .append(Text.literal(" as their companion!").formatted(Formatting.GRAY)));
         }
     }
 
