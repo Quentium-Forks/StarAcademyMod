@@ -2,8 +2,8 @@ package abeshutt.staracademy.screen;
 
 import abeshutt.staracademy.StarAcademyMod;
 import abeshutt.staracademy.init.ModItems;
-import abeshutt.staracademy.init.ModOutfits;
-import abeshutt.staracademy.outfit.core.OutfitPiece;
+import abeshutt.staracademy.init.ModNetwork;
+import abeshutt.staracademy.net.UpdateOutfitC2SPacket;
 import abeshutt.staracademy.screen.helper.Texture9SliceRegion;
 import abeshutt.staracademy.world.data.WardrobeData;
 import net.minecraft.client.MinecraftClient;
@@ -24,6 +24,7 @@ public class WardrobeOutfitsWidget extends ScrollableWidget {
     private static final Identifier TEXTURE = StarAcademyMod.id("textures/gui/wardrobe.png");
 
     protected static Texture9SliceRegion OUTFIT_BG = new Texture9SliceRegion(19, 0, 18, 19, 256, 256);
+    protected static Texture9SliceRegion OUTFIT_BG_HOVER = new Texture9SliceRegion(38, 0, 19, 19, 256, 256);
 
     protected int entryHeight = 25;
     protected int gap = 5;
@@ -58,28 +59,62 @@ public class WardrobeOutfitsWidget extends ScrollableWidget {
     }
 
     @Override
+    public boolean mouseClicked(double mouseX, double mouseY, int button) {
+        boolean clicked = super.mouseClicked(mouseX, mouseY, button);
+
+        int pointerX = (int) mouseX;
+        int pointerY = (int) (mouseY + getScrollY());
+
+        WardrobeData.Entry wardrobe = getWardrobe();
+        Set<String> unlocked = wardrobe.getUnlocked();
+        Set<String> equipped = wardrobe.getEquipped();
+
+        int i = 0;
+        for (String outfitId : unlocked) {
+            int x = getX() + this.gap;
+            int y = getY() + (i + 1) * this.gap + i * this.entryHeight;
+            int w = width - 2 * gap + 2;
+            int h = entryHeight + gap;
+
+            if ((x <= pointerX && pointerX <= x + w)
+                    && (y <= pointerY && pointerY <= y + h)) {
+                ModNetwork.CHANNEL.sendToServer(new UpdateOutfitC2SPacket(outfitId, !equipped.contains(outfitId)));
+                break;
+            }
+
+            i++;
+        }
+
+        return clicked;
+    }
+
+    @Override
     public void render(DrawContext context, int mouseX, int mouseY, float delta) {
         super.render(context, mouseX, mouseY, delta);
     }
 
     @Override
     protected void renderContents(DrawContext context, int mouseX, int mouseY, float delta) {
-        int pointerX = mouseX - getX();
-        int pointerY = (int) (mouseY - getY() + getScrollY());
+        int pointerX = mouseX;
+        int pointerY = (int) (mouseY + getScrollY());
 
         TextRenderer textRenderer = MinecraftClient.getInstance().textRenderer;
 
-        Set<String> unlocked = getWardrobe().getUnlocked();
+        WardrobeData.Entry wardrobe = getWardrobe();
+        Set<String> unlocked = wardrobe.getUnlocked();
+        Set<String> equipped = wardrobe.getEquipped();
 
         int i = 0;
         for (String outfitId : unlocked) {
-            OutfitPiece outfit = ModOutfits.REGISTRY.get(outfitId);
-
             int x = getX() + this.gap;
             int y = getY() + (i + 1) * this.gap + i * this.entryHeight;
             int w = width - 2 * gap + 2;
             int h = entryHeight + gap;
-            OUTFIT_BG.draw(context, TEXTURE, x, y, w, h);
+
+            Texture9SliceRegion outfitBg = (x <= pointerX && pointerX <= x + w)
+                    && (y <= pointerY && pointerY <= y + h) ? OUTFIT_BG_HOVER : OUTFIT_BG;
+
+            outfitBg.draw(context, TEXTURE, x, y, w, h);
 
             ItemStack itemStack = new ItemStack(ModItems.OUTFIT.get());
             NbtCompound nbt = itemStack.getOrCreateNbt();
@@ -96,10 +131,14 @@ public class WardrobeOutfitsWidget extends ScrollableWidget {
             context.getMatrices().translate(x + 24, y + 11, 0);
             context.getMatrices().scale(scale, scale, scale);
             context.drawText(textRenderer,
-//                    Text.translatable("item.academy.outfit." + outfitId),
-                    Text.literal("Formal 1 Jacket"),
+                    Text.translatable("item.academy.outfit." + outfitId),
                     0, 0, 0xFF_FFFFFF, false);
             context.getMatrices().pop();
+
+            if (equipped.contains(outfitId)) {
+                context.drawTexture(TEXTURE, x + width - 26, y + 11,
+                        0, 39, 7, 6);
+            }
 
             i++;
         }

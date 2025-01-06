@@ -4,6 +4,7 @@ import abeshutt.staracademy.StarAcademyMod;
 import abeshutt.staracademy.screen.helper.Texture9SliceRegion;
 import com.mojang.blaze3d.systems.RenderSystem;
 import net.minecraft.client.MinecraftClient;
+import net.minecraft.client.font.TextRenderer;
 import net.minecraft.client.gui.DrawContext;
 import net.minecraft.client.gui.screen.Screen;
 import net.minecraft.client.network.ClientPlayerEntity;
@@ -66,6 +67,8 @@ public class WardrobeScreen extends Screen {
     public void render(DrawContext context, int mouseX, int mouseY, float delta) {
         renderBackground(context);
 
+        TextRenderer textRenderer = MinecraftClient.getInstance().textRenderer;
+
         OUTFITS_BG.draw(context, TEXTURE,
                 this.x + (int) (this.backgroundWidth * 0.5f) / 2 + 4, this.y,
                 this.backgroundWidth, this.backgroundHeight);
@@ -85,6 +88,8 @@ public class WardrobeScreen extends Screen {
         }
 
         super.render(context, mouseX, mouseY, delta);
+
+        context.drawText(textRenderer, this.getTitle(), this.x - 48, this.y - 10, 0xFF_FFFFFF, true);
     }
 
     public static void drawEntity(DrawContext context, int x, int y, int size, float mouseX, float mouseY, LivingEntity entity) {
