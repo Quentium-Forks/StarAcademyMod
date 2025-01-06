@@ -1,6 +1,8 @@
 package abeshutt.staracademy.entity;
 
+import abeshutt.staracademy.init.ModConfigs;
 import abeshutt.staracademy.init.ModEntities;
+import abeshutt.staracademy.init.ModItems;
 import net.minecraft.entity.EntityType;
 import net.minecraft.entity.LivingEntity;
 import net.minecraft.entity.projectile.thrown.ThrownItemEntity;
@@ -49,6 +51,8 @@ public class DuelingGloveEntity extends ThrownItemEntity {
                         .append(target.getName())
                         .append(Text.literal(" to a duel!").formatted(Formatting.GRAY)));
             }
+
+            thrower.getItemCooldownManager().set(ModItems.DUELING_GLOVE.get(), ModConfigs.DUELING.getCooldownTicks());
         }
     }
 

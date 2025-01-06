@@ -20,6 +20,7 @@ public class ModConfigs extends ModRegistries {
     public static SafariConfig SAFARI;
     public static WardrobeConfig WARDROBE;
     public static NPCConfig NPC;
+    public static DuelingConfig DUELING;
 
     public static void register(boolean initialization) {
         STARTER_RAFFLE = new StarterRaffleConfig().read();
@@ -28,6 +29,7 @@ public class ModConfigs extends ModRegistries {
         SAFARI = new SafariConfig().read();
         WARDROBE = new WardrobeConfig().read();
         NPC = new NPCConfig().read();
+        DUELING = new DuelingConfig().read();
 
         if(!initialization) {
             POST_LOAD.forEach(Runnable::run);
