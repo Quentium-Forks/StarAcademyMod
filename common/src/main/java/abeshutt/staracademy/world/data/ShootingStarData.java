@@ -17,7 +17,9 @@ public class ShootingStarData extends WorldData {
 
     @Override
     public Optional<NbtCompound> writeNbt() {
-        return Optional.empty();
+        return Optional.of(new NbtCompound()).map(nbt -> {
+            return nbt;
+        });
     }
 
     @Override

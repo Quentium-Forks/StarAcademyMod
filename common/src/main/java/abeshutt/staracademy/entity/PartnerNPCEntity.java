@@ -2,6 +2,7 @@ package abeshutt.staracademy.entity;
 
 import abeshutt.staracademy.StarAcademyMod;
 import abeshutt.staracademy.event.CommonEvents;
+import abeshutt.staracademy.init.ModConfigs;
 import com.cobblemon.mod.common.api.Priority;
 import net.minecraft.entity.EntityType;
 import net.minecraft.entity.ai.goal.LookAroundGoal;
@@ -11,6 +12,7 @@ import net.minecraft.entity.mob.PathAwareEntity;
 import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.nbt.NbtCompound;
 import net.minecraft.server.network.ServerPlayerEntity;
+import net.minecraft.text.Text;
 import net.minecraft.util.ActionResult;
 import net.minecraft.util.Hand;
 import net.minecraft.util.Identifier;
@@ -50,8 +52,11 @@ public class PartnerNPCEntity extends HumanEntity {
     @Override
     public void tick() {
         this.setInvulnerable(true);
+        this.setCustomNameVisible(false);
 
         if(!this.getWorld().isClient() && this.getServer() != null) {
+            this.setCustomName(Text.literal(ModConfigs.NPC.getPartnerNPCName()));
+
             this.conversations.forEach((uuid, conversation) -> {
                 ServerPlayerEntity player = this.getServer().getPlayerManager().getPlayer(uuid);
 

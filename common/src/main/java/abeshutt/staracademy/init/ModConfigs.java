@@ -19,6 +19,7 @@ public class ModConfigs extends ModRegistries {
     public static ECCobblemonConfig ENHANCED_CELESTIALS_COBBLEMON_CONFIG;
     public static SafariConfig SAFARI;
     public static WardrobeConfig WARDROBE;
+    public static NPCConfig NPC;
 
     public static void register(boolean initialization) {
         STARTER_RAFFLE = new StarterRaffleConfig().read();
@@ -26,6 +27,7 @@ public class ModConfigs extends ModRegistries {
         ENHANCED_CELESTIALS_COBBLEMON_CONFIG = new ECCobblemonConfig().read();
         SAFARI = new SafariConfig().read();
         WARDROBE = new WardrobeConfig().read();
+        NPC = new NPCConfig().read();
 
         if(!initialization) {
             POST_LOAD.forEach(Runnable::run);
