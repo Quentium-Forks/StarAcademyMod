@@ -53,9 +53,10 @@ public class WardrobeCommand extends Command {
 
         data.get(sender.getUuid()).ifPresentOrElse(
                 wardrobe -> {
-                    source.sendFeedback(() -> Text.literal("== UNLOCKED OUTFITS=="), false);
+                    source.sendFeedback(() -> Text.literal("== UNLOCKED OUTFITS =="), false);
                     Set<String> equipped = wardrobe.getEquipped();
-                    for (String outfitId : wardrobe.getUnlocked()) {
+
+                    for(String outfitId : wardrobe.getUnlocked()) {
                         source.sendFeedback(() -> Text.literal("- " + outfitId + (equipped.contains(outfitId) ? " (equipped)" : "")), false);
                     }
                 },
