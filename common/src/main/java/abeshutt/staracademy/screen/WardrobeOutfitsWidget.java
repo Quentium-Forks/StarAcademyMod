@@ -46,6 +46,8 @@ public class WardrobeOutfitsWidget extends ScrollableWidget {
         this.unlockedOutfits = unlocked.stream().sorted((id1, id2) -> {
             OutfitPiece outfit1 = ModOutfits.REGISTRY.get(id1);
             OutfitPiece outfit2 = ModOutfits.REGISTRY.get(id2);
+            if (outfit1 == null) return 1;
+            if (outfit2 == null) return -1;
             return Integer.compare(outfit1.getOrder(), outfit2.getOrder());
         }).toList();
     }
@@ -88,7 +90,7 @@ public class WardrobeOutfitsWidget extends ScrollableWidget {
         int i = 0;
         for (String outfitId : this.unlockedOutfits) {
             int x = getX() + this.gap;
-            int y = getY() + (i + 1) * this.gap + i * this.entryHeight;
+            int y = getY() + (i + 1) * this.gap + i * this.entryHeight - 2;
             int w = width - 2 * gap + 2;
             int h = entryHeight + gap;
 
@@ -117,16 +119,32 @@ public class WardrobeOutfitsWidget extends ScrollableWidget {
         }
     }
 
+    @Override
+    protected void drawBox(DrawContext context, int x, int y, int width, int height) {
+//        int i = this.isFocused() ? 0xffffffff : 0xffa0a0a0;
+//        context.fill(x, y, x + width, y + height, i);
+//        context.fill(x + 1, y + 1, x + width - 1, y + height - 1, 0xff000000);
+        new Texture9SliceRegion(10, 0, 7, 7, 256, 256)
+                .draw(context, TEXTURE, x + 1, y, width, height + 2);
+    }
+
     private void drawScrollbar(DrawContext context) {
-//        int i = this.getScrollbarThumbHeight();
         int contentsHeight = this.getContentsHeight() + 4;
         int i = MathHelper.clamp((int) ((float) (this.height * this.height) / (float) contentsHeight), 32, this.height);
         int j = this.getX() + this.width;
         int k = this.getX() + this.width + 8;
         int l = Math.max(this.getY(), (int) this.getScrollY() * (this.height - i) / this.getMaxScrollY() + this.getY());
         int m = l + i;
-        context.fill(j, l, k, m, -8355712);
-        context.fill(j, l, k - 1, m - 1, -4144960);
+
+        int trackBorder = 0xff_C6C6C6;
+        int trackBg = 0xff_333333;
+        int thumbBorder = 0xff_555555;
+        int thumbBg = 0xff_A0A0A0;
+
+        context.fill(j, this.getY(), k, getY() + getHeight(), trackBorder);
+        context.fill(j + 1, this.getY() + 1, k - 1, getY() + getHeight() - 1, trackBg);
+        context.fill(j, l, k, m, thumbBorder);
+        context.fill(j + 1, l + 1, k - 1, m - 1, thumbBg);
     }
 
     @Override
@@ -142,7 +160,7 @@ public class WardrobeOutfitsWidget extends ScrollableWidget {
         int i = 0;
         for (String outfitId : this.unlockedOutfits) {
             int x = getX() + this.gap;
-            int y = getY() + (i + 1) * this.gap + i * this.entryHeight;
+            int y = getY() + (i + 1) * this.gap + i * this.entryHeight - 2;
             int w = width - 2 * gap + 2;
             int h = entryHeight + gap;
 
