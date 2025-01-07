@@ -3,7 +3,9 @@ package abeshutt.staracademy.screen;
 import abeshutt.staracademy.StarAcademyMod;
 import abeshutt.staracademy.init.ModItems;
 import abeshutt.staracademy.init.ModNetwork;
+import abeshutt.staracademy.init.ModOutfits;
 import abeshutt.staracademy.net.UpdateOutfitC2SPacket;
+import abeshutt.staracademy.outfit.core.OutfitPiece;
 import abeshutt.staracademy.screen.helper.Texture9SliceRegion;
 import abeshutt.staracademy.world.data.WardrobeData;
 import net.minecraft.client.MinecraftClient;
@@ -16,7 +18,11 @@ import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.NbtCompound;
 import net.minecraft.text.Text;
 import net.minecraft.util.Identifier;
+import net.minecraft.util.math.MathHelper;
 
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
 import java.util.Set;
 
 public class WardrobeOutfitsWidget extends ScrollableWidget {
@@ -29,8 +35,19 @@ public class WardrobeOutfitsWidget extends ScrollableWidget {
     protected int entryHeight = 25;
     protected int gap = 5;
 
+    protected Map<String, ItemStack> outfitStackCache = new HashMap<>();
+    protected List<String> unlockedOutfits;
+
     public WardrobeOutfitsWidget(int x, int y, int w, int h, Text text) {
         super(x, y, w, h, text);
+
+        WardrobeData.Entry wardrobe = getWardrobe();
+        Set<String> unlocked = wardrobe.getUnlocked();
+        this.unlockedOutfits = unlocked.stream().sorted((id1, id2) -> {
+            OutfitPiece outfit1 = ModOutfits.REGISTRY.get(id1);
+            OutfitPiece outfit2 = ModOutfits.REGISTRY.get(id2);
+            return Integer.compare(outfit1.getOrder(), outfit2.getOrder());
+        }).toList();
     }
 
     @Override
@@ -66,11 +83,10 @@ public class WardrobeOutfitsWidget extends ScrollableWidget {
         int pointerY = (int) (mouseY + getScrollY());
 
         WardrobeData.Entry wardrobe = getWardrobe();
-        Set<String> unlocked = wardrobe.getUnlocked();
         Set<String> equipped = wardrobe.getEquipped();
 
         int i = 0;
-        for (String outfitId : unlocked) {
+        for (String outfitId : this.unlockedOutfits) {
             int x = getX() + this.gap;
             int y = getY() + (i + 1) * this.gap + i * this.entryHeight;
             int w = width - 2 * gap + 2;
@@ -88,9 +104,29 @@ public class WardrobeOutfitsWidget extends ScrollableWidget {
         return clicked;
     }
 
+
     @Override
     public void render(DrawContext context, int mouseX, int mouseY, float delta) {
         super.render(context, mouseX, mouseY, delta);
+    }
+
+    @Override
+    protected void renderOverlay(DrawContext context) {
+        if (this.overflows()) {
+            this.drawScrollbar(context);
+        }
+    }
+
+    private void drawScrollbar(DrawContext context) {
+//        int i = this.getScrollbarThumbHeight();
+        int contentsHeight = this.getContentsHeight() + 4;
+        int i = MathHelper.clamp((int) ((float) (this.height * this.height) / (float) contentsHeight), 32, this.height);
+        int j = this.getX() + this.width;
+        int k = this.getX() + this.width + 8;
+        int l = Math.max(this.getY(), (int) this.getScrollY() * (this.height - i) / this.getMaxScrollY() + this.getY());
+        int m = l + i;
+        context.fill(j, l, k, m, -8355712);
+        context.fill(j, l, k - 1, m - 1, -4144960);
     }
 
     @Override
@@ -101,11 +137,10 @@ public class WardrobeOutfitsWidget extends ScrollableWidget {
         TextRenderer textRenderer = MinecraftClient.getInstance().textRenderer;
 
         WardrobeData.Entry wardrobe = getWardrobe();
-        Set<String> unlocked = wardrobe.getUnlocked();
         Set<String> equipped = wardrobe.getEquipped();
 
         int i = 0;
-        for (String outfitId : unlocked) {
+        for (String outfitId : this.unlockedOutfits) {
             int x = getX() + this.gap;
             int y = getY() + (i + 1) * this.gap + i * this.entryHeight;
             int w = width - 2 * gap + 2;
@@ -116,15 +151,19 @@ public class WardrobeOutfitsWidget extends ScrollableWidget {
 
             outfitBg.draw(context, TEXTURE, x, y, w, h);
 
-            ItemStack itemStack = new ItemStack(ModItems.OUTFIT.get());
-            NbtCompound nbt = itemStack.getOrCreateNbt();
+            ItemStack outfitStack = outfitStackCache.computeIfAbsent(outfitId, id -> {
+                ItemStack itemStack = new ItemStack(ModItems.OUTFIT.get());
 
-            NbtCompound entryNbt = new NbtCompound();
-            entryNbt.putString("type", "value");
-            entryNbt.putString("id", outfitId);
-            nbt.put("entry", entryNbt);
+                NbtCompound nbt = itemStack.getOrCreateNbt();
+                NbtCompound entryNbt = new NbtCompound();
+                entryNbt.putString("type", "value");
+                entryNbt.putString("id", outfitId);
+                nbt.put("entry", entryNbt);
 
-            context.drawItem(itemStack, x + 6, y + 7);
+                return itemStack;
+            });
+
+            context.drawItem(outfitStack, x + 6, y + 7);
 
             context.getMatrices().push();
             float scale = 0.75f;

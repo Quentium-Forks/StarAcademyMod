@@ -12,6 +12,7 @@ public abstract class OutfitPiece {
             "right_pants", "left_arm", "left_leg", "left_sleeve", "left_pants", "ear", "cloak", "jacket" };
 
     private final String id;
+    private int order;
     private OutfitTexture texture;
 
     @Environment(EnvType.CLIENT)
@@ -30,12 +31,20 @@ public abstract class OutfitPiece {
         return this.id;
     }
 
+    public int getOrder() {
+        return order;
+    }
+
     public OutfitTexture getTexture() {
         return this.texture;
     }
 
     public OutfitModel getModel() {
         return this.model;
+    }
+
+    public void setOrder(int order) {
+        this.order = order;
     }
 
     @Environment(EnvType.CLIENT)

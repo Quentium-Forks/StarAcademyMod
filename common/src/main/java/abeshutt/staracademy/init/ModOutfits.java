@@ -106,7 +106,10 @@ public class ModOutfits {
         SLOWKING_HAT = register(new PokemonHatOutfit.Slowking("slowking_hat"));
     }
 
+    private static int order;
+
     public static <T extends OutfitPiece> T register(T piece) {
+        piece.setOrder(order++);
         REGISTRY.put(piece.getId(), piece);
         return piece;
     }
