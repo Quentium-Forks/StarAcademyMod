@@ -15,6 +15,7 @@ dependencies {
     modImplementation files("jars/cloud-boots-1.20.1-fabric-3.0.0.jar")
     modImplementation files("jars/GooeyLibs-Fabric-3.0.0+1.20.1.jar")
     modImplementation files("jars/Hunt-1.1.0-fabric.jar")
+    modImplementation files("jars/mousewheelie-1.13.0+mc1.20.1.jar")
     modImplementation files("jars/Myths_and_Legends-1.6.1-fabric.jar")
     modImplementation files("jars/Scout-2.0.4+1.20.1.jar")
     modImplementation files("jars/Terrastorage-1.0.7+1.20-1.20.1.jar")
