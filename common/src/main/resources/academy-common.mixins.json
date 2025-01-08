@@ -26,6 +26,7 @@
     "MixinLivingEntity",
     "MixinPlayerScreenHandler",
     "MixinStructureTemplate",
+    "MixinTrinket",
     "bountiful.MixinBountyItem",
     "cobblemon.MixinPokeBallItem",
     "mythsandlegends.MixinFormAndAspectUtils",
