@@ -28,7 +28,7 @@
     "MixinMobEntity",
     "MixinPlayerScreenHandler",
     "MixinStructureTemplate",
-    "MixinTrinket",
+    "cloudboots.MixinGoldenFeatherTrinket",
     "bountiful.MixinBountyItem",
     "cobblemon.MixinPokeBallItem",
     "mythsandlegends.MixinFormAndAspectUtils",
