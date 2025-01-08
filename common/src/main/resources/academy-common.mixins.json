@@ -7,7 +7,6 @@
     "MixinBlockEntityRendererFactories",
     "MixinBuiltinModelItemRenderer",
     "MixinClientWorld",
-    "mousewheelie.MixinContainerScreenHelper",
     "MixinInGameHud",
     "MixinInventoryScreen",
     "MixinModelLoader",
@@ -17,6 +16,7 @@
     "cobblemon.MixinCategoryListEntry",
     "cobblemon.MixinSelectionButton",
     "cobblemon.MixinStarterSelectionScreen",
+    "mousewheelie.MixinContainerScreenHelper",
     "scout.MixinScoutUtilClient"
   ],
   "mixins": [
@@ -25,6 +25,7 @@
     "MixinEntity",
     "MixinGameProfile",
     "MixinLivingEntity",
+    "MixinMobEntity",
     "MixinPlayerScreenHandler",
     "MixinStructureTemplate",
     "MixinTrinket",
