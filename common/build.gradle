@@ -28,4 +28,6 @@ dependencies {
     modImplementation files("jars/solara_dimension-0.1A-fabric-1.20.1.jar")
     modImplementation files("jars/Corgilib-Fabric-1.20.1-4.0.3.3.jar")
     modImplementation files("jars/Enhanced-Celestials-Fabric-1.20.1-5.0.1.0.jar")
+    modImplementation files("jars/sophisticatedbackpacks-1.20.1-3.20.17.1.60.jar")
+    modImplementation files("jars/sophisticatedstorage-1.20.1-0.11.3.1.73.jar")
 }

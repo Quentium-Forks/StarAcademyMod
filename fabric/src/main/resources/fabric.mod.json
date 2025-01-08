@@ -19,7 +19,8 @@
     ]
   },
   "mixins": [
-    "academy-common.mixins.json"
+    "academy-common.mixins.json",
+    "academy-fabric.mixins.json"
   ],
   "depends": {
   },

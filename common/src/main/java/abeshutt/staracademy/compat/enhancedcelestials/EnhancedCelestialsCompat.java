@@ -1,4 +1,4 @@
-package abeshutt.staracademy.modsupport.enhancedcelestials;
+package abeshutt.staracademy.compat.enhancedcelestials;
 
 import abeshutt.staracademy.StarAcademyMod;
 import abeshutt.staracademy.init.ModConfigs;

@@ -3,7 +3,7 @@ package abeshutt.staracademy;
 import abeshutt.staracademy.event.CommonEvents;
 import abeshutt.staracademy.init.ModConfigs;
 import abeshutt.staracademy.init.ModRegistries;
-import abeshutt.staracademy.modsupport.enhancedcelestials.EnhancedCelestialsCompat;
+import abeshutt.staracademy.compat.enhancedcelestials.EnhancedCelestialsCompat;
 import abeshutt.staracademy.world.random.JavaRandom;
 import com.cobblemon.mod.common.Cobblemon;
 import com.cobblemon.mod.common.CobblemonItems;
