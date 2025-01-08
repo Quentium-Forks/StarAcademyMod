@@ -12,6 +12,7 @@ dependencies {
     modImplementation("com.cobblemon:mod:1.5.2+1.20.1")
 
     modImplementation files("jars/Bountiful-6.0.3+1.20.1-fabric.jar")
+    modImplementation files("jars/cloud-boots-1.20.1-fabric-3.0.0.jar")
     modImplementation files("jars/GooeyLibs-Fabric-3.0.0+1.20.1.jar")
     modImplementation files("jars/Hunt-1.1.0-fabric.jar")
     modImplementation files("jars/Myths_and_Legends-1.6.1-fabric.jar")

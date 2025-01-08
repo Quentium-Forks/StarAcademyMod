@@ -1,24 +1,20 @@
 package abeshutt.staracademy.mixin;
 
-import dev.architectury.platform.Platform;
-import dev.architectury.utils.Env;
+import com.tiviacz.cloudboots.TrinketsCompat;
 import dev.emi.trinkets.api.SlotReference;
-import dev.emi.trinkets.api.Trinket;
 import net.minecraft.entity.LivingEntity;
 import net.minecraft.item.ItemStack;
 import org.spongepowered.asm.mixin.Mixin;
 import org.spongepowered.asm.mixin.injection.At;
-import org.spongepowered.asm.mixin.injection.Inject;
+import org.spongepowered.asm.mixin.injection.Redirect;
 import org.spongepowered.asm.mixin.injection.callback.CallbackInfo;
 
-@Mixin(Trinket.class)
+@Mixin(TrinketsCompat.GoldenFeatherTrinket .class)
 public class MixinTrinket {
 
-    @Inject(method = "onBreak", at = @At("HEAD"), cancellable = true)
+    @Redirect(method = "lambda$tick$0", at = @At(value = "HEAD"))
     void onBreak(ItemStack stack, SlotReference slot, LivingEntity entity, CallbackInfo ci) {
-        if(Platform.getEnvironment() == Env.SERVER) {
-            ci.cancel();
-        }
+        entity.playEquipmentBreakEffects(stack);
     }
 
 }

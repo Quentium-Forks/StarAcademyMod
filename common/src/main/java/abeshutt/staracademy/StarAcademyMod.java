@@ -82,15 +82,15 @@ public final class StarAcademyMod {
             if (pokemon.getShiny()) prefixes.add("Shiny");
             if (pokemon.isLegendary()) prefixes.add("Legendary");
 
-            if (pokemon.getShiny() || pokemon.isLegendary()) {
+            if(pokemon.getShiny() || pokemon.isLegendary()) {
                 MutableText message = Text.empty()
-                        .append(Text.literal("A ").formatted(Formatting.BOLD))
-                        .append(Text.literal(String.join(" ", prefixes)).formatted(Formatting.BOLD))
-                        .append(prefixes.isEmpty() ? Text.empty() : Text.literal(" "))
-                        .append(event.getEntity().getDisplayName().copy().formatted(Formatting.BOLD))
-                        .append(Text.literal(" has spawned near someone!").formatted(Formatting.BOLD));
+                    .append(Text.literal("A ").formatted(Formatting.BOLD))
+                    .append(Text.literal(String.join(" ", prefixes)).formatted(Formatting.BOLD))
+                    .append(prefixes.isEmpty() ? Text.empty() : Text.literal(" "))
+                    .append(event.getEntity().getDisplayName().copy().formatted(Formatting.BOLD))
+                    .append(Text.literal(" has spawned near someone!").formatted(Formatting.BOLD));
 
-                for (ServerPlayerEntity player : server.getPlayerManager().getPlayerList()) {
+                for(ServerPlayerEntity player : server.getPlayerManager().getPlayerList()) {
                     player.sendMessage(message);
                 }
             }
