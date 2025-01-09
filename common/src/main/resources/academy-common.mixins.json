@@ -25,7 +25,6 @@
     "MixinEntity",
     "MixinGameProfile",
     "MixinLivingEntity",
-    "MixinMobEntity",
     "MixinPlayerScreenHandler",
     "MixinStructureTemplate",
     "bountiful.MixinBountyItem",
