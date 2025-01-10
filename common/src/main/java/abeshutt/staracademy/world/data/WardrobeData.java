@@ -246,7 +246,7 @@ public class WardrobeData extends WorldData {
 
             this.equipped.clear();
 
-            if(nbt.get("unlocked") instanceof NbtList equipped) {
+            if(nbt.get("equipped") instanceof NbtList equipped) {
                 for(NbtElement element : equipped) {
                     Adapters.UTF_8.readNbt(element).ifPresent(this.equipped::add);
                 }
