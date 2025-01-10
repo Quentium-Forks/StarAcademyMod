@@ -1,9 +1,14 @@
 package abeshutt.staracademy.mixin.mythsandlegends;
 
+import abeshutt.staracademy.data.biome.BiomePredicate;
 import abeshutt.staracademy.init.ModConfigs;
+import abeshutt.staracademy.world.random.JavaRandom;
+import abeshutt.staracademy.world.random.RandomSource;
 import com.cobblemon.mod.common.entity.pokemon.PokemonEntity;
 import com.github.d0ctorleon.mythsandlegends.MythsAndLegends;
 import com.github.d0ctorleon.mythsandlegends.utils.ForceSpawningUtils;
+import com.mojang.datafixers.optics.Optic;
+import net.minecraft.entity.Entity;
 import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.item.ItemStack;
 import net.minecraft.registry.entry.RegistryEntry;
@@ -17,6 +22,8 @@ import org.spongepowered.asm.mixin.injection.At;
 import org.spongepowered.asm.mixin.injection.Inject;
 import org.spongepowered.asm.mixin.injection.callback.CallbackInfoReturnable;
 
+import java.util.Optional;
+
 @Mixin(ForceSpawningUtils.class)
 public class MixinForceSpawningUtils {
 
@@ -25,20 +32,46 @@ public class MixinForceSpawningUtils {
         ItemStack stack = player.getStackInHand(hand);
 
         ModConfigs.FORCE_SPAWN_ITEM.getPokemon(stack).ifPresent(entry -> {
-            BlockPos pos = player.getBlockPos();
-            RegistryEntry<Biome> biome = world.getBiome(pos);
+            RegistryEntry<Biome> biome = world.getBiome(player.getBlockPos());
 
             if(entry.getBiome().test(biome)) {
                 PokemonEntity entity = entry.getPokemon().createEntity(world);
-                world.spawnEntity(entity);
-                entity.setPosition(player.getX(), player.getY(), player.getZ());
-                stack.decrement(1);
+                BlockPos pos = findSpawningSpace(world, player.getBlockPos(), entity).orElse(null);
+
+                if(pos != null) {
+                    world.spawnEntity(entity);
+                    stack.decrement(1);
+                } else {
+                    player.getItemCooldownManager().set(stack.getItem(), MythsAndLegends.getConfigManager().getConfig().force_spawn_item_cooldown);
+                }
             } else {
                 player.getItemCooldownManager().set(stack.getItem(), MythsAndLegends.getConfigManager().getConfig().force_spawn_item_cooldown);
             }
         });
 
         ci.setReturnValue(TypedActionResult.success(stack, world.isClient()));
+    }
+
+    private static Optional<BlockPos> findSpawningSpace(World world, BlockPos center, Entity entity) {
+        RandomSource random = JavaRandom.ofNanoTime();
+        BlockPos.Mutable pos = new BlockPos.Mutable();
+        int w = ModConfigs.FORCE_SPAWN_ITEM.getHorizontalSpawnRadius();
+        int h = ModConfigs.FORCE_SPAWN_ITEM.getVerticalSpawnRadius();
+
+        for(int i = 0; i < 1000; i++) {
+            int x = center.getX() + random.nextInt(w * 2 + 1) - w;
+            int y = center.getY() + random.nextInt(h * 2 + 1) - h;
+            int z = center.getZ() + random.nextInt(w * 2 + 1) - w;
+            pos.set(x, y, z);
+
+            entity.setPosition(pos.getX() + 0.5D, pos.getY(), pos.getZ() + 0.5D);
+
+            if(world.isSpaceEmpty(entity) && world.getBlockState(pos.down()).isFullCube(world, pos.down())) {
+                return Optional.of(pos);
+            }
+        }
+
+        return Optional.empty();
     }
 
 }

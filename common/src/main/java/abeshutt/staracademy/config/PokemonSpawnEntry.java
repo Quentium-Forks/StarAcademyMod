@@ -6,16 +6,20 @@ import com.google.gson.annotations.Expose;
 
 public class PokemonSpawnEntry {
 
-    @Expose private PokemonProperties pokemon;
+    @Expose private String pokemon;
     @Expose private BiomePredicate biome;
 
-    public PokemonSpawnEntry(PokemonProperties pokemon, BiomePredicate biome) {
+    public PokemonSpawnEntry(String pokemon, BiomePredicate biome) {
         this.pokemon = pokemon;
         this.biome = biome;
     }
 
-    public PokemonProperties getPokemon() {
+    public String getRawPokemon() {
         return this.pokemon;
+    }
+
+    public PokemonProperties getPokemon() {
+        return PokemonProperties.Companion.parse(this.pokemon);
     }
 
     public BiomePredicate getBiome() {

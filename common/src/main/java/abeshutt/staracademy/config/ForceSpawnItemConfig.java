@@ -12,11 +12,21 @@ import java.util.Optional;
 
 public class ForceSpawnItemConfig extends FileConfig {
 
+    @Expose private int horizontalSpawnRadius;
+    @Expose private int verticalSpawnRadius;
     @Expose private Map<ItemPredicate, PokemonSpawnEntry> entries;
 
     @Override
     public String getPath() {
         return "force_spawn_item";
+    }
+
+    public int getHorizontalSpawnRadius() {
+        return this.horizontalSpawnRadius;
+    }
+
+    public int getVerticalSpawnRadius() {
+        return this.verticalSpawnRadius;
     }
 
     public Optional<PokemonSpawnEntry> getPokemon(ItemStack stack) {
@@ -31,9 +41,12 @@ public class ForceSpawnItemConfig extends FileConfig {
 
     @Override
     protected void reset() {
+        this.horizontalSpawnRadius = 15;
+        this.verticalSpawnRadius = 10;
+
         this.entries = new LinkedHashMap<>();
         this.entries.put(ItemPredicate.of("myths_and_legends:adamant_orb", true).orElseThrow(), new PokemonSpawnEntry(
-                PokemonProperties.Companion.parse("pikachu"),
+                "pikachu",
                 BiomePredicate.of("minecraft:plains", true).orElseThrow()
         ));
     }
