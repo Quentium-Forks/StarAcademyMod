@@ -35,7 +35,7 @@ public final class StarAcademyMod {
     public static final RegistryKey<World> SAFARI = RegistryKey.of(RegistryKeys.WORLD, StarAcademyMod.id("safari"));
 
     public static void init() {
-        if (FabricLoader.getInstance().isModLoaded("enhancedcelestials")) {
+        if(FabricLoader.getInstance().isModLoaded("enhancedcelestials")) {
             EnhancedCelestialsCompat.init();
         }
 
@@ -43,7 +43,7 @@ public final class StarAcademyMod {
         ModRegistries.register();
 
         CommonEvents.POKEMON_CATCH_RATE.subscribe(Priority.LOWEST, event -> {
-            if (event.getThrower().getWorld().getRegistryKey() == SAFARI) {
+            if(event.getThrower().getWorld().getRegistryKey() == SAFARI) {
                 if (event.getPokeBallEntity().getPokeBall().item() != CobblemonItems.SAFARI_BALL) {
                     event.setCatchRate(0.0F);
                 }
@@ -51,19 +51,19 @@ public final class StarAcademyMod {
         });
 
         CommonEvents.POKEMON_SENT_PRE.subscribe(Priority.NORMAL, event -> {
-            if (event.getLevel().getRegistryKey() == SAFARI) {
+            if(event.getLevel().getRegistryKey() == SAFARI) {
                 event.cancel();
             }
         });
 
-        CommonEvents.POKEMON_ENTITY_SPAWN.subscribe(Priority.NORMAL, event -> {
+        CommonEvents.POKEMON_ENTITY_SPAWN.subscribe(Priority.HIGHEST, event -> {
             World world = event.getEntity().getEntityWorld();
             WorldBorder border = world.getWorldBorder();
             double dx = event.getEntity().getPos().getX() - border.getCenterX();
             double dz = event.getEntity().getPos().getZ() - border.getCenterZ();
             double distance = Math.sqrt(dx * dx + dz * dz);
 
-            if (distance <= ModConfigs.POKEMON_SPAWN.getSpawnProtectionDistance()) {
+            if(distance <= ModConfigs.POKEMON_SPAWN.getSpawnProtectionDistance()) {
                 event.getEntity().discard();
                 return;
             }
@@ -73,14 +73,14 @@ public final class StarAcademyMod {
             });
         });
 
-        CommonEvents.POKEMON_ENTITY_SPAWN.subscribe(Priority.NORMAL, event -> {
+        CommonEvents.POKEMON_ENTITY_SPAWN.subscribe(Priority.LOWEST, event -> {
             MinecraftServer server = event.getEntity().getWorld().getServer();
-            if (server == null) return;
+            if(server == null) return;
             Pokemon pokemon = event.getEntity().getPokemon();
 
             List<String> prefixes = new ArrayList<>();
-            if (pokemon.getShiny()) prefixes.add("Shiny");
-            if (pokemon.isLegendary()) prefixes.add("Legendary");
+            if(pokemon.getShiny()) prefixes.add("Shiny");
+            if(pokemon.isLegendary()) prefixes.add("Legendary");
 
             if(pokemon.getShiny() || pokemon.isLegendary()) {
                 MutableText message = Text.empty()

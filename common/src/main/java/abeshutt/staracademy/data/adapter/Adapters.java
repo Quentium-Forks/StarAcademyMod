@@ -8,6 +8,7 @@ import abeshutt.staracademy.data.adapter.basic.*;
 import abeshutt.staracademy.data.adapter.nbt.*;
 import abeshutt.staracademy.data.adapter.number.*;
 import abeshutt.staracademy.data.adapter.util.*;
+import abeshutt.staracademy.data.biome.BiomePredicate;
 import abeshutt.staracademy.data.entity.EntityPredicate;
 import abeshutt.staracademy.data.item.ItemPredicate;
 import abeshutt.staracademy.data.item.PartialItem;
@@ -113,12 +114,14 @@ public class Adapters {
     public static final TilePredicate.Adapter TILE_PREDICATE = new TilePredicate.Adapter();
     public static final EntityPredicate.Adapter ENTITY_PREDICATE = new EntityPredicate.Adapter();
     public static final ItemPredicate.Adapter ITEM_PREDICATE = new ItemPredicate.Adapter();
+    public static final BiomePredicate.Adapter BIOME_PREDICATE = new BiomePredicate.Adapter();
 
     public static final RegistryAdapter<Block> BLOCK = new RegistryAdapter<>(() -> Registries.BLOCK, false);
     public static final RegistryAdapter<Item> ITEM = new RegistryAdapter<>(() -> Registries.ITEM, false);
     public static final BlockPosAdapter BLOCK_POS = new BlockPosAdapter(false);
     public static final OutfitEntry.Adapter OUTFIT_ENTRY = new OutfitEntry.Adapter();
     public static final Vec3dAdapter VEC_3D = new Vec3dAdapter(false);
+    public static final PokemonPropertiesAdapter POKEMON_PROPERTIES = new PokemonPropertiesAdapter();
 
     public static Lcg.Adapter LCG = new Lcg.Adapter(false);
 

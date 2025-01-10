@@ -13,6 +13,7 @@ public class ModConfigs extends ModRegistries {
     public static TileGroupsConfig TILE_GROUPS;
     public static EntityGroupsConfig ENTITY_GROUPS;
     public static ItemGroupsConfig ITEM_GROUPS;
+    public static BiomeGroupsConfig BIOME_GROUPS;
 
     public static StarterRaffleConfig STARTER_RAFFLE;
     public static PokemonSpawnConfig POKEMON_SPAWN;
@@ -21,8 +22,14 @@ public class ModConfigs extends ModRegistries {
     public static WardrobeConfig WARDROBE;
     public static NPCConfig NPC;
     public static DuelingConfig DUELING;
+    public static ForceSpawnItemConfig FORCE_SPAWN_ITEM;
 
     public static void register(boolean initialization) {
+        TILE_GROUPS = new TileGroupsConfig().read();
+        ENTITY_GROUPS = new EntityGroupsConfig().read();
+        ITEM_GROUPS = new ItemGroupsConfig().read();
+        BIOME_GROUPS = new BiomeGroupsConfig().read();
+
         STARTER_RAFFLE = new StarterRaffleConfig().read();
         POKEMON_SPAWN = new PokemonSpawnConfig().read();
         ENHANCED_CELESTIALS_COBBLEMON_CONFIG = new ECCobblemonConfig().read();
@@ -30,6 +37,7 @@ public class ModConfigs extends ModRegistries {
         WARDROBE = new WardrobeConfig().read();
         NPC = new NPCConfig().read();
         DUELING = new DuelingConfig().read();
+        FORCE_SPAWN_ITEM = new ForceSpawnItemConfig().read();
 
         if(!initialization) {
             POST_LOAD.forEach(Runnable::run);

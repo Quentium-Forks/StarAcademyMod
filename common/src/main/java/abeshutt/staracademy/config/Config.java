@@ -1,10 +1,12 @@
 package abeshutt.staracademy.config;
 
 import abeshutt.staracademy.data.adapter.Adapters;
+import abeshutt.staracademy.data.biome.BiomePredicate;
 import abeshutt.staracademy.data.entity.EntityPredicate;
 import abeshutt.staracademy.data.item.ItemPredicate;
 import abeshutt.staracademy.data.tile.TilePredicate;
 import abeshutt.staracademy.world.roll.IntRoll;
+import com.cobblemon.mod.common.api.pokemon.PokemonProperties;
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
 import net.minecraft.util.Identifier;
@@ -25,9 +27,11 @@ public abstract class Config {
             .registerTypeHierarchyAdapter(TilePredicate.class, Adapters.TILE_PREDICATE)
             .registerTypeHierarchyAdapter(EntityPredicate.class, Adapters.ENTITY_PREDICATE)
             .registerTypeHierarchyAdapter(ItemPredicate.class, Adapters.ITEM_PREDICATE)
+            .registerTypeHierarchyAdapter(BiomePredicate.class, Adapters.BIOME_PREDICATE)
             .registerTypeHierarchyAdapter(IntRoll.class, Adapters.INT_ROLL)
             .registerTypeAdapter(BlockPos.class, Adapters.BLOCK_POS)
             .registerTypeAdapter(Identifier.class, Adapters.IDENTIFIER)
+            .registerTypeAdapter(PokemonProperties.class, Adapters.POKEMON_PROPERTIES)
             .create();
 
     public abstract void write() throws IOException;
