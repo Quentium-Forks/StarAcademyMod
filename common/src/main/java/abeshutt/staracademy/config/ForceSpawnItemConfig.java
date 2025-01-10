@@ -3,17 +3,13 @@ package abeshutt.staracademy.config;
 import abeshutt.staracademy.data.biome.BiomePredicate;
 import abeshutt.staracademy.data.item.ItemPredicate;
 import abeshutt.staracademy.world.random.RandomSource;
-import com.cobblemon.mod.common.api.pokemon.PokemonProperties;
 import com.google.gson.annotations.Expose;
-import it.unimi.dsi.fastutil.Function;
 import it.unimi.dsi.fastutil.objects.Object2DoubleFunction;
 import net.minecraft.item.ItemStack;
-import net.minecraft.util.collection.WeightedList;
+import net.minecraft.registry.entry.RegistryEntry;
+import net.minecraft.world.biome.Biome;
 
-import java.util.LinkedHashMap;
-import java.util.List;
-import java.util.Map;
-import java.util.Optional;
+import java.util.*;
 
 public class ForceSpawnItemConfig extends FileConfig {
 
@@ -34,10 +30,11 @@ public class ForceSpawnItemConfig extends FileConfig {
         return this.verticalSpawnRadius;
     }
 
-    public Optional<PokemonSpawnEntry> getPokemon(ItemStack stack, RandomSource random) {
+    public Optional<PokemonSpawnEntry> getPokemon(ItemStack stack, RegistryEntry<Biome> biome, RandomSource random) {
         for(Map.Entry<ItemPredicate, List<PokemonSpawnEntry>> entry : this.entries.entrySet()) {
            if(entry.getKey().test(stack)) {
-               List<PokemonSpawnEntry> options = entry.getValue();
+               List<PokemonSpawnEntry> options = new ArrayList<>(entry.getValue());
+               options.removeIf(e -> !e.getBiome().test(biome));
                return this.getWeighted(options, o -> ((PokemonSpawnEntry)o).getWeight(), random);
            }
         }
