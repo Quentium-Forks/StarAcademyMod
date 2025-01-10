@@ -8,10 +8,12 @@ public class PokemonSpawnEntry {
 
     @Expose private String pokemon;
     @Expose private BiomePredicate biome;
+    @Expose private double weight;
 
-    public PokemonSpawnEntry(String pokemon, BiomePredicate biome) {
+    public PokemonSpawnEntry(String pokemon, BiomePredicate biome, double weight) {
         this.pokemon = pokemon;
         this.biome = biome;
+        this.weight = weight;
     }
 
     public String getRawPokemon() {
@@ -24,6 +26,10 @@ public class PokemonSpawnEntry {
 
     public BiomePredicate getBiome() {
         return this.biome;
+    }
+
+    public double getWeight() {
+        return this.weight;
     }
 
 }

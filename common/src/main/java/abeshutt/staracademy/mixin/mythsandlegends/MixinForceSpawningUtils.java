@@ -31,7 +31,7 @@ public class MixinForceSpawningUtils {
     private static void forceSpawnv1(World world, PlayerEntity player, Hand hand, String keyItem, CallbackInfoReturnable<TypedActionResult<ItemStack>> ci) {
         ItemStack stack = player.getStackInHand(hand);
 
-        ModConfigs.FORCE_SPAWN_ITEM.getPokemon(stack).ifPresent(entry -> {
+        ModConfigs.FORCE_SPAWN_ITEM.getPokemon(stack, JavaRandom.ofNanoTime()).ifPresent(entry -> {
             RegistryEntry<Biome> biome = world.getBiome(player.getBlockPos());
 
             if(entry.getBiome().test(biome)) {
