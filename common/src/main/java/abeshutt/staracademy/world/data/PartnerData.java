@@ -8,7 +8,6 @@ import com.cobblemon.mod.common.api.storage.NoPokemonStoreException;
 import com.cobblemon.mod.common.api.storage.party.PlayerPartyStore;
 import com.cobblemon.mod.common.api.storage.pc.PCPosition;
 import com.cobblemon.mod.common.api.storage.pc.PCStore;
-import com.cobblemon.mod.common.api.storage.pc.link.PCLinkManager;
 import com.cobblemon.mod.common.pokemon.Pokemon;
 import com.cobblemon.mod.common.pokemon.Species;
 import dev.architectury.event.events.common.TickEvent;

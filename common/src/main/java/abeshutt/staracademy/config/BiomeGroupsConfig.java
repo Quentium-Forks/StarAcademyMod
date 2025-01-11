@@ -1,16 +1,10 @@
 package abeshutt.staracademy.config;
 
 import abeshutt.staracademy.data.biome.BiomePredicate;
-import abeshutt.staracademy.data.item.ItemPredicate;
-import abeshutt.staracademy.data.item.PartialItem;
-import abeshutt.staracademy.data.item.PartialStack;
-import abeshutt.staracademy.data.nbt.PartialCompoundNbt;
 import com.google.gson.annotations.Expose;
-import net.minecraft.registry.DynamicRegistryManager;
 import net.minecraft.registry.entry.RegistryEntry;
 import net.minecraft.util.Identifier;
 import net.minecraft.world.biome.Biome;
-import org.spongepowered.asm.mixin.Dynamic;
 
 import java.util.HashSet;
 import java.util.LinkedHashMap;

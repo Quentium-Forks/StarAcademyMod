@@ -2,28 +2,12 @@ package abeshutt.staracademy.entity.renderer;
 
 import abeshutt.staracademy.entity.ShootingStarEntity;
 import abeshutt.staracademy.entity.model.ShootingStarModel;
-import abeshutt.staracademy.entity.model.StarBadgeBeltModel;
-import abeshutt.staracademy.init.ModItems;
-import abeshutt.staracademy.world.data.StarBadgeData;
-import abeshutt.staracademy.world.inventory.BaseInventory;
 import com.mojang.blaze3d.systems.RenderSystem;
-import net.minecraft.client.MinecraftClient;
-import net.minecraft.client.network.AbstractClientPlayerEntity;
 import net.minecraft.client.render.*;
 import net.minecraft.client.render.entity.EntityRenderer;
 import net.minecraft.client.render.entity.EntityRendererFactory;
-import net.minecraft.client.render.entity.feature.FeatureRenderer;
-import net.minecraft.client.render.entity.feature.FeatureRendererContext;
-import net.minecraft.client.render.entity.model.PlayerEntityModel;
-import net.minecraft.client.render.model.json.ModelTransformationMode;
 import net.minecraft.client.util.math.MatrixStack;
-import net.minecraft.item.ItemStack;
 import net.minecraft.util.Identifier;
-import net.minecraft.util.math.RotationAxis;
-import net.minecraft.util.math.Vec3d;
-
-import java.util.ArrayList;
-import java.util.List;
 
 public class ShootingStarRenderer extends EntityRenderer<ShootingStarEntity> {
 

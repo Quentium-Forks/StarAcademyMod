@@ -3,7 +3,6 @@ package abeshutt.staracademy.data.biome;
 import abeshutt.staracademy.init.ModConfigs;
 import com.mojang.brigadier.StringReader;
 import com.mojang.brigadier.exceptions.CommandSyntaxException;
-import net.minecraft.registry.DynamicRegistryManager;
 import net.minecraft.registry.entry.RegistryEntry;
 import net.minecraft.util.Identifier;
 import net.minecraft.util.InvalidIdentifierException;

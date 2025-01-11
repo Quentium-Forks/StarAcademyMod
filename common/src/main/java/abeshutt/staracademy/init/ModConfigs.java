@@ -22,7 +22,6 @@ public class ModConfigs extends ModRegistries {
     public static WardrobeConfig WARDROBE;
     public static NPCConfig NPC;
     public static DuelingConfig DUELING;
-    public static ForceSpawnItemConfig FORCE_SPAWN_ITEM;
 
     public static void register(boolean initialization) {
         TILE_GROUPS = new TileGroupsConfig().read();
@@ -37,7 +36,6 @@ public class ModConfigs extends ModRegistries {
         WARDROBE = new WardrobeConfig().read();
         NPC = new NPCConfig().read();
         DUELING = new DuelingConfig().read();
-        FORCE_SPAWN_ITEM = new ForceSpawnItemConfig().read();
 
         if(!initialization) {
             POST_LOAD.forEach(Runnable::run);

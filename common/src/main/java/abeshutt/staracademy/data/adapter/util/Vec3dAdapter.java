@@ -10,7 +10,6 @@ import com.google.gson.JsonPrimitive;
 import io.netty.buffer.ByteBuf;
 import net.minecraft.nbt.*;
 import net.minecraft.util.math.Vec3d;
-import net.minecraft.util.math.Vec3d;
 
 import java.io.DataInput;
 import java.io.DataOutput;

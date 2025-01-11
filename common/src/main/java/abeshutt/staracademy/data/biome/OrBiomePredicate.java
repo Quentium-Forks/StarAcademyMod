@@ -1,6 +1,5 @@
 package abeshutt.staracademy.data.biome;
 
-import net.minecraft.registry.DynamicRegistryManager;
 import net.minecraft.registry.entry.RegistryEntry;
 import net.minecraft.world.biome.Biome;
 

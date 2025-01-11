@@ -10,14 +10,12 @@ import abeshutt.staracademy.world.random.RandomSource;
 import com.cobblemon.mod.common.api.events.pokemon.PokemonSentPostEvent;
 import com.cobblemon.mod.common.pokemon.Species;
 import net.minecraft.nbt.NbtCompound;
-import net.minecraft.server.MinecraftServer;
 import net.minecraft.server.network.ServerPlayerEntity;
 import net.minecraft.text.ClickEvent;
 import net.minecraft.text.MutableText;
 import net.minecraft.text.Style;
 import net.minecraft.text.Text;
 import net.minecraft.util.Formatting;
-import net.minecraft.world.World;
 
 import java.util.Optional;
 import java.util.UUID;
