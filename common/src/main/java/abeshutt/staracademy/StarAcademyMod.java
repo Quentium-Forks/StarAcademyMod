@@ -29,6 +29,8 @@ import java.util.List;
 
 public final class StarAcademyMod {
 
+    public static final ThreadLocal<Boolean> FORCE_SPAWNING = ThreadLocal.withInitial(() -> false);
+
     public static final String ID = "academy";
     public static final Logger LOGGER = LogManager.getLogger(ID);
 
@@ -57,6 +59,10 @@ public final class StarAcademyMod {
         });
 
         CommonEvents.POKEMON_ENTITY_SPAWN.subscribe(Priority.HIGHEST, event -> {
+            if(FORCE_SPAWNING.get()) {
+                return;
+            }
+
             World world = event.getEntity().getEntityWorld();
             WorldBorder border = world.getWorldBorder();
             double dx = event.getEntity().getPos().getX() - border.getCenterX();
@@ -78,20 +84,37 @@ public final class StarAcademyMod {
             if(server == null) return;
             Pokemon pokemon = event.getEntity().getPokemon();
 
-            List<String> prefixes = new ArrayList<>();
-            if(pokemon.getShiny()) prefixes.add("Shiny");
-            if(pokemon.isLegendary()) prefixes.add("Legendary");
+            if(FORCE_SPAWNING.get()) {
+                List<String> prefixes = new ArrayList<>();
+                if(pokemon.getShiny()) prefixes.add("Shiny");
+                if(pokemon.isLegendary()) prefixes.add("Legendary");
 
-            if(pokemon.getShiny() || pokemon.isLegendary()) {
                 MutableText message = Text.empty()
-                    .append(Text.literal("A ").formatted(Formatting.BOLD))
-                    .append(Text.literal(String.join(" ", prefixes)).formatted(Formatting.BOLD))
-                    .append(prefixes.isEmpty() ? Text.empty() : Text.literal(" "))
-                    .append(event.getEntity().getDisplayName().copy().formatted(Formatting.BOLD))
-                    .append(Text.literal(" has spawned near someone!").formatted(Formatting.BOLD));
+                        .append(Text.literal("A ").formatted(Formatting.BOLD))
+                        .append(Text.literal(String.join(" ", prefixes)).formatted(Formatting.BOLD))
+                        .append(prefixes.isEmpty() ? Text.empty() : Text.literal(" "))
+                        .append(event.getEntity().getDisplayName().copy().formatted(Formatting.BOLD))
+                        .append(Text.literal(" has been summoned!").formatted(Formatting.BOLD));
 
                 for(ServerPlayerEntity player : server.getPlayerManager().getPlayerList()) {
                     player.sendMessage(message);
+                }
+            } else {
+                List<String> prefixes = new ArrayList<>();
+                if(pokemon.getShiny()) prefixes.add("Shiny");
+                if(pokemon.isLegendary()) prefixes.add("Legendary");
+
+                if(pokemon.getShiny() || pokemon.isLegendary()) {
+                    MutableText message = Text.empty()
+                            .append(Text.literal("A ").formatted(Formatting.BOLD))
+                            .append(Text.literal(String.join(" ", prefixes)).formatted(Formatting.BOLD))
+                            .append(prefixes.isEmpty() ? Text.empty() : Text.literal(" "))
+                            .append(event.getEntity().getDisplayName().copy().formatted(Formatting.BOLD))
+                            .append(Text.literal(" has spawned near someone!").formatted(Formatting.BOLD));
+
+                    for(ServerPlayerEntity player : server.getPlayerManager().getPlayerList()) {
+                        player.sendMessage(message);
+                    }
                 }
             }
         });

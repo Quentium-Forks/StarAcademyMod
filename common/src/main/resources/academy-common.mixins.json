@@ -30,6 +30,7 @@
     "bountiful.MixinBountyItem",
     "cloudboots.MixinGoldenFeatherTrinket",
     "cobblemon.MixinPokeBallItem",
+    "mythsandlegends.MixinForceSpawningUtils",
     "mythsandlegends.MixinFormAndAspectUtils",
     "mythsandlegends.MixinPlayerEvents",
     "scout.MixinBaseBagItem",
