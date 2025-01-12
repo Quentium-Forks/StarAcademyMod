@@ -26,6 +26,7 @@
     "MixinGameProfile",
     "MixinLivingEntity",
     "MixinPlayerScreenHandler",
+    "MixinServerWorld",
     "MixinStructureTemplate",
     "bountiful.MixinBountyItem",
     "cloudboots.MixinGoldenFeatherTrinket",

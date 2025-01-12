@@ -7,6 +7,7 @@ import net.minecraft.util.math.BlockPos;
 
 public class SafariConfig extends FileConfig {
 
+    @Expose private long seed;
     @Expose private Identifier structure;
     @Expose private BlockPos placementOffset;
     @Expose private BlockPos spawnPositionRelative;
@@ -21,6 +22,10 @@ public class SafariConfig extends FileConfig {
     @Override
     public String getPath() {
         return "safari";
+    }
+
+    public long getSeed() {
+        return this.seed;
     }
 
     public Identifier getStructure() {
@@ -63,6 +68,7 @@ public class SafariConfig extends FileConfig {
 
     @Override
     protected void reset() {
+        this.seed = -4534904328483650727L;
         this.structure = StarAcademyMod.id("test");
         this.placementOffset = new BlockPos(0, 128, 0);
         this.spawnPositionRelative = new BlockPos(0, 2, 0);

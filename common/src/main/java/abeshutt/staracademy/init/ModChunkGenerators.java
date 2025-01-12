@@ -1,5 +1,6 @@
 package abeshutt.staracademy.init;
 
+import abeshutt.staracademy.world.OldSafariChunkGenerator;
 import abeshutt.staracademy.world.SafariChunkGenerator;
 import com.mojang.serialization.Codec;
 import dev.architectury.registry.registries.RegistrySupplier;

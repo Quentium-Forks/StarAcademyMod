@@ -11,3 +11,4 @@ accessible method net/minecraft/structure/StructureTemplate$PalettedBlockInfoLis
 accessible field net/minecraft/server/MinecraftServer session Lnet/minecraft/world/level/storage/LevelStorage$Session;
 accessible field net/minecraft/server/MinecraftServer worlds Ljava/util/Map;
 accessible method net/minecraft/entity/LivingEntity playEquipmentBreakEffects (Lnet/minecraft/item/ItemStack;)V
+extendable class net/minecraft/world/gen/chunk/NoiseChunkGenerator
