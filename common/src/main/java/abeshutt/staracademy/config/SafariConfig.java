@@ -69,10 +69,10 @@ public class SafariConfig extends FileConfig {
     @Override
     protected void reset() {
         this.seed = -4534904328483650727L;
-        this.structure = StarAcademyMod.id("test");
-        this.placementOffset = new BlockPos(0, 128, 0);
-        this.spawnPositionRelative = new BlockPos(0, 2, 0);
-        this.spawnYaw = 0.0F;
+        this.structure = StarAcademyMod.id("safari_spawn");
+        this.placementOffset = new BlockPos(-431, 87, -303);
+        this.spawnPositionRelative = new BlockPos(53, 13, 76);
+        this.spawnYaw = -90.0F;
         this.spawnPitch = 0.0F;
         this.playerDuration = 30 * 60 * 20;
         this.providedSafariBalls = 16;

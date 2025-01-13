@@ -48,7 +48,7 @@ public class SafariChunkGenerator extends NoiseChunkGenerator {
         super.generateFeatures(access, chunk, structureAccessor);
         if(!(access instanceof ChunkRegion region)) return;
         ServerWorld world = region.toServerWorld();
-        
+
         world.getStructureTemplateManager().getTemplate(ModConfigs.SAFARI.getStructure()).ifPresent(template -> {
             ProxyStructureTemplate.of(template).ifPresent(proxy -> {
                 ChunkPos chunkPos = chunk.getPos();
@@ -63,7 +63,10 @@ public class SafariChunkGenerator extends NoiseChunkGenerator {
                                     && target.getY() < template.getSize().getY() && target.getX() >= 0
                                     && target.getZ() >= 0 && target.getY() >= 0) {
                                 StructureTemplate.StructureBlockInfo entry = proxy.get(target);
-                                if(entry == null) continue;
+
+                                if(entry == null) {
+                                    entry = new StructureTemplate.StructureBlockInfo(target, Blocks.AIR.getDefaultState(), null);
+                                }
 
                                 FluidState fluidState = region.getFluidState(pos);
                                 BlockState state = entry.state();
