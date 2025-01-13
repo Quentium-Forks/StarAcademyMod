@@ -2,6 +2,7 @@ package abeshutt.staracademy.command;
 
 import abeshutt.staracademy.StarAcademyMod;
 import abeshutt.staracademy.init.ModWorldData;
+import abeshutt.staracademy.item.SafariTicketItem;
 import abeshutt.staracademy.world.data.SafariData;
 import com.mojang.brigadier.CommandDispatcher;
 import com.mojang.brigadier.context.CommandContext;
@@ -48,13 +49,8 @@ public class SafariCommand extends Command {
         for(ServerPlayerEntity player : players) {
             SafariData.Entry entry = data.getOrCreate(player.getUuid());
             entry.setTimeLeft(entry.getTimeLeft() + time);
-
-            context.getSource().sendFeedback(() -> Text.empty()
-                .append(Text.literal("Added ").formatted(Formatting.GRAY))
-                .append(Text.literal(String.valueOf(time)).formatted(Formatting.AQUA))
-                .append(Text.literal(" ticks to ").formatted(Formatting.GRAY))
-                .append(player.getName())
-                .append(Text.literal("'s Safari.").formatted(Formatting.GRAY)), true);
+            context.getSource().sendFeedback(() -> SafariTicketItem.getTimeMessage(player, time, false), true);
+            player.sendMessage(SafariTicketItem.getTimeMessage(player, time, true), false);
         }
 
         return 0;
