@@ -60,6 +60,8 @@ public class ModOutfits {
     public static SweaterOutfit.Top SWEATER_TOP;
     public static SweaterOutfit.Boots SWEATER_BOOTS;
 
+    public static CarrotHeadBandOutfit CARROT_HEAD_BAND;
+
     public static void register() {
         CLASSY1_HAT = register(new Classy1Outfit.Hat("classy1_hat"));
         CLASSY1_SHIRT = register(new Classy1Outfit.Shirt("classy1_shirt"));
@@ -110,6 +112,8 @@ public class ModOutfits {
 
         SWEATER_TOP = register(new SweaterOutfit.Top("sweater_top"));
         SWEATER_BOOTS = register(new SweaterOutfit.Boots("sweater_boots"));
+
+        CARROT_HEAD_BAND = register(new CarrotHeadBandOutfit("carrot_head_band"));
     }
 
     private static int order;
