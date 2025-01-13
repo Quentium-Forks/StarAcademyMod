@@ -60,9 +60,9 @@ public class ModOutfits {
     public static SweaterOutfit.Top SWEATER_TOP;
     public static SweaterOutfit.Boots SWEATER_BOOTS;
 
-    public static CarrotHeadBandOutfit CARROT_HEAD_BAND;
-
-    public static CatEarsOutfit CAT_EARS;
+    public static HeadBandOutfit.Carrot CARROT_HEAD_BAND;
+    public static HeadBandOutfit.Flower FLOWER_HEAD_BAND;
+    public static HeadBandOutfit.CatEars CAT_EARS;
 
     public static void register() {
         CLASSY1_HAT = register(new Classy1Outfit.Hat("classy1_hat"));
@@ -115,9 +115,9 @@ public class ModOutfits {
         SWEATER_TOP = register(new SweaterOutfit.Top("sweater_top"));
         SWEATER_BOOTS = register(new SweaterOutfit.Boots("sweater_boots"));
 
-        CARROT_HEAD_BAND = register(new CarrotHeadBandOutfit("carrot_head_band"));
-
-        CAT_EARS = register(new CatEarsOutfit("cat_ears"));
+        CARROT_HEAD_BAND = register(new HeadBandOutfit.Carrot("carrot_head_band"));
+        FLOWER_HEAD_BAND = register(new HeadBandOutfit.Flower("flower_head_band"));
+        CAT_EARS = register(new HeadBandOutfit.CatEars("cat_ears"));
     }
 
     private static int order;
