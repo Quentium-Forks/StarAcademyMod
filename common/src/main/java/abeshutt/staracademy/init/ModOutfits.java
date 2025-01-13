@@ -57,6 +57,9 @@ public class ModOutfits {
     public static PokemonHatOutfit.Pikachu PIKACHU_HAT;
     public static PokemonHatOutfit.Slowking SLOWKING_HAT;
 
+    public static SweaterOutfit.Top SWEATER_TOP;
+    public static SweaterOutfit.Boots SWEATER_BOOTS;
+
     public static void register() {
         CLASSY1_HAT = register(new Classy1Outfit.Hat("classy1_hat"));
         CLASSY1_SHIRT = register(new Classy1Outfit.Shirt("classy1_shirt"));
@@ -104,6 +107,9 @@ public class ModOutfits {
         GOOMY_HAT = register(new PokemonHatOutfit.Goomy("goomy_hat"));
         PIKACHU_HAT = register(new PokemonHatOutfit.Pikachu("pikachu_hat"));
         SLOWKING_HAT = register(new PokemonHatOutfit.Slowking("slowking_hat"));
+
+        SWEATER_TOP = register(new SweaterOutfit.Top("sweater_top"));
+        SWEATER_BOOTS = register(new SweaterOutfit.Boots("sweater_boots"));
     }
 
     private static int order;
