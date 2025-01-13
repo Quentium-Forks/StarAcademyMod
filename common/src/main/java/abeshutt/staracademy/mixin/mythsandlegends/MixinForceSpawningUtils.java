@@ -1,7 +1,6 @@
 package abeshutt.staracademy.mixin.mythsandlegends;
 
 import abeshutt.staracademy.StarAcademyMod;
-import com.github.d0ctorleon.mythsandlegends.utils.ForceSpawningUtils;
 import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.item.ItemStack;
 import net.minecraft.util.Hand;

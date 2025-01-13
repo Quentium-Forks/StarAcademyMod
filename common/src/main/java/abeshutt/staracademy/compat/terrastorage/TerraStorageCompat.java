@@ -1,6 +1,5 @@
 package abeshutt.staracademy.compat.terrastorage;
 
-import net.minecraft.client.gui.screen.ingame.ShulkerBoxScreen;
 import net.p3pp3rf1y.sophisticatedbackpacks.client.gui.BackpackScreen;
 import net.p3pp3rf1y.sophisticatedstorage.client.gui.StorageScreen;
 
