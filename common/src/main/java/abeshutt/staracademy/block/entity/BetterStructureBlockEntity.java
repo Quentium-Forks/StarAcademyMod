@@ -133,7 +133,7 @@ public class BetterStructureBlockEntity extends BlockEntity {
             BlockPos blockPos = this.getPos();
             BlockState blockState = this.world.getBlockState(blockPos);
             if (blockState.isOf(Blocks.STRUCTURE_BLOCK)) {
-                this.world.setBlockState(blockPos, (BlockState)blockState.with(StructureBlock.MODE, this.mode), 2);
+                this.world.setBlockState(blockPos, blockState.with(StructureBlock.MODE, this.mode), 2);
             }
 
         }

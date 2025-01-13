@@ -9,6 +9,7 @@ import net.minecraft.block.BlockState;
 import net.minecraft.block.Blocks;
 import net.minecraft.block.FluidFillable;
 import net.minecraft.block.entity.BlockEntity;
+import net.minecraft.block.entity.LootableContainerBlockEntity;
 import net.minecraft.fluid.FluidState;
 import net.minecraft.registry.entry.RegistryEntry;
 import net.minecraft.server.world.ServerWorld;
@@ -78,8 +79,16 @@ public class SafariChunkGenerator extends NoiseChunkGenerator {
                                 }
 
                                 if(region.setBlockState(pos, state, Block.NOTIFY_ALL)) {
+                                    if(entry.nbt() != null) {
+                                        BlockEntity blockEntity = region.getBlockEntity(pos);
+
+                                        if(blockEntity != null) {
+                                            blockEntity.readNbt(entry.nbt());
+                                        }
+                                    }
+
                                     if(fluidState != null && state.getBlock() instanceof FluidFillable fillable) {
-                                        fillable.tryFillWithFluid(world, pos, state, fluidState);
+                                        fillable.tryFillWithFluid(region, pos, state, fluidState);
                                     }
                                 }
                             }
