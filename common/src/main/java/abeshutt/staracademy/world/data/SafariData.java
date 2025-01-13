@@ -294,6 +294,7 @@ public class SafariData extends WorldData {
 
             nbt.put("entries", entries);
             Adapters.LONG.writeNbt(this.timeLeft).ifPresent(tag -> nbt.put("timeLeft", tag));
+            Adapters.LONG.writeNbt(this.lastUpdated).ifPresent(tag -> nbt.put("lastUpdated", tag));
             return nbt;
         });
     }
@@ -324,6 +325,7 @@ public class SafariData extends WorldData {
         }
 
         this.timeLeft = Adapters.LONG.readNbt(nbt.get("timeLeft")).orElse(0L);
+        this.lastUpdated = Adapters.LONG.readNbt(nbt.get("lastUpdated")).orElse(0L);
     }
 
     public static void init() {

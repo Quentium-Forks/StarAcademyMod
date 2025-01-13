@@ -17,7 +17,9 @@
     "cobblemon.MixinSelectionButton",
     "cobblemon.MixinStarterSelectionScreen",
     "mousewheelie.MixinContainerScreenHelper",
-    "scout.MixinScoutUtilClient"
+    "scout.MixinScoutUtilClient",
+    "terrastorage.MixinHandledScreenMixin",
+    "terrastorage.MixinInventoryScreenMixin"
   ],
   "mixins": [
     "MixinAbstractFireBlock",

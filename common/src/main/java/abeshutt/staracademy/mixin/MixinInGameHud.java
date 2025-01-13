@@ -1,5 +1,6 @@
 package abeshutt.staracademy.mixin;
 
+import abeshutt.staracademy.StarAcademyMod;
 import abeshutt.staracademy.screen.SafariWidget;
 import abeshutt.staracademy.screen.StarterSelectionWidget;
 import abeshutt.staracademy.util.ClientScheduler;
@@ -12,6 +13,7 @@ import net.minecraft.client.MinecraftClient;
 import net.minecraft.client.gui.DrawContext;
 import net.minecraft.client.gui.hud.InGameHud;
 import net.minecraft.client.network.ClientPlayerEntity;
+import net.minecraft.client.world.ClientWorld;
 import net.minecraft.util.Identifier;
 import org.spongepowered.asm.mixin.Mixin;
 import org.spongepowered.asm.mixin.injection.At;
@@ -44,6 +46,12 @@ public class MixinInGameHud {
 
     private void renderSafari(DrawContext context, float tickDelta) {
         if(SafariData.CLIENT.getTimeLeft() <= 0 || SafariData.CLIENT.isPaused()) {
+            return;
+        }
+
+         ClientWorld world = MinecraftClient.getInstance().world;
+
+        if((world == null || world.getRegistryKey() != StarAcademyMod.SAFARI) && !MinecraftClient.getInstance().options.playerListKey.isPressed()) {
             return;
         }
 

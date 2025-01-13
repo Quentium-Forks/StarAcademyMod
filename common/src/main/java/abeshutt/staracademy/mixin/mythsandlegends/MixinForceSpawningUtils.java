@@ -12,7 +12,7 @@ import org.spongepowered.asm.mixin.injection.At;
 import org.spongepowered.asm.mixin.injection.Inject;
 import org.spongepowered.asm.mixin.injection.callback.CallbackInfoReturnable;
 
-@Mixin(ForceSpawningUtils.class)
+@Mixin(targets = { "com.github.d0ctorleon.mythsandlegends.utils.ForceSpawningUtils" })
 public class MixinForceSpawningUtils {
 
     @Inject(method = "forceSpawnv1", at = @At("HEAD"))

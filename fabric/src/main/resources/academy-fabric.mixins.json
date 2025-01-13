@@ -4,10 +4,9 @@
   "compatibilityLevel": "JAVA_17",
   "minVersion": "0.8",
   "client": [
-    "terrastorage.MixinHandledScreenMixin",
-    "terrastorage.MixinInventoryScreenMixin"
   ],
   "mixins": [
+    "MixinMinecraftClient"
   ],
   "injectors": {
     "defaultRequire": 1
