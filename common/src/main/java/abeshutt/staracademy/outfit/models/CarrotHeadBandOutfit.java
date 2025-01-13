@@ -27,7 +27,7 @@ public class CarrotHeadBandOutfit extends OutfitPiece {
 
     @Override
     protected OutfitTexture buildTexture() {
-        return new OutfitTexture(32, 32,
+        return new OutfitTexture(64, 64,
                 StarAcademyMod.id("textures/entity/outfit/carrot_head_band.png"),
                 StarAcademyMod.mid("outfit/carrot_head_band", "inventory")
         );
