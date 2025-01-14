@@ -1,8 +1,10 @@
 package abeshutt.staracademy.item;
 
+import abeshutt.staracademy.config.SafariConfig;
 import abeshutt.staracademy.data.adapter.Adapters;
+import abeshutt.staracademy.init.ModConfigs;
 import abeshutt.staracademy.init.ModWorldData;
-import abeshutt.staracademy.item.renderer.NullSpecialItemRenderer;
+import abeshutt.staracademy.item.renderer.SafariTicketItemRenderer;
 import abeshutt.staracademy.item.renderer.SpecialItemRenderer;
 import abeshutt.staracademy.util.ISpecialItemModel;
 import abeshutt.staracademy.world.data.SafariData;
@@ -13,6 +15,7 @@ import net.minecraft.client.util.ModelIdentifier;
 import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
+import net.minecraft.text.Style;
 import net.minecraft.text.Text;
 import net.minecraft.util.Formatting;
 import net.minecraft.util.Hand;
@@ -30,6 +33,13 @@ public class SafariTicketItem extends Item implements ISpecialItemModel {
     }
 
     @Override
+    public Text getName(ItemStack stack) {
+        return SafariTicketItem.getEntry(stack, true).map(entry -> {
+            return (Text)Text.literal(entry.getName()).setStyle(Style.EMPTY.withColor(entry.getColor()));
+        }).orElseGet(() -> super.getName(stack));
+    }
+
+    @Override
     public TypedActionResult<ItemStack> use(World world, PlayerEntity user, Hand hand) {
         ItemStack stack = user.getStackInHand(hand);
 
@@ -39,8 +49,8 @@ public class SafariTicketItem extends Item implements ISpecialItemModel {
 
         SafariData data = ModWorldData.SAFARI.getGlobal(world.getServer());
 
-        SafariTicketItem.getRoll(stack).ifPresent(roll -> {
-            int time = roll.get(JavaRandom.ofNanoTime());
+        SafariTicketItem.getEntry(stack, false).ifPresent(value -> {
+            int time = value.getTime().get(JavaRandom.ofNanoTime());
             SafariData.Entry entry = data.getOrCreate(user.getUuid());
             entry.setTimeLeft(entry.getTimeLeft() + time);
             user.sendMessage(SafariTicketItem.getTimeMessage(user, time, true));
@@ -57,43 +67,41 @@ public class SafariTicketItem extends Item implements ISpecialItemModel {
     public void appendTooltip(ItemStack stack, World world, List<Text> tooltip, TooltipContext context) {
         super.appendTooltip(stack, world, tooltip, context);
 
-        SafariTicketItem.getRoll(stack).ifPresent(roll -> {
-            int min = IntRoll.getMin(roll);
-            int max = IntRoll.getMax(roll);
+        SafariTicketItem.getEntry(stack, world.isClient()).ifPresent(entry -> {
+            int min = IntRoll.getMin(entry.getTime());
+            int max = IntRoll.getMax(entry.getTime());
 
             if(min == max) {
                 tooltip.add(Text.literal("Adds " + formatTimeString(min) + " to your Safari timer.")
-                        .formatted(Formatting.GRAY, Formatting.ITALIC));
+                        .formatted(Formatting.GRAY));
             } else {
                 tooltip.add(Text.literal("Adds between " + formatTimeString(min) + " and "
                         + formatTimeString(max) + " to your Safari timer.")
-                        .formatted(Formatting.GRAY, Formatting.ITALIC));
+                        .formatted(Formatting.GRAY));
             }
         });
     }
 
-    public static Optional<IntRoll> getRoll(ItemStack stack) {
+    public static Optional<SafariTicketEntry> getEntry(ItemStack stack, boolean client) {
         if(stack.getNbt() == null) {
             return Optional.empty();
         }
 
-        return Adapters.INT_ROLL.readNbt(stack.getNbt().get("roll"));
-    }
-
-    public static void setRoll(ItemStack stack, IntRoll roll) {
-        Adapters.INT_ROLL.writeNbt(roll).ifPresent(tag -> {
-            stack.getOrCreateNbt().put("roll", tag);
+        return Adapters.UTF_8.readNbt(stack.getNbt().get("id")).flatMap(id -> {
+            return client ? SafariConfig.CLIENT.getTicket(id) : ModConfigs.SAFARI.getTicket(id);
         });
     }
 
     @Override
     public void loadModels(Consumer<ModelIdentifier> consumer) {
-
+        ModConfigs.SAFARI.getTickets().forEach((id, entry) -> {
+            consumer.accept(entry.getModelId());
+        });
     }
 
     @Override
     public SpecialItemRenderer getRenderer() {
-        return NullSpecialItemRenderer.INSTANCE;
+        return SafariTicketItemRenderer.INSTANCE;
     }
 
     public static Text getTimeMessage(PlayerEntity target, long ticks, boolean personal) {

@@ -2,18 +2,21 @@ package abeshutt.staracademy.world.data;
 
 import abeshutt.staracademy.StarAcademyMod;
 import abeshutt.staracademy.block.entity.SafariPortalBlockEntity;
+import abeshutt.staracademy.config.SafariConfig;
 import abeshutt.staracademy.data.adapter.Adapters;
 import abeshutt.staracademy.data.bit.BitBuffer;
 import abeshutt.staracademy.data.serializable.ISerializable;
 import abeshutt.staracademy.init.ModConfigs;
 import abeshutt.staracademy.init.ModNetwork;
 import abeshutt.staracademy.init.ModWorldData;
+import abeshutt.staracademy.net.UpdateSafariConfigS2CPacket;
 import abeshutt.staracademy.net.UpdateSafariS2CPacket;
 import abeshutt.staracademy.util.ProxyEntity;
 import abeshutt.staracademy.world.DummyWorldGenerationProgressListener;
 import com.cobblemon.mod.common.CobblemonItems;
 import com.google.common.collect.ImmutableList;
 import com.google.gson.JsonObject;
+import dev.architectury.event.events.common.PlayerEvent;
 import dev.architectury.event.events.common.TickEvent;
 import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.NbtCompound;
@@ -52,6 +55,8 @@ public class SafariData extends WorldData {
     private long lastUpdated;
     private final Map<RegistryKey<World>, Set<BlockPos>> portals;
     private final Map<UUID, Entry> entries;
+
+    private SafariConfig lastConfig;
 
     private SafariData(boolean paused) {
         this.paused = paused;
@@ -184,6 +189,10 @@ public class SafariData extends WorldData {
         this.entries.clear();
     }
 
+    private void onJoin(ServerPlayerEntity player) {
+        ModNetwork.CHANNEL.sendToPlayer(player, new UpdateSafariConfigS2CPacket(ModConfigs.SAFARI.getTickets()));
+    }
+
     public void onTick(MinecraftServer server) {
         this.timeLeft = ModConfigs.SAFARI.getTimeLeft(this.lastUpdated) / 50;
 
@@ -266,6 +275,11 @@ public class SafariData extends WorldData {
             }
         }
 
+        if(this.lastConfig != ModConfigs.SAFARI) {
+            ModNetwork.CHANNEL.sendToPlayers(server.getPlayerManager().getPlayerList(), new UpdateSafariConfigS2CPacket(ModConfigs.SAFARI.getTickets()));
+            this.lastConfig = ModConfigs.SAFARI;
+        }
+
         this.markDirty();
     }
 
@@ -329,6 +343,11 @@ public class SafariData extends WorldData {
     }
 
     public static void init() {
+        PlayerEvent.PLAYER_JOIN.register(player -> {
+            SafariData data = ModWorldData.SAFARI.getGlobal(player.getWorld());
+            data.onJoin(player);
+        });
+
         TickEvent.SERVER_POST.register(server -> {
             SafariData data = ModWorldData.SAFARI.getGlobal(server);
             data.onTick(server);

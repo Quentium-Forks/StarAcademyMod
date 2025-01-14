@@ -38,12 +38,14 @@ public class ModConfigs extends ModRegistries {
         DUELING = new DuelingConfig().read();
 
         if(!initialization) {
-            POST_LOAD.forEach(Runnable::run);
+            ArrayList<Runnable> actions = new ArrayList<>(POST_LOAD);
             POST_LOAD.clear();
+            actions.forEach(Runnable::run);
         } else {
             LifecycleEvent.SETUP.register(() -> {
-                POST_LOAD.forEach(Runnable::run);
+                ArrayList<Runnable> actions = new ArrayList<>(POST_LOAD);
                 POST_LOAD.clear();
+                actions.forEach(Runnable::run);
             });
         }
     }

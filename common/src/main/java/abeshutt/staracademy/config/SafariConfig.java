@@ -1,11 +1,20 @@
 package abeshutt.staracademy.config;
 
 import abeshutt.staracademy.StarAcademyMod;
+import abeshutt.staracademy.item.SafariTicketEntry;
+import abeshutt.staracademy.world.roll.IntRoll;
 import com.google.gson.annotations.Expose;
 import net.minecraft.util.Identifier;
 import net.minecraft.util.math.BlockPos;
 
+import java.util.HashMap;
+import java.util.LinkedHashMap;
+import java.util.Map;
+import java.util.Optional;
+
 public class SafariConfig extends FileConfig {
+
+    public static final SafariConfig CLIENT = new SafariConfig();
 
     @Expose private long seed;
     @Expose private Identifier structure;
@@ -18,6 +27,7 @@ public class SafariConfig extends FileConfig {
     @Expose private long startEpoch;
     @Expose private long restartDelay;
     @Expose private boolean paused;
+    @Expose private Map<String, SafariTicketEntry> tickets = new HashMap<>();
 
     @Override
     public String getPath() {
@@ -66,6 +76,14 @@ public class SafariConfig extends FileConfig {
         return nextRefresh - System.currentTimeMillis();
     }
 
+    public Map<String, SafariTicketEntry> getTickets() {
+        return this.tickets;
+    }
+
+    public Optional<SafariTicketEntry> getTicket(String id) {
+        return Optional.ofNullable(this.tickets.get(id));
+    }
+
     @Override
     protected void reset() {
         this.seed = -4534904328483650727L;
@@ -79,6 +97,17 @@ public class SafariConfig extends FileConfig {
         this.startEpoch = 0;
         this.restartDelay = 1000 * 60 * 60 * 24;
         this.paused = false;
+
+        this.tickets = new LinkedHashMap<>();
+
+        this.tickets.put("base", new SafariTicketEntry("Safari Ticket", 0xFFFFFF,
+                IntRoll.ofConstant(20 * 60), "academy:safari_ticket/base#inventory"));
+
+        this.tickets.put("great", new SafariTicketEntry("Great Safari Ticket", 0xAC3C34,
+                IntRoll.ofConstant(20 * 60 * 5), "academy:safari_ticket/great#inventory"));
+
+        this.tickets.put("golden", new SafariTicketEntry("Golden Safari Ticket", 0xD4841C,
+                IntRoll.ofUniform(20 * 60 * 10, 20 * 60 * 20), "academy:safari_ticket/base#inventory"));
     }
 
 }
