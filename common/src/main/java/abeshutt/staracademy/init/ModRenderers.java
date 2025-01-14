@@ -30,8 +30,19 @@ public class ModRenderers extends ModRegistries {
             ProxyModelPredicateProviderRegistry.register(ModItems.DUELING_GLOVE.get(), new Identifier("pulling"), (stack, world, entity, seed) -> {
                 return entity != null && entity.isUsingItem() && entity.getActiveItem() == stack ? 1.0F : 0.0F;
             });
-        }
 
+            ProxyModelPredicateProviderRegistry.register(ModItems.SLINGSHOT.get(), new Identifier("pull"), (stack, world, entity, seed) -> {
+                if(entity == null) {
+                    return 0.0F;
+                }
+
+                return entity.getActiveItem() != stack ? 0.0F : (float)(stack.getMaxUseTime() - entity.getItemUseTimeLeft()) / 20.0F;
+            });
+
+            ProxyModelPredicateProviderRegistry.register(ModItems.SLINGSHOT.get(), new Identifier("pulling"), (stack, world, entity, seed) -> {
+                return entity != null && entity.isUsingItem() && entity.getActiveItem() == stack ? 1.0F : 0.0F;
+            });
+        }
     }
 
     public static class Entities extends ModRenderers {
@@ -39,6 +50,7 @@ public class ModRenderers extends ModRegistries {
             ClientLifecycleEvent.CLIENT_SETUP.register(minecraft -> {
                 EntityRenderers.register(ModEntities.STAR_BADGE.get(), FlyingItemEntityRenderer::new);
                 EntityRenderers.register(ModEntities.DUELING_GLOVE.get(), FlyingItemEntityRenderer::new);
+                EntityRenderers.register(ModEntities.SLINGSHOT.get(), FlyingItemEntityRenderer::new);
                 EntityRenderers.register(ModEntities.PARTNER_NPC.get(), ctx -> new HumanEntityRenderer<>(ctx, false));
                 EntityRenderers.register(ModEntities.SAFARI_NPC.get(), ctx -> new HumanEntityRenderer<>(ctx, false));
                 EntityRenderers.register(ModEntities.NURSE_NPC.get(), ctx -> new HumanEntityRenderer<>(ctx, false));

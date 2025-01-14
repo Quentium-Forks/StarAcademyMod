@@ -13,6 +13,7 @@ public class ModEntities extends ModRegistries {
 
     public static RegistrySupplier<EntityType<StarBadgeEntity>> STAR_BADGE;
     public static RegistrySupplier<EntityType<DuelingGloveEntity>> DUELING_GLOVE;
+    public static RegistrySupplier<EntityType<SlingshotEntity>> SLINGSHOT;
     public static RegistrySupplier<EntityType<PartnerNPCEntity>> PARTNER_NPC;
     public static RegistrySupplier<EntityType<SafariNPCEntity>> SAFARI_NPC;
     public static RegistrySupplier<EntityType<NurseNPCEntity>> NURSE_NPC;
@@ -23,6 +24,9 @@ public class ModEntities extends ModRegistries {
                 builder -> builder.setDimensions(0.98F, 0.7F).maxTrackingRange(128));
 
         DUELING_GLOVE = register("dueling_glove", DuelingGloveEntity::new, SpawnGroup.MISC,
+                builder -> builder.setDimensions(0.98F, 0.7F).maxTrackingRange(128));
+
+        SLINGSHOT = register("slingshot", SlingshotEntity::new, SpawnGroup.MISC,
                 builder -> builder.setDimensions(0.98F, 0.7F).maxTrackingRange(128));
 
         PARTNER_NPC = register("partner_npc", PartnerNPCEntity::new, SpawnGroup.MISC,

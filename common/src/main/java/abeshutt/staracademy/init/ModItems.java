@@ -14,6 +14,7 @@ public class ModItems extends ModRegistries {
     public static RegistrySupplier<DuelingGloveItem> DUELING_GLOVE;
     public static RegistrySupplier<OutfitItem> OUTFIT;
     public static RegistrySupplier<SafariTicketItem> SAFARI_TICKET;
+    public static RegistrySupplier<SlingshotItem> SLINGSHOT;
 
     public static void register() {
         STAR_BADGE = register("star_badge", StarBadgeItem::new);
@@ -21,6 +22,7 @@ public class ModItems extends ModRegistries {
         DUELING_GLOVE = register("dueling_glove", DuelingGloveItem::new);
         OUTFIT = register("outfit", OutfitItem::new);
         SAFARI_TICKET = register("safari_ticket", SafariTicketItem::new);
+        SLINGSHOT = register("slingshot", SlingshotItem::new);
     }
 
     public static <V extends Item> RegistrySupplier<V> register(Identifier id, Supplier<V> item) {

@@ -1,0 +1,6 @@
+{
+    "parent": "academy:item/dueling_glove",
+    "textures": {
+        "layer0": "academy:item/slingshot_pulling_2"
+    }
+}
