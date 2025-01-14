@@ -16,6 +16,7 @@ public class ModCommands {
         register(SafariCommand::new, dispatcher, access, environment);
         register(PartnerCommand::new, dispatcher, access, environment);
         register(WardrobeCommand::new, dispatcher, access, environment);
+        register(StatsCommand::new, dispatcher, access, environment);
     }
 
     private static <T extends Command> T register(Supplier<T> supplier, CommandDispatcher<ServerCommandSource> dispatcher,

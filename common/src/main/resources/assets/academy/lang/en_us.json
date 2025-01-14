@@ -52,5 +52,6 @@
   "cobblemon.ui.starter.choosebutton.same": "I don't choose you!",
   "entity.academy.partner_npc": "Partner NPC",
   "entity.academy.safari_npc": "Safari NPC",
-  "entity.academy.nurse_npc": "Nurse NPC"
+  "entity.academy.nurse_npc": "Nurse NPC",
+  "stat_type.minecraft.custom": "Custom"
 }

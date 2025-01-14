@@ -104,12 +104,12 @@ public class PlayerProfileData extends WorldData {
 
     public static void init() {
         PlayerEvent.PLAYER_JOIN.register(player -> {
-            PlayerProfileData data = ModWorldData.PLAYER_NAME.getGlobal(player.getWorld());
+            PlayerProfileData data = ModWorldData.PLAYER_PROFILE.getGlobal(player.getWorld());
             data.onJoin(player);
         });
 
         TickEvent.SERVER_POST.register(server -> {
-            PlayerProfileData data = ModWorldData.PLAYER_NAME.getGlobal(server);
+            PlayerProfileData data = ModWorldData.PLAYER_PROFILE.getGlobal(server);
             data.onTick(server);
         });
     }
