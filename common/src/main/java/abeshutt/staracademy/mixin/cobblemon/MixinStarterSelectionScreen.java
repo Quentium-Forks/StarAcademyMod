@@ -88,16 +88,16 @@ public abstract class MixinStarterSelectionScreen extends Screen implements Prox
     private void render(DrawContext context, int mouseX, int mouseY, float delta, CallbackInfo ci) {
         ClientPlayerEntity player = MinecraftClient.getInstance().player;
         if(player == null) return;
-        StarterEntry entry = PokemonStarterData.CLIENT.getEntries().get(player.getUuid());
+        PokemonStarterData data = PokemonStarterData.CLIENT;
+        StarterEntry entry = data.getEntries().get(player.getUuid());
         if(entry == null) return;
 
-        boolean isRaffle = PokemonStarterData.CLIENT.getMode() == StarterMode.RAFFLE_ENABLED
-                || PokemonStarterData.CLIENT.getMode() == StarterMode.RAFFLE_PAUSED;
+        boolean isRaffle = data.getMode() == StarterMode.RAFFLE_ENABLED || data.getMode() == StarterMode.RAFFLE_PAUSED;
 
         Identifier current = this.currentPokemon.component1().getResourceIdentifier();
 
         if(isRaffle) {
-            this.button.visible = !PokemonStarterData.CLIENT.isGranted(current) && !entry.isOnCooldown(current);
+            this.button.visible = entry.isAvailable() && !data.isGranted(current) && !entry.isOnCooldown(current);
         } else {
             this.button.visible = true;
         }
@@ -108,7 +108,7 @@ public abstract class MixinStarterSelectionScreen extends Screen implements Prox
                 return;
             }
 
-            Identifier pick = PokemonStarterData.CLIENT.getPick(player.getUuid());
+            Identifier pick = data.getPick(player.getUuid());
             if(pick == null) return;
 
             if(current.equals(pick)) {

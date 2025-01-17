@@ -173,6 +173,13 @@ public class PokemonStarterData extends WorldData {
             }
         }
 
+        for(ServerPlayerEntity player : server.getPlayerManager().getPlayerList()) {
+            StarterEntry entry = this.getEntries().get(player.getUuid());
+            if(entry == null) continue;
+            PlayerData playerData = Cobblemon.playerData.get(player);
+            entry.setAvailable(!playerData.getStarterSelected() && !playerData.getStarterLocked());
+        }
+
         Map<UUID, StarterEntry> changes = new HashMap<>();
 
         this.entries.forEach((uuid, entry) -> {

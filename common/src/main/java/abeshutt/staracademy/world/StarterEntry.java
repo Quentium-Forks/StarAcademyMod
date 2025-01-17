@@ -17,10 +17,12 @@ public class StarterEntry implements ISerializable<NbtCompound, JsonObject> {
     private Identifier pick;
     private final Map<Identifier, Integer> cooldowns;
     private Identifier granted;
+    private boolean available;
     private boolean changed;
 
     public StarterEntry() {
         this.cooldowns = new HashMap<>();
+        this.available = false;
         this.changed = true;
     }
 
@@ -48,6 +50,15 @@ public class StarterEntry implements ISerializable<NbtCompound, JsonObject> {
 
     public void setGranted(Identifier granted) {
         this.granted = granted;
+        this.setChanged(true);
+    }
+
+    public boolean isAvailable() {
+        return this.available;
+    }
+
+    public void setAvailable(boolean available) {
+        this.available = available;
         this.setChanged(true);
     }
 
@@ -90,6 +101,7 @@ public class StarterEntry implements ISerializable<NbtCompound, JsonObject> {
         });
 
         Adapters.IDENTIFIER.asNullable().writeBits(this.granted, buffer);
+        Adapters.BOOLEAN.writeBits(this.available, buffer);
     }
 
     @Override
@@ -106,6 +118,7 @@ public class StarterEntry implements ISerializable<NbtCompound, JsonObject> {
         }
 
         this.granted = Adapters.IDENTIFIER.asNullable().readBits(buffer).orElse(null);
+        this.available = Adapters.BOOLEAN.readBits(buffer).orElseThrow();
     }
 
     @Override
