@@ -1,11 +1,12 @@
 package abeshutt.staracademy.config;
 
+import abeshutt.staracademy.world.data.StarterMode;
 import com.google.gson.annotations.Expose;
 
 public class StarterRaffleConfig extends FileConfig {
 
     @Expose private long timeInterval;
-    @Expose private boolean paused;
+    @Expose private StarterMode mode;
     @Expose private int selectionCooldown;
 
     @Override
@@ -17,8 +18,8 @@ public class StarterRaffleConfig extends FileConfig {
         return this.timeInterval;
     }
 
-    public boolean isPaused() {
-        return this.paused;
+    public StarterMode getMode() {
+        return this.mode;
     }
 
     public int getSelectionCooldown() {
@@ -28,7 +29,7 @@ public class StarterRaffleConfig extends FileConfig {
     @Override
     protected void reset() {
         this.timeInterval = 20 * 60 * 2;
-        this.paused = true;
+        this.mode = StarterMode.RAFFLE_ENABLED;
         this.selectionCooldown = 2;
     }
 

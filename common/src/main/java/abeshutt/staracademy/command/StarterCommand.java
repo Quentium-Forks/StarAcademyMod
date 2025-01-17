@@ -1,8 +1,10 @@
 package abeshutt.staracademy.command;
 
 import abeshutt.staracademy.StarAcademyMod;
+import abeshutt.staracademy.config.StarterModeArgumentType;
 import abeshutt.staracademy.init.ModWorldData;
 import abeshutt.staracademy.world.data.PokemonStarterData;
+import abeshutt.staracademy.world.data.StarterMode;
 import com.mojang.brigadier.CommandDispatcher;
 import com.mojang.brigadier.context.CommandContext;
 import net.minecraft.command.CommandRegistryAccess;
@@ -21,56 +23,37 @@ public class StarterCommand extends Command {
     @Override
     public void register(CommandDispatcher<ServerCommandSource> dispatcher, CommandRegistryAccess access, CommandManager.RegistrationEnvironment environment) {
         dispatcher.register(literal(StarAcademyMod.ID)
-                .then(literal("starter_raffle")
+                .then(literal("starter")
                     .requires(source -> source.hasPermissionLevel(4))
-                    .then(literal("pause")
-                        .executes(this::onPause))
-                    .then(literal("resume")
-                        .executes(this::onResume))
-                    .then(literal("set_interval")
+                    .then(literal("mode")
+                        .then(argument("mode", StarterModeArgumentType.starterMode())
+                            .executes(this::onMode)))
+                    .then(literal("set_raffle_interval")
                         .then(argument("interval", TimeArgumentType.time())
-                            .executes(this::onSetInterval)))));
+                            .executes(this::onSetRaffleInterval)))));
     }
 
-    private int onPause(CommandContext<ServerCommandSource> context) {
+    private int onMode(CommandContext<ServerCommandSource> context) {
         MinecraftServer server = context.getSource().getServer();
         PokemonStarterData data = ModWorldData.POKEMON_STARTER.getGlobal(server);
+        StarterMode mode = StarterModeArgumentType.getStarterMode(context, "mode");
 
-        if(data.setPaused(true)) {
+        if(data.setMode(mode)) {
             context.getSource().sendFeedback(() -> Text.empty()
-                .append(Text.literal("The starter raffle is now ").formatted(Formatting.GRAY))
-                .append(Text.literal("paused").formatted(Formatting.RED))
+                .append(Text.literal("The starter handler is now ").formatted(Formatting.GRAY))
+                .append(Text.literal(mode.asString()).formatted(Formatting.AQUA))
                 .append(Text.literal(".").formatted(Formatting.GRAY)), true);
         } else {
             context.getSource().sendFeedback(() -> Text.empty()
-                .append(Text.literal("The starter raffle is already ").formatted(Formatting.GRAY))
-                .append(Text.literal("paused").formatted(Formatting.RED))
+                .append(Text.literal("The starter handler is already ").formatted(Formatting.GRAY))
+                .append(Text.literal(mode.asString()).formatted(Formatting.AQUA))
                 .append(Text.literal(".").formatted(Formatting.GRAY)), true);
         }
 
         return 0;
     }
 
-    private int onResume(CommandContext<ServerCommandSource> context) {
-        MinecraftServer server = context.getSource().getServer();
-        PokemonStarterData data = ModWorldData.POKEMON_STARTER.getGlobal(server);
-
-        if(data.setPaused(false)) {
-            context.getSource().sendFeedback(() -> Text.empty()
-                .append(Text.literal("The starter raffle is now ").formatted(Formatting.GRAY))
-                .append(Text.literal("unpaused").formatted(Formatting.GREEN))
-                .append(Text.literal(".").formatted(Formatting.GRAY)), true);
-        } else {
-            context.getSource().sendFeedback(() -> Text.empty()
-                .append(Text.literal("The starter raffle is already ").formatted(Formatting.GRAY))
-                .append(Text.literal("unpaused").formatted(Formatting.GREEN))
-                .append(Text.literal(".").formatted(Formatting.GRAY)), true);
-        }
-
-        return 0;
-    }
-
-    private int onSetInterval(CommandContext<ServerCommandSource> context) {
+    private int onSetRaffleInterval(CommandContext<ServerCommandSource> context) {
         long interval = context.getArgument("interval", Integer.class);
         MinecraftServer server = context.getSource().getServer();
         PokemonStarterData data = ModWorldData.POKEMON_STARTER.getGlobal(server);

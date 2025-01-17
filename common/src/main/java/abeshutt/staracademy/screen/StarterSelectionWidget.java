@@ -40,17 +40,6 @@ public class StarterSelectionWidget implements Drawable {
         this.paused = paused;
     }
 
-    static {
-        ClientTickEvent.CLIENT_PRE.register(minecraft -> {
-            if(PokemonStarterData.CLIENT.isPaused()) return;
-            Long time = PokemonStarterData.CLIENT.getTimeLeft();
-            if(time % 20 != 0 || time > 20 * 20) return;
-            //float pitch = (float)Math.pow(2.0, (double)((20 - time / 20) - 12) / 12.0);
-            //PositionedSoundInstance sound = PositionedSoundInstance.master(SoundEvents.BLOCK_NOTE_BLOCK_PLING, pitch);
-            //MinecraftClient.getInstance().getSoundManager().play(sound);
-        });
-    }
-
     @Override
     public void render(DrawContext context, int mouseX, int mouseY, float delta) {
         int x = 0;

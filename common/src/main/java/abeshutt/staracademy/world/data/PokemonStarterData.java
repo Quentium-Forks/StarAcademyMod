@@ -1,5 +1,6 @@
 package abeshutt.staracademy.world.data;
 
+import abeshutt.staracademy.GameStarterHandler;
 import abeshutt.staracademy.data.adapter.Adapters;
 import abeshutt.staracademy.init.ModConfigs;
 import abeshutt.staracademy.init.ModNetwork;
@@ -16,6 +17,7 @@ import com.cobblemon.mod.common.api.storage.player.PlayerData;
 import com.cobblemon.mod.common.config.starter.StarterCategory;
 import com.cobblemon.mod.common.pokemon.Pokemon;
 import com.cobblemon.mod.common.pokemon.Species;
+import com.cobblemon.mod.common.starter.CobblemonStarterHandler;
 import com.cobblemon.mod.common.util.LocalizationUtilsKt;
 import com.cobblemon.mod.common.world.gamerules.CobblemonGameRules;
 import dev.architectury.event.events.common.PlayerEvent;
@@ -32,32 +34,38 @@ import net.minecraft.util.Identifier;
 import java.util.*;
 import java.util.stream.Collectors;
 
+import static abeshutt.staracademy.data.adapter.basic.EnumAdapter.Mode.NAME;
+import static abeshutt.staracademy.world.data.StarterMode.*;
 import static com.cobblemon.mod.common.util.ResourceLocationExtensionsKt.asIdentifierDefaultingNamespace;
 
 public class PokemonStarterData extends WorldData {
 
-    public static final PokemonStarterData CLIENT = new PokemonStarterData(0, true, 0);
+    public static final PokemonStarterData CLIENT = new PokemonStarterData(0, RAFFLE_PAUSED, 0);
 
     private final Set<Identifier> starters;
     private final Map<UUID, StarterEntry> entries;
     private long timeInterval;
     private long timeLeft;
-    private boolean paused;
+
+    private StarterMode mode;
+    private StarterMode lastMode;
+
     private int selectionCooldown;
 
     private boolean changed;
 
-    private PokemonStarterData(long timeInterval, boolean paused, int selectionCooldown) {
+    private PokemonStarterData(long timeInterval, StarterMode mode, int selectionCooldown) {
         this.starters = new LinkedHashSet<>();
         this.entries = new HashMap<>();
         this.timeInterval = timeInterval;
         this.timeLeft = this.timeInterval;
-        this.paused = paused;
+        this.mode = mode;
+        this.lastMode = null;
         this.selectionCooldown = selectionCooldown;
     }
 
     public PokemonStarterData() {
-        this(ModConfigs.STARTER_RAFFLE.getTimeInterval(), ModConfigs.STARTER_RAFFLE.isPaused(),
+        this(ModConfigs.STARTER_RAFFLE.getTimeInterval(), ModConfigs.STARTER_RAFFLE.getMode(),
                 ModConfigs.STARTER_RAFFLE.getSelectionCooldown());
     }
 
@@ -99,13 +107,13 @@ public class PokemonStarterData extends WorldData {
         this.setChanged(true);
     }
 
-    public boolean isPaused() {
-        return this.paused;
+    public StarterMode getMode() {
+        return this.mode;
     }
 
-    public boolean setPaused(boolean paused) {
-        boolean changed = this.paused != paused;
-        this.paused = paused;
+    public boolean setMode(StarterMode mode) {
+        boolean changed = this.mode != mode;
+        this.mode = mode;
 
         if(changed) {
             this.setChanged(true);
@@ -147,7 +155,16 @@ public class PokemonStarterData extends WorldData {
     }
 
     public void onTick(MinecraftServer server) {
-        if(!this.isPaused()) {
+        if(this.mode != this.lastMode) {
+            Cobblemon.INSTANCE.setStarterHandler(switch(this.mode) {
+                case DEFAULT -> new CobblemonStarterHandler();
+                case RAFFLE_ENABLED, RAFFLE_PAUSED -> new GameStarterHandler();
+            });
+
+            this.lastMode = this.mode;
+        }
+
+        if(this.mode == RAFFLE_ENABLED) {
             if(this.getTimeLeft() <= 0) {
                 this.onRaffle(server);
                 this.setTimeLeft(this.getTimeInterval());
@@ -179,7 +196,7 @@ public class PokemonStarterData extends WorldData {
                 });
 
                 ModNetwork.CHANNEL.sendToPlayer(player, new UpdateStarterRaffleS2CPacket(null,
-                        message, this.timeInterval, this.timeLeft, this.paused, this.selectionCooldown));
+                        message, this.timeInterval, this.timeLeft, this.mode, this.selectionCooldown));
             }
         }
     }
@@ -202,7 +219,7 @@ public class PokemonStarterData extends WorldData {
         });
 
         ModNetwork.CHANNEL.sendToPlayer(player, new UpdateStarterRaffleS2CPacket(starters, message,
-                this.timeInterval, this.timeLeft, this.paused, this.selectionCooldown));
+                this.timeInterval, this.timeLeft, this.mode, this.selectionCooldown));
     }
 
     private void onRaffle(MinecraftServer server) {
@@ -309,7 +326,7 @@ public class PokemonStarterData extends WorldData {
             nbt.put("entries", entries);
             Adapters.LONG.writeNbt(this.timeInterval).ifPresent(tag -> nbt.put("timeInterval", tag));
             Adapters.LONG.writeNbt(this.timeLeft).ifPresent(tag -> nbt.put("timeLeft", tag));
-            Adapters.BOOLEAN.writeNbt(this.paused).ifPresent(tag -> nbt.put("paused", tag));
+            Adapters.ofEnum(StarterMode.class, NAME).writeNbt(this.mode).ifPresent(tag -> nbt.put("mode", tag));
             return nbt;
         });
     }
@@ -327,7 +344,12 @@ public class PokemonStarterData extends WorldData {
 
         this.timeInterval = Adapters.LONG.readNbt(nbt.get("timeInterval")).orElseGet(ModConfigs.STARTER_RAFFLE::getTimeInterval);
         this.timeLeft = Math.min(Adapters.LONG.readNbt(nbt.get("timeLeft")).orElse(this.timeInterval), this.timeInterval);
-        this.paused = Adapters.BOOLEAN.readNbt(nbt.get("paused")).orElseGet(ModConfigs.STARTER_RAFFLE::isPaused);
+
+        if(nbt.contains("mode")) {
+            this.mode = Adapters.ofEnum(StarterMode.class, NAME).readNbt(nbt.get("mode")).orElseGet(ModConfigs.STARTER_RAFFLE::getMode);
+        } else {
+            this.mode = Adapters.BOOLEAN.readNbt(nbt.get("paused")).orElse(false) ? RAFFLE_PAUSED : RAFFLE_ENABLED;
+        }
     }
 
     public static void init() {

@@ -1,13 +1,17 @@
 package abeshutt.staracademy.net;
 
 import abeshutt.staracademy.data.adapter.Adapters;
+import abeshutt.staracademy.data.adapter.basic.EnumAdapter;
 import abeshutt.staracademy.data.bit.BitBuffer;
 import abeshutt.staracademy.world.StarterEntry;
 import abeshutt.staracademy.world.data.PokemonStarterData;
+import abeshutt.staracademy.world.data.StarterMode;
 import net.minecraft.client.network.ClientPlayNetworkHandler;
 import net.minecraft.util.Identifier;
 
 import java.util.*;
+
+import static abeshutt.staracademy.data.adapter.basic.EnumAdapter.Mode.NAME;
 
 public class UpdateStarterRaffleS2CPacket extends ModPacket<ClientPlayNetworkHandler> {
 
@@ -15,7 +19,7 @@ public class UpdateStarterRaffleS2CPacket extends ModPacket<ClientPlayNetworkHan
     private Map<UUID, StarterEntry> entries;
     private long timeInterval;
     private long timeLeft;
-    private boolean paused;
+    private StarterMode mode;
     private int selectionCooldown;
 
     public UpdateStarterRaffleS2CPacket() {
@@ -23,12 +27,12 @@ public class UpdateStarterRaffleS2CPacket extends ModPacket<ClientPlayNetworkHan
     }
 
     public UpdateStarterRaffleS2CPacket(Set<Identifier> starters, Map<UUID, StarterEntry> entries, long timeInterval,
-                                        long timeLeft, boolean paused, int selectionCooldown) {
+                                        long timeLeft, StarterMode mode, int selectionCooldown) {
         this.starters = starters;
         this.entries = entries;
         this.timeInterval = timeInterval;
         this.timeLeft = timeLeft;
-        this.paused = paused;
+        this.mode = mode;
         this.selectionCooldown = selectionCooldown;
     }
 
@@ -55,7 +59,7 @@ public class UpdateStarterRaffleS2CPacket extends ModPacket<ClientPlayNetworkHan
 
         PokemonStarterData.CLIENT.setTimeInterval(this.timeInterval);
         PokemonStarterData.CLIENT.setTimeLeft(this.timeLeft);
-        PokemonStarterData.CLIENT.setPaused(this.paused);
+        PokemonStarterData.CLIENT.setMode(this.mode);
         PokemonStarterData.CLIENT.setSelectionCooldown(this.selectionCooldown);
     }
 
@@ -81,7 +85,7 @@ public class UpdateStarterRaffleS2CPacket extends ModPacket<ClientPlayNetworkHan
 
         Adapters.LONG.writeBits(this.timeInterval, buffer);
         Adapters.LONG.writeBits(this.timeLeft, buffer);
-        Adapters.BOOLEAN.writeBits(this.paused, buffer);
+        Adapters.ofEnum(StarterMode.class, NAME).asNullable().writeBits(this.mode, buffer);
         Adapters.INT_SEGMENTED_3.writeBits(this.selectionCooldown, buffer);
     }
 
@@ -114,7 +118,7 @@ public class UpdateStarterRaffleS2CPacket extends ModPacket<ClientPlayNetworkHan
 
         this.timeInterval = Adapters.LONG.readBits(buffer).orElseThrow();
         this.timeLeft = Adapters.LONG.readBits(buffer).orElseThrow();
-        this.paused = Adapters.BOOLEAN.readBits(buffer).orElseThrow();
+        this.mode = Adapters.ofEnum(StarterMode.class, NAME).asNullable().readBits(buffer).orElse(null);
         this.selectionCooldown = Adapters.INT_SEGMENTED_3.readBits(buffer).orElseThrow();
     }
 

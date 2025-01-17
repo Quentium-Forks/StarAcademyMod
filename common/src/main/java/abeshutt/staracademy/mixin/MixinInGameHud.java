@@ -7,6 +7,7 @@ import abeshutt.staracademy.util.ClientScheduler;
 import abeshutt.staracademy.world.StarterEntry;
 import abeshutt.staracademy.world.data.PokemonStarterData;
 import abeshutt.staracademy.world.data.SafariData;
+import abeshutt.staracademy.world.data.StarterMode;
 import com.cobblemon.mod.common.api.pokemon.PokemonSpecies;
 import com.cobblemon.mod.common.pokemon.Species;
 import net.minecraft.client.MinecraftClient;
@@ -19,6 +20,9 @@ import org.spongepowered.asm.mixin.Mixin;
 import org.spongepowered.asm.mixin.injection.At;
 import org.spongepowered.asm.mixin.injection.Inject;
 import org.spongepowered.asm.mixin.injection.callback.CallbackInfo;
+
+import static abeshutt.staracademy.world.data.StarterMode.DEFAULT;
+import static abeshutt.staracademy.world.data.StarterMode.RAFFLE_ENABLED;
 
 @Mixin(InGameHud.class)
 public class MixinInGameHud {
@@ -37,10 +41,11 @@ public class MixinInGameHud {
 
         Identifier pick = PokemonStarterData.CLIENT.getPick(player.getUuid());
         Species species = pick == null ? null : PokemonSpecies.INSTANCE.getByIdentifier(pick);
-        if(PokemonStarterData.CLIENT.isPaused() && pick == null) return;
+        if(PokemonStarterData.CLIENT.getMode() != RAFFLE_ENABLED && pick == null) return;
+        if(PokemonStarterData.CLIENT.getMode() == DEFAULT) return;
 
         StarterSelectionWidget widget = new StarterSelectionWidget(species, PokemonStarterData.CLIENT.getTimeLeft(),
-                PokemonStarterData.CLIENT.isPaused());
+                PokemonStarterData.CLIENT.getMode() != RAFFLE_ENABLED);
         widget.render(context, 0, 0, ClientScheduler.getTick(tickDelta));
     }
 

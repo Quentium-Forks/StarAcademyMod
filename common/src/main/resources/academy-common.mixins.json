@@ -23,6 +23,7 @@
   ],
   "mixins": [
     "MixinAbstractFireBlock",
+    "MixinArgumentTypes",
     "MixinCommandManager",
     "MixinEntity",
     "MixinGameProfile",

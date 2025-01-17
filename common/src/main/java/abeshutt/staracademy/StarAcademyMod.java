@@ -41,7 +41,6 @@ public final class StarAcademyMod {
             EnhancedCelestialsCompat.init();
         }
 
-        Cobblemon.INSTANCE.setStarterHandler(new GameStarterHandler());
         ModRegistries.register();
 
         CommonEvents.POKEMON_CATCH_RATE.subscribe(Priority.LOWEST, event -> {
