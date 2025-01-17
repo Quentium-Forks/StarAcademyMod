@@ -15,7 +15,7 @@ import java.util.Optional;
 public class StarterEntry implements ISerializable<NbtCompound, JsonObject> {
 
     private Identifier pick;
-    private final Map<String, Integer> cooldowns;
+    private final Map<Identifier, Integer> cooldowns;
     private Identifier granted;
     private boolean changed;
 
@@ -37,7 +37,7 @@ public class StarterEntry implements ISerializable<NbtCompound, JsonObject> {
         return this.cooldowns.getOrDefault(species, 0) > 0;
     }
 
-    public void putOnCooldown(String species, int rounds) {
+    public void putOnCooldown(Identifier species, int rounds) {
         this.cooldowns.put(species, Math.max(this.cooldowns.getOrDefault(species, 0), rounds));
         this.setChanged(true);
     }
@@ -51,11 +51,15 @@ public class StarterEntry implements ISerializable<NbtCompound, JsonObject> {
         this.setChanged(true);
     }
 
-    public void onCompleteRound() {
-        Iterator<Map.Entry<String, Integer>> iterator = this.cooldowns.entrySet().iterator();
+    public void onCompleteRound(int cooldown) {
+        if(this.pick != null) {
+            this.cooldowns.put(this.pick, this.cooldowns.getOrDefault(this.pick, 0) + cooldown + 1);
+        }
+
+        Iterator<Map.Entry<Identifier, Integer>> iterator = this.cooldowns.entrySet().iterator();
 
         while(iterator.hasNext()) {
-            Map.Entry<String, Integer> entry = iterator.next();
+            Map.Entry<Identifier, Integer> entry = iterator.next();
             entry.setValue(entry.getValue() - 1);
 
             if(entry.getValue() <= 0) {
@@ -63,6 +67,7 @@ public class StarterEntry implements ISerializable<NbtCompound, JsonObject> {
             }
         }
 
+        this.pick = null;
         this.setChanged(true);
     }
 
@@ -80,7 +85,7 @@ public class StarterEntry implements ISerializable<NbtCompound, JsonObject> {
         Adapters.INT_SEGMENTED_3.writeBits(this.cooldowns.size(), buffer);
 
         this.cooldowns.forEach((species, rounds) -> {
-            Adapters.UTF_8.writeBits(species, buffer);
+            Adapters.IDENTIFIER.writeBits(species, buffer);
             Adapters.INT_SEGMENTED_3.writeBits(rounds, buffer);
         });
 
@@ -95,7 +100,7 @@ public class StarterEntry implements ISerializable<NbtCompound, JsonObject> {
 
         for(int i = 0; i < size; i++) {
             this.cooldowns.put(
-                Adapters.UTF_8.readBits(buffer).orElseThrow(),
+                Adapters.IDENTIFIER.readBits(buffer).orElseThrow(),
                 Adapters.INT_SEGMENTED_3.readBits(buffer).orElseThrow()
             );
         }
@@ -110,7 +115,7 @@ public class StarterEntry implements ISerializable<NbtCompound, JsonObject> {
             NbtCompound cooldowns = new NbtCompound();
 
             this.cooldowns.forEach((species, rounds) -> {
-                Adapters.INT.writeNbt(rounds).ifPresent(tag -> cooldowns.put(species, tag));
+                Adapters.INT.writeNbt(rounds).ifPresent(tag -> cooldowns.put(species.toString(), tag));
             });
 
             nbt.put("cooldowns", cooldowns);
@@ -126,7 +131,7 @@ public class StarterEntry implements ISerializable<NbtCompound, JsonObject> {
         this.cooldowns.clear();
 
         for(String key : cooldowns.getKeys()) {
-           Adapters.INT.readNbt(cooldowns.getCompound(key)).ifPresent(tag -> this.cooldowns.put(key, tag));
+           Adapters.INT.readNbt(cooldowns.getCompound(key)).ifPresent(tag -> this.cooldowns.put(Identifier.tryParse(key), tag));
         }
 
         this.granted = Adapters.IDENTIFIER.readNbt(nbt.get("granted")).orElse(null);

@@ -255,8 +255,7 @@ public class PokemonStarterData extends WorldData {
         });
 
         for(StarterEntry entry : this.entries.values()) {
-            entry.setPick(null);
-            entry.onCompleteRound();
+            entry.onCompleteRound(this.selectionCooldown);
         }
     }
 
