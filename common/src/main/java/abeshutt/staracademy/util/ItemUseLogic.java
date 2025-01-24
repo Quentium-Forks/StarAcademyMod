@@ -20,15 +20,17 @@ public class ItemUseLogic implements ISerializable<NbtCompound, JsonObject> {
     private ItemPredicate predicate;
     private final List<String> commands;
     private CommandExecutionContext context;
+    private boolean consumable;
 
     public ItemUseLogic() {
         this.commands = new ArrayList<>();
     }
 
-    public ItemUseLogic(String predicate, CommandExecutionContext context, String... commands) {
+    public ItemUseLogic(String predicate, boolean consumable, CommandExecutionContext context, String... commands) {
         this.predicate = ItemPredicate.of(predicate, true).orElseThrow();
         this.context = context;
         this.commands = new ArrayList<>(Arrays.asList(commands));
+        this.consumable = consumable;
     }
 
     public ItemPredicate getPredicate() {
@@ -43,6 +45,10 @@ public class ItemUseLogic implements ISerializable<NbtCompound, JsonObject> {
         return this.context;
     }
 
+    public boolean isConsumable() {
+        return this.consumable;
+    }
+
     @Override
     public Optional<JsonObject> writeJson() {
         return Optional.of(new JsonObject()).map(json -> {
@@ -53,6 +59,7 @@ public class ItemUseLogic implements ISerializable<NbtCompound, JsonObject> {
             json.add("commands", commands);
             Adapters.ofEnum(CommandExecutionContext.class, NAME).writeJson(this.context)
                     .ifPresent(tag -> json.add("context", tag));
+            Adapters.BOOLEAN.writeJson(this.consumable).ifPresent(consumable -> json.add("consumable", consumable));
             return json;
         });
     }
@@ -69,6 +76,7 @@ public class ItemUseLogic implements ISerializable<NbtCompound, JsonObject> {
         }
 
         this.context = Adapters.ofEnum(CommandExecutionContext.class, NAME).readJson(json.get("context")).orElse(CommandExecutionContext.SERVER);
+        this.consumable = Adapters.BOOLEAN.readJson(json.get("consumable")).orElse(false);
     }
 
     public enum CommandExecutionContext {

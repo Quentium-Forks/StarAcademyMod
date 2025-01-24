@@ -3,11 +3,13 @@ package abeshutt.staracademy.mixin;
 import abeshutt.staracademy.init.ModConfigs;
 import abeshutt.staracademy.util.ItemUseLogic;
 import net.minecraft.entity.player.PlayerEntity;
+import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
 import net.minecraft.util.Hand;
 import net.minecraft.util.TypedActionResult;
 import net.minecraft.world.World;
 import org.spongepowered.asm.mixin.Mixin;
+import org.spongepowered.asm.mixin.Shadow;
 import org.spongepowered.asm.mixin.injection.At;
 import org.spongepowered.asm.mixin.injection.Inject;
 import org.spongepowered.asm.mixin.injection.callback.CallbackInfoReturnable;
@@ -15,7 +17,9 @@ import org.spongepowered.asm.mixin.injection.callback.CallbackInfoReturnable;
 import static abeshutt.staracademy.util.ItemUseLogic.CommandExecutionContext.*;
 
 @Mixin(ItemStack.class)
-public class MixinItemStack {
+public abstract class MixinItemStack {
+
+    @Shadow public abstract Item getItem();
 
     @Inject(method = "use", at = @At("HEAD"), cancellable = true)
     public void use(World world, PlayerEntity user, Hand hand, CallbackInfoReturnable<TypedActionResult<ItemStack>> ci) {
@@ -32,6 +36,12 @@ public class MixinItemStack {
                 } else if(logic.getContext() == SERVER) {
                     user.getServer().getCommandManager().executeWithPrefix(user.getServer().getCommandSource(), command);
                 }
+            }
+
+            this.getItem().use(world, user, hand);
+
+            if(!user.isCreative()) {
+                user.getStackInHand(hand).decrement(1);
             }
 
             ci.setReturnValue(TypedActionResult.success(user.getStackInHand(hand)));
