@@ -24,7 +24,8 @@ public class MixinItemStack {
             if(logic == null) return;
 
             for(String command : logic.getCommands()) {
-                command = command.replace("${user_uuid}", user.getUuid().toString());
+                command = command.replace("${user_uuid}", user.getUuid().toString())
+                            .replace("${user_name}", user.getGameProfile().getName());
 
                 if(logic.getContext() == PLAYER) {
                     user.getServer().getCommandManager().executeWithPrefix(user.getCommandSource(), command);

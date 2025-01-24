@@ -34,9 +34,9 @@ public class ItemLogicConfig extends FileConfig {
     protected void reset() {
         this.use = new ArrayList<>();
         this.use.add(new ItemUseLogic("academy:hunt", PLAYER, "/hunt"));
-        this.use.add(new ItemUseLogic("academy:shiny_incense", SERVER, "/yacb boost ${user_uuid} 4 24000 shiny"));
-        this.use.add(new ItemUseLogic("academy:strong_shiny_incense", SERVER, "/yacb boost ${user_uuid} 8 36000 shiny"));
-        this.use.add(new ItemUseLogic("academy:uber_shiny_incense", SERVER, "/yacb boost ${user_uuid} 12 72000 shiny"));
+        this.use.add(new ItemUseLogic("academy:shiny_incense", SERVER, "/yacb boost ${user_name} 4 24000 shiny"));
+        this.use.add(new ItemUseLogic("academy:strong_shiny_incense", SERVER, "/yacb boost ${user_name} 8 36000 shiny"));
+        this.use.add(new ItemUseLogic("academy:uber_shiny_incense", SERVER, "/yacb boost ${user_name} 12 72000 shiny"));
     }
 
 }
