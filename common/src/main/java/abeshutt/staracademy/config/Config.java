@@ -5,6 +5,7 @@ import abeshutt.staracademy.data.biome.BiomePredicate;
 import abeshutt.staracademy.data.entity.EntityPredicate;
 import abeshutt.staracademy.data.item.ItemPredicate;
 import abeshutt.staracademy.data.tile.TilePredicate;
+import abeshutt.staracademy.util.ItemUseLogic;
 import abeshutt.staracademy.world.roll.IntRoll;
 import com.cobblemon.mod.common.api.pokemon.PokemonProperties;
 import com.google.gson.Gson;
@@ -32,6 +33,7 @@ public abstract class Config {
             .registerTypeAdapter(BlockPos.class, Adapters.BLOCK_POS)
             .registerTypeAdapter(Identifier.class, Adapters.IDENTIFIER)
             .registerTypeAdapter(PokemonProperties.class, Adapters.POKEMON_PROPERTIES)
+            .registerTypeAdapter(ItemUseLogic.class, Adapters.of(ItemUseLogic::new, false))
             .create();
 
     public abstract void write() throws IOException;

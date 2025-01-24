@@ -27,6 +27,7 @@
     "MixinCommandManager",
     "MixinEntity",
     "MixinGameProfile",
+    "MixinItemStack",
     "MixinLivingEntity",
     "MixinPlayerScreenHandler",
     "MixinServerWorld",

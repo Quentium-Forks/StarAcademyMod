@@ -22,6 +22,7 @@ public class ModConfigs extends ModRegistries {
     public static WardrobeConfig WARDROBE;
     public static NPCConfig NPC;
     public static DuelingConfig DUELING;
+    public static ItemLogicConfig ITEM_LOGIC;
 
     public static void register(boolean initialization) {
         TILE_GROUPS = new TileGroupsConfig().read();
@@ -36,6 +37,7 @@ public class ModConfigs extends ModRegistries {
         WARDROBE = new WardrobeConfig().read();
         NPC = new NPCConfig().read();
         DUELING = new DuelingConfig().read();
+        ITEM_LOGIC = new ItemLogicConfig().read();
 
         if(!initialization) {
             ArrayList<Runnable> actions = new ArrayList<>(POST_LOAD);
