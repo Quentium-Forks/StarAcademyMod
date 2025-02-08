@@ -40,7 +40,7 @@ public abstract class MixinItemStack {
 
             this.getItem().use(world, user, hand);
 
-            if(!user.isCreative()) {
+            if(logic.isConsumable() && !user.isCreative()) {
                 user.getStackInHand(hand).decrement(1);
             }
 
