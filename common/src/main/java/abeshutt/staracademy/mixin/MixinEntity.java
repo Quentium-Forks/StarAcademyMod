@@ -1,16 +1,22 @@
 package abeshutt.staracademy.mixin;
 
 import abeshutt.staracademy.StarAcademyMod;
+import abeshutt.staracademy.block.SafariPortalBlock;
 import abeshutt.staracademy.data.adapter.Adapters;
 import abeshutt.staracademy.init.ModConfigs;
 import abeshutt.staracademy.init.ModWorldData;
 import abeshutt.staracademy.util.ProxyEntity;
 import abeshutt.staracademy.world.data.EntityState;
 import abeshutt.staracademy.world.data.SafariData;
+import net.minecraft.block.BlockState;
 import net.minecraft.entity.Entity;
 import net.minecraft.nbt.NbtCompound;
 import net.minecraft.server.world.ServerWorld;
+import net.minecraft.util.crash.CrashException;
+import net.minecraft.util.crash.CrashReport;
+import net.minecraft.util.crash.CrashReportSection;
 import net.minecraft.util.math.BlockPos;
+import net.minecraft.util.math.Box;
 import net.minecraft.util.math.Vec3d;
 import net.minecraft.world.TeleportTarget;
 import net.minecraft.world.World;
@@ -39,6 +45,12 @@ public abstract class MixinEntity implements ProxyEntity {
     @Shadow protected abstract void checkBlockCollision();
 
     @Shadow public abstract boolean hasPortalCooldown();
+
+    @Shadow public abstract Box getBoundingBox();
+
+    @Shadow public abstract void readNbt(NbtCompound nbt);
+
+    @Shadow public abstract void remove(Entity.RemovalReason reason);
 
     @Override
     public boolean isInSafariPortal() {
@@ -70,9 +82,7 @@ public abstract class MixinEntity implements ProxyEntity {
         this.setInSafariPortal(false);
 
         if(this.hasSafariPortalCooldown() && !this.hasPortalCooldown()) {
-            this.checkBlockCollision();
-
-            if(!this.isInSafariPortal()) {
+            if(!this.isCollidingWithPortal()) {
                 this.setSafariPortalCooldown(false);
             }
         }
@@ -110,6 +120,30 @@ public abstract class MixinEntity implements ProxyEntity {
     public void readNbt(NbtCompound nbt, CallbackInfo ci) {
         this.inSafariPortal = Adapters.BOOLEAN.readNbt(nbt.get("inSafariPortal")).orElse(false);
         this.safariPortalCooldown = Adapters.BOOLEAN.readNbt(nbt.get("safariPortalCooldown")).orElse(false);
+    }
+
+    private boolean isCollidingWithPortal() {
+        Box box = this.getBoundingBox();
+        BlockPos blockPos = BlockPos.ofFloored(box.minX + 1.0E-7, box.minY + 1.0E-7, box.minZ + 1.0E-7);
+        BlockPos blockPos2 = BlockPos.ofFloored(box.maxX - 1.0E-7, box.maxY - 1.0E-7, box.maxZ - 1.0E-7);
+
+        if(this.getWorld().isRegionLoaded(blockPos, blockPos2)) {
+            BlockPos.Mutable mutable = new BlockPos.Mutable();
+            for(int i = blockPos.getX(); i <= blockPos2.getX(); i++) {
+                for(int j = blockPos.getY(); j <= blockPos2.getY(); j++) {
+                    for(int k = blockPos.getZ(); k <= blockPos2.getZ(); k++) {
+                        mutable.set(i, j, k);
+                        BlockState blockState = this.getWorld().getBlockState(mutable);
+
+                        if(blockState.getBlock() instanceof SafariPortalBlock) {
+                            return true;
+                        }
+                    }
+                }
+            }
+        }
+
+        return false;
     }
 
 }

@@ -74,13 +74,13 @@ public class SafariPortalBlock extends Block implements BlockEntityProvider {
         }
 
         ProxyEntity proxy = ProxyEntity.of(entity).orElseThrow();
-        proxy.setInSafariPortal(true);
 
         if(entity instanceof ServerPlayerEntity player && entity.canUsePortals() && !proxy.hasSafariPortalCooldown()
-                && VoxelShapes.matchesAnywhere(
+                && !proxy.isInSafariPortal() && VoxelShapes.matchesAnywhere(
                 VoxelShapes.cuboid(entity.getBoundingBox().offset(-pos.getX(), -pos.getY(), -pos.getZ())),
                 state.getOutlineShape(world, pos),
                 BooleanBiFunction.AND)) {
+            proxy.setInSafariPortal(true);
 
             SafariData data = ModWorldData.SAFARI.getGlobal(world);
             SafariData.Entry entry = data.get(player.getUuid()).orElse(null);
