@@ -12,6 +12,8 @@ public interface ProxyEntity {
 
     void setSafariPortalCooldown(boolean safariPortalCooldown);
 
+    void schedulePortalTick(Runnable runnable);
+
     static Optional<ProxyEntity> of(Object object) {
         if(object instanceof ProxyEntity proxy) {
             return Optional.of(proxy);

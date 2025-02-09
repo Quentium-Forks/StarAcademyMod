@@ -22,6 +22,8 @@ import org.spongepowered.asm.mixin.injection.Inject;
 import org.spongepowered.asm.mixin.injection.callback.CallbackInfo;
 import org.spongepowered.asm.mixin.injection.callback.CallbackInfoReturnable;
 
+import java.util.ArrayList;
+import java.util.List;
 import java.util.UUID;
 
 @Mixin(Entity.class)
@@ -29,6 +31,7 @@ public abstract class MixinEntity implements ProxyEntity {
 
     @Unique private boolean inSafariPortal;
     @Unique private boolean safariPortalCooldown;
+    @Unique private List<Runnable> scheduledPortalTicks = new ArrayList<>();
 
     @Shadow public abstract World getWorld();
     @Shadow public abstract UUID getUuid();
@@ -57,6 +60,11 @@ public abstract class MixinEntity implements ProxyEntity {
         this.safariPortalCooldown = safariPortalCooldown;
     }
 
+    @Override
+    public void schedulePortalTick(Runnable runnable) {
+        this.scheduledPortalTicks.add(runnable);
+    }
+
     @Inject(method = "tick", at = @At("HEAD"))
     public void tickHead(CallbackInfo ci) {
         this.setInSafariPortal(false);
@@ -67,6 +75,14 @@ public abstract class MixinEntity implements ProxyEntity {
             if(!this.isInSafariPortal()) {
                 this.setSafariPortalCooldown(false);
             }
+        }
+    }
+
+    @Inject(method = "tickPortal", at = @At("HEAD"))
+    public void tickPortal(CallbackInfo ci) {
+        if(this.getWorld() instanceof ServerWorld) {
+            this.scheduledPortalTicks.forEach(Runnable::run);
+            this.scheduledPortalTicks.clear();
         }
     }
 

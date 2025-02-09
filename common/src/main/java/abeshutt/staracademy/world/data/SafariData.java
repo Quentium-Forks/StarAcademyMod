@@ -111,7 +111,9 @@ public class SafariData extends WorldData {
         if(destination != null) {
             this.getOrCreate(player.getUuid()).setLastState(new EntityState(player));
             //player.interactionManager.changeGameMode(GameMode.ADVENTURE);
-            player.moveToWorld(destination);
+            ProxyEntity.of(player).ifPresent(proxy -> {
+                proxy.schedulePortalTick(() -> player.moveToWorld(destination));
+            });
         }
     }
 
@@ -128,7 +130,9 @@ public class SafariData extends WorldData {
             ServerWorld destination = server.getWorld(dimension);
 
             if(destination != null) {
-                player.moveToWorld(destination);
+                ProxyEntity.of(player).ifPresent(proxy -> {
+                    proxy.schedulePortalTick(() -> player.moveToWorld(destination));
+                });
             }
         }
 
