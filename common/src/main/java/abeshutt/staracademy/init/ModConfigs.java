@@ -23,6 +23,7 @@ public class ModConfigs extends ModRegistries {
     public static NPCConfig NPC;
     public static DuelingConfig DUELING;
     public static ItemLogicConfig ITEM_LOGIC;
+    public static StarBadgeConfig STAR_BADGE;
 
     public static void register(boolean initialization) {
         TILE_GROUPS = new TileGroupsConfig().read();
@@ -38,6 +39,7 @@ public class ModConfigs extends ModRegistries {
         NPC = new NPCConfig().read();
         DUELING = new DuelingConfig().read();
         ITEM_LOGIC = new ItemLogicConfig().read();
+        STAR_BADGE = new StarBadgeConfig().read();
 
         if(!initialization) {
             ArrayList<Runnable> actions = new ArrayList<>(POST_LOAD);

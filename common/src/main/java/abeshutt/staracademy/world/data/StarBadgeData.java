@@ -1,5 +1,6 @@
 package abeshutt.staracademy.world.data;
 
+import abeshutt.staracademy.init.ModConfigs;
 import abeshutt.staracademy.init.ModItems;
 import abeshutt.staracademy.init.ModNetwork;
 import abeshutt.staracademy.init.ModWorldData;
@@ -43,8 +44,8 @@ public class StarBadgeData extends WorldData {
             this.markDirty();
         });
 
-        for(int i = 0; i < 5; i++) {
-            inventory.addStack(new ItemStack(ModItems.STAR_BADGE.get()));
+        for(ItemStack stack : ModConfigs.STAR_BADGE.getStartItems()) {
+            inventory.addStack(stack);
         }
 
         this.markDirty();

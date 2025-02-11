@@ -62,7 +62,7 @@ public class StarBadgeBeltRenderer extends FeatureRenderer<AbstractClientPlayerE
             }
 
             for(int i = 0; i < inventory.size(); i++) {
-                if(!inventory.getStack(i).isOf(ModItems.STAR_BADGE.get())) {
+                if(inventory.getStack(i).isEmpty()) {
                     continue;
                 }
 
@@ -71,7 +71,7 @@ public class StarBadgeBeltRenderer extends FeatureRenderer<AbstractClientPlayerE
                 matrices.translate(offset.x, offset.y, offset.z);
                 matrices.scale(0.25F, 0.25F, 0.25F);
 
-                MinecraftClient.getInstance().getItemRenderer().renderItem(new ItemStack(ModItems.STAR_BADGE.get()),
+                MinecraftClient.getInstance().getItemRenderer().renderItem(inventory.getStack(i),
                         ModelTransformationMode.GROUND, light, OverlayTexture.DEFAULT_UV, matrices, vertexConsumers, null, 0);
                 matrices.pop();
             }

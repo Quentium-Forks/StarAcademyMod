@@ -10,6 +10,7 @@ import abeshutt.staracademy.world.roll.IntRoll;
 import com.cobblemon.mod.common.api.pokemon.PokemonProperties;
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
+import net.minecraft.item.ItemStack;
 import net.minecraft.util.Identifier;
 import net.minecraft.util.math.BlockPos;
 
@@ -32,6 +33,7 @@ public abstract class Config {
             .registerTypeHierarchyAdapter(IntRoll.class, Adapters.INT_ROLL)
             .registerTypeAdapter(BlockPos.class, Adapters.BLOCK_POS)
             .registerTypeAdapter(Identifier.class, Adapters.IDENTIFIER)
+            .registerTypeAdapter(ItemStack.class, Adapters.ITEM_STACK)
             .registerTypeAdapter(PokemonProperties.class, Adapters.POKEMON_PROPERTIES)
             .registerTypeAdapter(ItemUseLogic.class, Adapters.of(ItemUseLogic::new, false))
             .create();

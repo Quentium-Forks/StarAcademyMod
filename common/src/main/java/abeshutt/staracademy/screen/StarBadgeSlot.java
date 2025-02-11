@@ -1,6 +1,6 @@
 package abeshutt.staracademy.screen;
 
-import abeshutt.staracademy.init.ModItems;
+import abeshutt.staracademy.init.ModConfigs;
 import net.minecraft.inventory.Inventory;
 import net.minecraft.item.ItemStack;
 import net.minecraft.screen.slot.Slot;
@@ -25,7 +25,7 @@ public class StarBadgeSlot extends Slot {
 
     @Override
     public boolean canInsert(ItemStack stack) {
-        return stack.isOf(ModItems.STAR_BADGE.get());
+        return ModConfigs.STAR_BADGE.isValid(stack);
     }
 
 }
