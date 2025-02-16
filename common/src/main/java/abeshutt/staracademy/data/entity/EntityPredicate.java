@@ -31,7 +31,9 @@ public interface EntityPredicate {
 	}
 
 	default boolean test(Entity entity) {
-		return this.test(entity.getPos(), entity.getBlockPos(), PartialCompoundNbt.of(entity.writeNbt(new NbtCompound())));
+		NbtCompound nbt = new NbtCompound();
+		entity.saveSelfNbt(nbt);
+		return this.test(entity.getPos(), entity.getBlockPos(), PartialCompoundNbt.of(nbt));
 	}
 
 	static Optional<EntityPredicate> of(String string, boolean logErrors) {

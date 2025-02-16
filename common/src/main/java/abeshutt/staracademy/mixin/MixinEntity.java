@@ -52,6 +52,8 @@ public abstract class MixinEntity implements ProxyEntity {
 
     @Shadow public abstract void remove(Entity.RemovalReason reason);
 
+    @Shadow public abstract void discard();
+
     @Override
     public boolean isInSafariPortal() {
         return this.inSafariPortal;
@@ -77,8 +79,13 @@ public abstract class MixinEntity implements ProxyEntity {
         this.scheduledPortalTicks.add(runnable);
     }
 
-    @Inject(method = "tick", at = @At("HEAD"))
+    @Inject(method = "tick", at = @At("HEAD"), cancellable = true)
     public void tickHead(CallbackInfo ci) {
+        if(ModConfigs.ENTITY_YEETER.contains((Entity)(Object)this) && !this.getWorld().isClient) {
+            this.discard();
+            ci.cancel();
+        }
+
         this.setInSafariPortal(false);
 
         if(this.hasSafariPortalCooldown() && !this.hasPortalCooldown()) {

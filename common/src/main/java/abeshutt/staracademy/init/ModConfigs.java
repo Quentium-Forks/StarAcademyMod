@@ -24,6 +24,7 @@ public class ModConfigs extends ModRegistries {
     public static DuelingConfig DUELING;
     public static ItemLogicConfig ITEM_LOGIC;
     public static StarBadgeConfig STAR_BADGE;
+    public static EntityYeeterConfig ENTITY_YEETER;
 
     public static void register(boolean initialization) {
         TILE_GROUPS = new TileGroupsConfig().read();
@@ -40,6 +41,7 @@ public class ModConfigs extends ModRegistries {
         DUELING = new DuelingConfig().read();
         ITEM_LOGIC = new ItemLogicConfig().read();
         STAR_BADGE = new StarBadgeConfig().read();
+        ENTITY_YEETER = new EntityYeeterConfig().read();
 
         if(!initialization) {
             ArrayList<Runnable> actions = new ArrayList<>(POST_LOAD);
