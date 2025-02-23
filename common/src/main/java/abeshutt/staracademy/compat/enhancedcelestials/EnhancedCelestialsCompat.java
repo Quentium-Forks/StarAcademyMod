@@ -42,7 +42,7 @@ public class EnhancedCelestialsCompat {
                 if (!world.isClient && world instanceof EnhancedCelestialsWorldData celestialsContext) {
                     EnhancedCelestialsContext lunarContext = celestialsContext.getLunarContext();
                     if (lunarContext != null) {
-                        if (lunarContext.getLunarForecast().currentLunarEvent().unwrapKey().orElseThrow() == DefaultLunarEvents.HARVEST_MOON) {
+                        if (lunarContext.getLunarForecast().currentLunarEvent().value().orElseThrow() == DefaultLunarEvents.HARVEST_MOON) {
                             experienceGainedPreEvent.setExperience((int) (experienceGainedPreEvent.getExperience() * ModConfigs.ENHANCED_CELESTIALS_COBBLEMON_CONFIG.getHarvestMoonExpShareMultiplier()));
                         }
                     }
@@ -78,7 +78,7 @@ public class EnhancedCelestialsCompat {
                         if (world instanceof EnhancedCelestialsWorldData celestialsContext) {
                             EnhancedCelestialsContext lunarContext = celestialsContext.getLunarContext();
                             if (lunarContext != null) {
-                                if (lunarContext.getLunarForecast().currentLunarEvent().unwrapKey().orElseThrow() == DefaultLunarEvents.BLUE_MOON) {
+                                if (lunarContext.getLunarForecast().currentLunarEvent().value().orElseThrow() == DefaultLunarEvents.BLUE_MOON) {
                                     return v * ModConfigs.ENHANCED_CELESTIALS_COBBLEMON_CONFIG.getBlueMoonShinyMultiplier();
                                 }
                             }
@@ -91,7 +91,7 @@ public class EnhancedCelestialsCompat {
                         if (world instanceof EnhancedCelestialsWorldData celestialsContext) {
                             EnhancedCelestialsContext lunarContext = celestialsContext.getLunarContext();
                             if (lunarContext != null) {
-                                if (lunarContext.getLunarForecast().currentLunarEvent().unwrapKey().orElseThrow() == DefaultLunarEvents.BLOOD_MOON) {
+                                if (lunarContext.getLunarForecast().currentLunarEvent().value().orElseThrow() == DefaultLunarEvents.BLOOD_MOON) {
                                     return v * ModConfigs.ENHANCED_CELESTIALS_COBBLEMON_CONFIG.getBloodMoonIVsMultiplier();
                                 }
                             }
@@ -103,7 +103,7 @@ public class EnhancedCelestialsCompat {
                         if (world instanceof EnhancedCelestialsWorldData celestialsContext) {
                             EnhancedCelestialsContext lunarContext = celestialsContext.getLunarContext();
                             if (lunarContext != null) {
-                                if (lunarContext.getLunarForecast().currentLunarEvent().unwrapKey().orElseThrow() == AURORA_MOON) {
+                                if (lunarContext.getLunarForecast().currentLunarEvent().value().orElseThrow() == AURORA_MOON) {
                                     return v * ModConfigs.ENHANCED_CELESTIALS_COBBLEMON_CONFIG.getAuroraMoonRarePokemonSpawnMultiplier();
                                 }
                             }
