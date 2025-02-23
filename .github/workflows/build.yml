@@ -35,6 +35,9 @@ jobs:
           restore-keys: |
             ${{ runner.os }}-gradle-
 
+      - name: Build Jars
+        run: ./gradlew :fabric:build
+
       - name: Upload workflow artifacts
         uses: actions/upload-artifact@v4
         with:
