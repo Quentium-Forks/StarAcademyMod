@@ -35,11 +35,6 @@ jobs:
           restore-keys: |
             ${{ runner.os }}-gradle-
 
-      - name: Publish to Github Packages
-        env:
-          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-        run: ./gradlew :fabric:build :fabric:publish
-
       - name: Upload workflow artifacts
         uses: actions/upload-artifact@v4
         with:
