@@ -45,7 +45,7 @@ jobs:
         uses: actions/upload-artifact@v4
         with:
           name: StarAcademyMod
-          path: ${{ github.workspace }}/build/
+          path: ${{ github.workspace }}/fabric/build/
 
       - name: Retrieve Version
         id: get_version
