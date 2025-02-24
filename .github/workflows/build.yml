@@ -38,6 +38,9 @@ jobs:
       - name: Build Jars
         run: ./gradlew :fabric:build
 
+      - name: List Files
+        run: ls -al
+
       - name: Upload workflow artifacts
         uses: actions/upload-artifact@v4
         with:
